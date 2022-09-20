@@ -1,0 +1,81 @@
+
+
+.progress{
+  height: 3px;
+  width: 30%;
+  -webkit-appearance: none;
+  border-radius: 8px;
+  caret-color: transparent;
+  cursor: pointer;
+}
+
+
+input[type=range]::-webkit-slider-thumb{
+  background: #ffffff;
+  height: 7px;
+  width: 7px;
+}
+.audio-player {
+  background-color: #120C1C;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+.artwork {
+  border-radius: 120px;
+  display: block;
+  margin: auto;
+  height: 200px;
+  width: 200px;
+}
+.title {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.artist {
+  font-weight: 300;
+  margin-top: 0;
+}
+
+.audio-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  width: 20%;
+}
+
+.audio-controls .prev svg,
+.audio-controls .next svg {
+  width: 35px;
+  height: 35px;
+}
+
+.audio-controls .play ,
+.audio-controls .pause  {
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.audio-controls path {
+  fill: var(--white);
+}
+
+.color-backdrop {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+
+
