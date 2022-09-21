@@ -3,18 +3,21 @@ import HeaderSideBar from "./header/index";
 import BodySideBar from "./body/index";
 import FooterSideBar from "./footer/index";
 import { widthDefaultValue } from "./styles";
-import { PLayer } from "../player";
-import useWindowSize from "../../../hooks/useWindowSize";
 
-export default function SiderBar({ route }: any) {
+import useWindowSize from "../../../hooks/useWindowSize";
+import { Audio } from "../audio";
+import useTheme from "../../../hooks/useTheme";
+
+export default function SiderBar() {
   const { width }: any = useWindowSize();
+  const { styles }: any = useTheme();
   const [withDefault, setWithDefault] = useState(widthDefaultValue);
 
   const [isToggle, setIsToggle] = useState(false);
   const sidebarRef = useRef(null);
 
   const handleToggleSidebar = () => {
-    if (withDefault == widthDefaultValue) {
+    if (withDefault === widthDefaultValue) {
       setWithDefault("64");
       setIsToggle(true);
     } else {
@@ -34,6 +37,7 @@ export default function SiderBar({ route }: any) {
   };
   useEffect(() => {
     handleFixWidthSidebar();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [width, isToggle]);
   return (
     <>
@@ -41,16 +45,18 @@ export default function SiderBar({ route }: any) {
         className={`h-screen  xl:w-64 lg:w-64 w-${withDefault} transition-all `}
         ref={sidebarRef}
       >
-        <div className=" pt-4 bg-[#2A213A] h-[100vh] flex-col flex">
+        <div
+          className={`pt-4 ${styles.sideBar.backgroundColor} h-[100vh] flex-col flex `}
+        >
           <HeaderSideBar isToggle={isToggle} />
-          <BodySideBar route={route} isToggle={isToggle} />
+          <BodySideBar isToggle={isToggle} />
           <div className="flex justify-center mt-auto  ">
             <FooterSideBar
               handleToggleSidebar={handleToggleSidebar}
               isToggle={isToggle}
             />
           </div>
-          <PLayer />
+          <Audio />
         </div>
       </aside>
     </>

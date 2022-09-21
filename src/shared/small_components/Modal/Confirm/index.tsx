@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "flowbite-react";
 
-import ModalContainer from "../../../../context/modal";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import useModal from "../../../../hooks/useModal";
 import { useNavigate } from "react-router-dom";

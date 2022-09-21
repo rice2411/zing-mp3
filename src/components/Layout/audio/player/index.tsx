@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import AudioControls from "./audioControls";
+import AudioControls from "../controls";
 
-const AudioPlayer = ({ tracks }: any) => {
+import "./styles.scss";
+import Actions from "../action";
+import Info from "../info";
+import useTheme from "../../../../hooks/useTheme";
+const Player = ({ tracks }: any) => {
   // State
   const [trackIndex, setTrackIndex] = useState(0);
   const [isDirty, setIsDirty] = useState(false);
@@ -10,9 +14,10 @@ const AudioPlayer = ({ tracks }: any) => {
   const [timeRunning, setTimeRunning] = useState(0);
   const [timeEnd, setTimeEnd] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const { styles }: any = useTheme();
 
   // Destructure for conciseness
-  const { title, artist, color, image, audioSrc } = tracks[trackIndex];
+  const { title, artist, image, audioSrc } = tracks[trackIndex];
 
   // Refs
   const audioRef = useRef(
@@ -86,6 +91,10 @@ const AudioPlayer = ({ tracks }: any) => {
       setTrackIndex(0);
     }
   };
+  const handleMouseEnter = (e: any) => {
+    const style = document.getElementById("thumbStyle");
+    style.innerHTML = `.progress:hover::-webkit-slider-thumb {  background: ${styles.audio.thumb.color};}`;
+  };
 
   useEffect(() => {
     if (isPlaying) {
@@ -146,40 +155,43 @@ const AudioPlayer = ({ tracks }: any) => {
   }, []);
 
   return (
-    <div className=" mt-auto h-[90px] z-50  w-screen">
-      <div className="audio-player">
-        <AudioControls
-          isPlaying={isPlaying}
-          onPrevClick={toPrevTrack}
-          onNextClick={toNextTrack}
-          onPlayPauseClick={handlePlay}
-        />
-        <div className="flex w-full justify-center items-center">
-          <span>{timeFormat(timeRunning)}</span>
-          <input
-            type="range"
-            value={trackProgress}
-            step="1"
-            min="0"
-            max={duration ? duration : 0}
-            className="progress mx-2.5"
-            onChange={(e) => onScrub(e.target.value)}
-            // onMouseUp={onScrubEnd}
-            // onKeyUp={onScrubEnd}
-            style={{ background: trackStyling }}
+    <>
+      <style id="thumbStyle" type="text/css"></style>
+      <div
+        className={`${styles.audio.backgroundColor} mt-auto h-[90px] z-50  w-screen audio  flex justify-between items-center `}
+      >
+        <Info title={title} artist={artist} image={image} />
+        <div
+          className={`player w-2/4 min-w-[300px] ${styles.audio.player.textColor} `}
+        >
+          <AudioControls
+            isPlaying={isPlaying}
+            onPrevClick={toPrevTrack}
+            onNextClick={toNextTrack}
+            onPlayPauseClick={handlePlay}
           />
-          <span>{timeFormat(timeEnd)}</span>
+          <div className="flex w-full justify-center items-center">
+            <span className="text-xs">{timeFormat(timeRunning)}</span>
+            <input
+              type="range"
+              value={trackProgress}
+              step="1"
+              min="0"
+              max={duration ? duration : 0}
+              className="progress mx-2.5"
+              onChange={(e) => onScrub(e.target.value)}
+              onMouseEnter={handleMouseEnter}
+              // onMouseUp={onScrubEnd}
+              // onKeyUp={onScrubEnd}
+              style={{ background: trackStyling }}
+            />
+            <span className="text-xs">{timeFormat(timeEnd)}</span>
+          </div>
         </div>
+        <Actions />
       </div>
-      {/* <img
-          className="artwork"
-          src={image}
-          alt={`track artwork for ${title} by ${artist}`}
-        />
-        <h2 className="title">{title}</h2>
-        <h3 className="artist">{artist}</h3> */}
-    </div>
+    </>
   );
 };
 
-export default AudioPlayer;
+export default Player;

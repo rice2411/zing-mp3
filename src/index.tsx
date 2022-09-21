@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./context/auth";
 import { ModalProvider } from "./context/modal";
-import { ModeProvider } from "./context/mode";
+import { ThemeProvider } from "./context/mode";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,11 +12,11 @@ root.render(
     <BrowserRouter>
       <ModalProvider>
         <AuthProvider>
-          <ModeProvider>
+          <ThemeProvider>
             <Routes>
               <Route path="/*" element={<App />} />
             </Routes>
-          </ModeProvider>
+          </ThemeProvider>
         </AuthProvider>
       </ModalProvider>
     </BrowserRouter>

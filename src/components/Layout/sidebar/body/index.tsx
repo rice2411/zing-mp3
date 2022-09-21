@@ -4,26 +4,21 @@ import Items from "./items";
 import { data } from "./items/data";
 import CTAButton from "./ctxButton";
 import Library from "./library";
+import useTheme from "../../../../hooks/useTheme";
 
-export default function BodySideBar({ route, isToggle }: any) {
+export default function BodySideBar({ isToggle }: any) {
+  const { styles }: any = useTheme();
   return (
     <>
-      <Items
-        data={data.noScroll}
-        className="pb-3  "
-        route={route}
-        isToggle={isToggle}
-      />
+      <Items data={data.noScroll} className="pb-3  " isToggle={isToggle} />
       <div className="px-3 ">
-        <div className="border-b border-gray-700"></div>
+        <div
+          className="border-b"
+          style={{ borderColor: styles.sideBar.divide.color }}
+        ></div>
       </div>
       <Scrollbar isHover={true} className="h-[300px] ">
-        <Items
-          data={data.scroll}
-          className="pt-3"
-          route={route}
-          isToggle={isToggle}
-        />
+        <Items data={data.scroll} className="pt-3" isToggle={isToggle} />
         <div className="pl-3 pb-3 xl:pb-0 lg:pb-0">
           <CTAButton />
         </div>

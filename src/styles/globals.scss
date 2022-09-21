@@ -1,7 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "./components/audioplayer.scss";
-@import "./shared/scrollbar.scss"
 
+@import "scrollbar.scss";
+body{
+    font-family: 'Inter', sans-serif;
+}
+#root{
+    min-width: 100vw;
+    min-height: 100vh;
 
+}

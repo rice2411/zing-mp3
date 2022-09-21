@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
+import useTheme from "../../../../../hooks/useTheme";
 import { iconStyles, textStyles, widthDefaultValue } from "../../styles";
 import { data } from "./data";
 
 export default function Library({ isToggle }: any) {
+  const { styles }: any = useTheme();
   const canPlayRefs = useRef([]);
   const adNode = (idx: number, node: any) => {
     if (node) {
@@ -28,9 +30,9 @@ export default function Library({ isToggle }: any) {
   return (
     <div>
       <span
-        className={`ml-4 xl:block lg:block  text-white font-medium uppercase text-xs pt-3 ${
+        className={`ml-4 xl:block lg:block font-medium uppercase text-xs pt-3 ${
           isToggle ? "block" : "hidden"
-        }`}
+        } ${styles.sideBar.active.textColor}`}
       >
         Thư viện
       </span>
@@ -44,7 +46,9 @@ export default function Library({ isToggle }: any) {
             key={item.id}
             className={`flex items-center ${
               isToggle ? "justify-start" : "justify-center"
-            } xl:justify-start lg:justify-start hover:text-white cursor-pointer px-2 py-3  ${textStyles} `}
+            } xl:justify-start lg:justify-start ${
+              styles.sideBar.hover.text
+            } cursor-pointer px-2 py-3  ${styles.sideBar.textColor} `}
           >
             <img src={item.icon} className={`${iconStyles}`} />
             <span

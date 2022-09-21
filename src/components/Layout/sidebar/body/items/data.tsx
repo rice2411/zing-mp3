@@ -18,7 +18,7 @@ export const data = {
       id: 2,
       icon: <FiDisc className={`${iconStyles}`} />,
       title: "Khám phá",
-      route: "",
+      route: "/",
     },
     {
       id: 3,

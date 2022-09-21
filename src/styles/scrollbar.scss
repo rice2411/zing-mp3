@@ -1,3 +1,7 @@
+html{
+  font-family: 'Inter';
+}
+
 .scroll-bar::-webkit-scrollbar {
     width: 5px;
     height: 20px;
@@ -14,10 +18,5 @@
   }
 
 
-  
-  :root {
-    --white: #fff;
-    --active-color: #00aeb0;
-  }
   
   

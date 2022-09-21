@@ -1,8 +1,12 @@
 import React, { useRef } from "react";
+import { useLocation } from "react-router-dom";
+import useTheme from "../../../../../hooks/useTheme";
 import { textStyles, widthDefaultValue } from "../../styles";
-import "./styles.scss";
-export default function Items({ data, className, route, isToggle }: any) {
+
+export default function Items({ data, className, isToggle }: any) {
+  const location = useLocation();
   const canPlayRefs = useRef([]);
+  const { styles }: any = useTheme();
   const adNode = (idx: number, node: any) => {
     if (node) {
       // @ts-ignore: Object is possibly 'null'.
@@ -24,22 +28,35 @@ export default function Items({ data, className, route, isToggle }: any) {
 
     canPlayRefs.current[index].classList.add("lg:hidden");
   };
+
+  const activeItemClass = () => {
+    return `font-medium ${styles.sideBar.active.textColor} border-l-[3px]  ${styles.sideBar.active.backgroundColor} `;
+  };
+
   return (
     <ul
       className={`w-${
         isToggle ? "64" : widthDefaultValue
-      } xl:w-auto lg:w-auto space-y-2 ${
-        className ? className : className
-      } ${textStyles}`}
+      } xl:w-auto lg:w-auto space-y-2 ${className ? className : className} ${
+        styles.sideBar.textColor
+      }`}
     >
       {data.map((item: any, index: number) => (
         <li
           key={item.id}
           className={`xl:block lg:block  flex ${
             isToggle ? "justify-start" : "justify-center"
-          } hover:text-white px-3 ${route === item.route ? "active" : ""} `}
+          } ${styles.sideBar.hover.text} px-3 ${
+            location.pathname === item.route ? activeItemClass() : ""
+          } `}
           onMouseEnter={() => hanldeMouseEnter(index)}
           onMouseLeave={() => hanldeMouseLeave(index)}
+          style={{
+            borderColor:
+              location.pathname === item.route
+                ? styles.sideBar.active.borderColor
+                : "",
+          }}
         >
           <a
             href="/home"
