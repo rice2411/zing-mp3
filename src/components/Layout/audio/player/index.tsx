@@ -15,7 +15,7 @@ const Player = ({ tracks }: any) => {
   const [timeEnd, setTimeEnd] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const { styles }: any = useTheme();
-
+  //alo
   // Destructure for conciseness
   const { title, artist, image, audioSrc } = tracks[trackIndex];
 
