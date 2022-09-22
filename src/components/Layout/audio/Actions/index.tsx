@@ -2,9 +2,9 @@ import React from "react";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { GiMicrophone } from "react-icons/gi";
 import { VscMultipleWindows } from "react-icons/vsc";
-import Volume from "./volume";
+import Volume from "./Volume";
 import useTheme from "../../../../hooks/useTheme";
-import PlayList from "./playlist";
+import PlayList from "./Playlist";
 
 const Actions = () => {
   const { styles }: any = useTheme();

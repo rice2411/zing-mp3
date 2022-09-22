@@ -11,7 +11,7 @@ const Volume = () => {
   return (
     <>
       <style id="thumbPlayerStyle" type="text/css"></style>
-      <div className="flex items-center  gap-x-2">
+      <div className="flex items-center  gap-x-2 p-3">
         <BsFillVolumeUpFill className={`cursor-pointer`} />
         <input
           type="range"

@@ -13,11 +13,11 @@ export const MODE = [
             textColor: "text-[#dadada]",
             border: "none",
             hover: {
-              text: "hover:text-[#ffffff]",
+              text: "hover:text-white",
               textDark: "hover:text-[#dadada]",
             },
             active: {
-              textColor: "text-[#ffffff]",
+              textColor: "text-white",
               backgroundColor: "bg-[#393243]",
               borderColor: "#7200a1",
             },
@@ -28,23 +28,30 @@ export const MODE = [
           audio: {
             backgroundColor: "bg-[#120C1C] ",
             info: {
-              textColor: "text-[#ffffff]",
+              textColor: "text-white",
               textDark: "text-[#dadada]",
             },
             player: {
-              textColor: "text-[#ffffff]",
+              textColor: "text-white",
+              textDark: "text-[#dadada]",
             },
             thumb: {
-              color: "#ffffff",
+              color: "white",
             },
             controls: {
-              color: "text-[#ffffff]",
+              color: "text-white",
               colorHover: "hover:text-[#c662ef]",
               hoverStyle: "hover:bg-[#282231] hover:rounded-[50%] ",
             },
             playlist: {
               backgroundColor: "rgba(255,255,255,0.1)",
               hoverColor: "rgba(255,255,255,0.2)",
+            },
+          },
+          navbar: {
+            textColor: "text-white",
+            item: {
+              backgroundColor: "bg-[#2F2739]",
             },
           },
         },
@@ -60,11 +67,11 @@ export const MODE = [
             textColor: "text-[#dadada]",
             border: "none",
             hover: {
-              text: "hover:text-[#ffffff]",
+              text: "hover:text-white",
               textDark: "hover:text-[#dadada]",
             },
             active: {
-              textColor: "text-[#ffffff]",
+              textColor: "text-white",
               backgroundColor: "bg-[#883939]",
               borderColor: "#aa1c1c",
             },
@@ -75,23 +82,30 @@ export const MODE = [
           audio: {
             backgroundColor: "bg-[#5C1212] ",
             info: {
-              textColor: "text-[#ffffff]",
+              textColor: "text-white",
               textDark: "text-[#dadada]",
             },
             player: {
-              textColor: "text-[#ffffff]",
+              textColor: "text-white",
+              textDark: "text-[#dadada]",
             },
             thumb: {
-              color: "#ffffff",
+              color: "white",
             },
             controls: {
-              color: "text-[#ffffff]",
+              color: "text-white",
               colorHover: "hover:text-[#f36565]",
               hoverStyle: "hover:bg-[#6A2828] hover:rounded-[50%] ",
             },
             playlist: {
               backgroundColor: "rgba(255,255,255,0.1)",
               hoverColor: "rgba(255,255,255,0.2)",
+            },
+          },
+          navbar: {
+            textColor: "text-white",
+            item: {
+              backgroundColor: "bg-[#2F2739]",
             },
           },
         },

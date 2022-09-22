@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import HeaderSideBar from "./header/index";
-import BodySideBar from "./body/index";
-import FooterSideBar from "./footer/index";
+import HeaderSideBar from "./Header/index";
+import BodySideBar from "./Body/index";
+import FooterSideBar from "./Footer/index";
 import { widthDefaultValue } from "./styles";
 
 import useWindowSize from "../../../hooks/useWindowSize";
-import { Audio } from "../audio";
+import { Audio } from "../Audio";
 import useTheme from "../../../hooks/useTheme";
 
 export default function SiderBar() {

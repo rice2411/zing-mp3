@@ -1,7 +1,7 @@
 import React from "react";
 
-import AddPLayList from "./addPLayList";
-import { Toggle } from "./toggle";
+import AddPLayList from "./AddPLayList";
+import { Toggle } from "./Toggle";
 
 export default function FooterSideBar({ handleToggleSidebar, isToggle }: any) {
   return (

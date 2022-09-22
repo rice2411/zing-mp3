@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import AudioControls from "../controls";
+import AudioControls from "../Controls";
 
 import "./styles.scss";
-import Actions from "../action";
-import Info from "../info";
+import Actions from "../Actions";
+import Info from "../Info";
 import useTheme from "../../../../hooks/useTheme";
 const Player = ({ tracks }: any) => {
   // State
@@ -59,7 +59,7 @@ const Player = ({ tracks }: any) => {
     clearInterval(intervalRef.current);
 
     audioRef.current.currentTime = value;
-
+    setTimeRunning(Math.round(audioRef.current.currentTime));
     setTrackProgress(audioRef.current.currentTime);
   };
   const handlePlay = () => {
@@ -171,7 +171,9 @@ const Player = ({ tracks }: any) => {
             onPlayPauseClick={handlePlay}
           />
           <div className="flex w-full justify-center items-center">
-            <span className="text-xs">{timeFormat(timeRunning)}</span>
+            <span className={`text-xs ${styles.audio.player.textDark} `}>
+              {timeFormat(timeRunning)}
+            </span>
             <input
               type="range"
               value={trackProgress}
@@ -185,7 +187,9 @@ const Player = ({ tracks }: any) => {
               // onKeyUp={onScrubEnd}
               style={{ background: trackStyling }}
             />
-            <span className="text-xs">{timeFormat(timeEnd)}</span>
+            <span className={`text-xs ${styles.audio.player.textColor} `}>
+              {timeFormat(timeEnd)}
+            </span>
           </div>
         </div>
         <Actions />

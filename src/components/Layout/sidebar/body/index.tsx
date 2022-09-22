@@ -1,9 +1,9 @@
 import React from "react";
 import Scrollbar from "../../../../shared/small_components/Scrollbar";
-import Items from "./items";
-import { data } from "./items/data";
+import Items from "./Items";
+import { data } from "./Items/data";
 import CTAButton from "./ctxButton";
-import Library from "./library";
+import Library from "./Library";
 import useTheme from "../../../../hooks/useTheme";
 
 export default function BodySideBar({ isToggle }: any) {
