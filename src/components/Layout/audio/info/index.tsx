@@ -1,5 +1,5 @@
 import React from "react";
-import { textStyles } from "../../sidebar/styles";
+
 import { AiOutlineHeart } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
 import useTheme from "../../../../hooks/useTheme";

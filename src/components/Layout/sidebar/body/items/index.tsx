@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useLocation } from "react-router-dom";
 import useTheme from "../../../../../hooks/useTheme";
-import { textStyles, widthDefaultValue } from "../../styles";
+import { widthDefaultValue } from "../../styles";
 
 export default function Items({ data, className, isToggle }: any) {
   const location = useLocation();
@@ -35,8 +35,8 @@ export default function Items({ data, className, isToggle }: any) {
 
   return (
     <ul
-      className={`w-${
-        isToggle ? "64" : widthDefaultValue
+      className={`${
+        isToggle ? "w-64" : widthDefaultValue
       } xl:w-auto lg:w-auto space-y-2 ${className ? className : className} ${
         styles.sideBar.textColor
       }`}

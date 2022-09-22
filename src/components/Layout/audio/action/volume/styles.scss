@@ -1,0 +1,21 @@
+.volume{    
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 2px;
+    width: 40%;
+    -webkit-appearance: none;
+    border-radius: 8px;
+    background-color: none;
+ 
+    cursor: pointer;
+    &:hover{
+      height: 5px;
+   
+    }
+    &::-webkit-slider-thumb{  
+      background: transparent!important;
+      height: 10px!important;
+      width: 10px!important;
+      -webkit-appearance: none;
+    }
+}

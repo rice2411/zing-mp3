@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import useTheme from "../../../../../hooks/useTheme";
-import { iconStyles, textStyles, widthDefaultValue } from "../../styles";
+import { iconStyles, widthDefaultValue } from "../../styles";
 import { data } from "./data";
 
 export default function Library({ isToggle }: any) {
@@ -38,7 +38,7 @@ export default function Library({ isToggle }: any) {
       </span>
       <ul
         className={`p-3 ${
-          isToggle ? "64" : widthDefaultValue
+          isToggle ? "w-64" : widthDefaultValue
         } xl:w-auto lg:w-auto`}
       >
         {data.map((item, index) => (

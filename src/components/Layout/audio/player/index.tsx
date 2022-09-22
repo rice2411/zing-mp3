@@ -92,7 +92,7 @@ const Player = ({ tracks }: any) => {
     }
   };
   const handleMouseEnter = (e: any) => {
-    const style = document.getElementById("thumbStyle");
+    const style = document.getElementById("thumbPlayerStyle");
     style.innerHTML = `.progress:hover::-webkit-slider-thumb {  background: ${styles.audio.thumb.color};}`;
   };
 
@@ -156,13 +156,13 @@ const Player = ({ tracks }: any) => {
 
   return (
     <>
-      <style id="thumbStyle" type="text/css"></style>
+      <style id="thumbPlayerStyle" type="text/css"></style>
       <div
         className={`${styles.audio.backgroundColor} mt-auto h-[90px] z-50  w-screen audio  flex justify-between items-center `}
       >
         <Info title={title} artist={artist} image={image} />
         <div
-          className={`player w-2/4 min-w-[300px] ${styles.audio.player.textColor} `}
+          className={`player w-3/4 min-w-[300px] ${styles.audio.player.textColor} mr-auto`}
         >
           <AudioControls
             isPlaying={isPlaying}

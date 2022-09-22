@@ -40,7 +40,11 @@ export const MODE = [
             controls: {
               color: "text-[#ffffff]",
               colorHover: "hover:text-[#c662ef]",
-              hoverStyle: "hover:bg-[#282231] hover:rounded-full ",
+              hoverStyle: "hover:bg-[#282231] hover:rounded-[50%] ",
+            },
+            playlist: {
+              backgroundColor: "rgba(255,255,255,0.1)",
+              hoverColor: "rgba(255,255,255,0.2)",
             },
           },
         },
@@ -83,7 +87,11 @@ export const MODE = [
             controls: {
               color: "text-[#ffffff]",
               colorHover: "hover:text-[#f36565]",
-              hoverStyle: "hover:bg-[#6A2828] hover:rounded-full ",
+              hoverStyle: "hover:bg-[#6A2828] hover:rounded-[50%] ",
+            },
+            playlist: {
+              backgroundColor: "rgba(255,255,255,0.1)",
+              hoverColor: "rgba(255,255,255,0.2)",
             },
           },
         },

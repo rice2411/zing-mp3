@@ -26,18 +26,18 @@ export default function Controls({
         >
           <ImPrevious2
             onClick={onPrevClick}
-            className={`h-[25px] w-[25px] cursor-pointer  ${styles.audio.controls.hoverStyle}`}
+            className={`h-6 w-6 cursor-pointer  ${styles.audio.controls.hoverStyle}`}
           />
         </div>
         {isPlaying ? (
           <AiOutlinePauseCircle
             onClick={() => onPlayPauseClick()}
-            className={` ${styles.audio.controls.colorHover} h-[40px] w-[40px] cursor-pointer`}
+            className={` ${styles.audio.controls.colorHover} h-10 w-10 cursor-pointer`}
           />
         ) : (
           <AiOutlinePlayCircle
             onClick={() => onPlayPauseClick()}
-            className={` ${styles.audio.controls.colorHover} h-[40px] w-[40px] cursor-pointer`}
+            className={` ${styles.audio.controls.colorHover} h-10 w-10 cursor-pointer`}
           />
         )}
         <div
@@ -45,7 +45,7 @@ export default function Controls({
         >
           <ImNext2
             onClick={onNextClick}
-            className={`h-[25px] w-[25px] cursor-pointer ${styles.audio.controls.hoverStyle}`}
+            className={`h-6 w-6 cursor-pointer ${styles.audio.controls.hoverStyle}`}
           />
         </div>{" "}
         <div

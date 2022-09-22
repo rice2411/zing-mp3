@@ -2,15 +2,37 @@ import React from "react";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { GiMicrophone } from "react-icons/gi";
 import { VscMultipleWindows } from "react-icons/vsc";
-import { BsFillVolumeUpFill } from "react-icons/bs";
+import Volume from "./volume";
+import useTheme from "../../../../hooks/useTheme";
+import PlayList from "./playlist";
+
 const Actions = () => {
+  const { styles }: any = useTheme();
   return (
-    <div className="flex gap-x-7 text-white w-1/5 min-w-[300px]">
-      <MdOutlineOndemandVideo />
-      <GiMicrophone />
-      <VscMultipleWindows />
-      <BsFillVolumeUpFill />
-    </div>
+    <>
+      <div
+        className={`flex  gap-x-3  ${styles.audio.player.textColor}  text-xl  `}
+      >
+        <div
+          className={`${styles.audio.controls.hoverStyle} flex justify-center items-center p-3`}
+        >
+          <MdOutlineOndemandVideo className={`cursor-pointer`} />
+        </div>
+        <div
+          className={`${styles.audio.controls.hoverStyle} flex justify-center items-center p-3`}
+        >
+          <GiMicrophone className={`cursor-pointer`} />
+        </div>
+        <div
+          className={`${styles.audio.controls.hoverStyle} flex justify-center items-center p-3`}
+        >
+          <VscMultipleWindows className={`cursor-pointer`} />
+        </div>
+
+        <Volume />
+      </div>
+      <PlayList />
+    </>
   );
 };
 
