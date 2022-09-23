@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-export default function Scrollbar({ isHover, className, ...props }: any) {
+export default function Scrollbar({ isHover, className, scrollBarRef, ...props }: any) {
   const scrollRef = useRef(null);
   const handleMouseEnter = () => {
     // @ts-ignore: Object is possibly 'null'.
@@ -20,7 +20,7 @@ export default function Scrollbar({ isHover, className, ...props }: any) {
   };
   return (
     <div
-      className={`scroll-bar overflow-hidden  ${className ? className : ""}`}
+      className={`scroll-bar ${isHover ? 'overflow-hidden' : 'overflow-auto'}  ${className ? className : ""}`}
       ref={scrollRef}
       onMouseEnter={isHover ? handleMouseEnter : () => {}}
       onMouseLeave={isHover ? handleMouseLeave : () => {}}
