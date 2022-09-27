@@ -9,9 +9,11 @@ export default function Scrollbar({
 }: any) {
   const scrollRef = useRef(null);
   const { styles, theme }: any = useTheme();
+  const scrollBarStyle = `.scroll-bar::-webkit-scrollbar-thumb {  background: ${styles.scrollBar.color};} .scroll-bar:hover::-webkit-slider-thumb {  background: ${styles.scrollBar.color};}`;
+  
   const handleMouseEnter = () => {
-    const style = document.getElementById("scrollbarStyle");
-    style.innerHTML = `.scroll-bar::-webkit-scrollbar-thumb {  background: ${styles.scrollBar.color};} .scroll-bar:hover::-webkit-slider-thumb {  background: ${styles.scrollBar.color};}`;
+    // const style = document.getElementById("scrollbarStyle");
+    // style.innerHTML = `.scroll-bar::-webkit-scrollbar-thumb {  background: ${styles.scrollBar.color};} .scroll-bar:hover::-webkit-slider-thumb {  background: ${styles.scrollBar.color};}`;
     // @ts-ignore: Object is possibly 'null'.
     scrollRef.current.classList.remove("overflow-hidden");
     // @ts-ignore: Object is possibly 'null'.
@@ -32,7 +34,7 @@ export default function Scrollbar({
 
   return (
     <>
-      <style id="scrollbarStyle" type="text/css"></style>
+      <style id="scrollbarStyle" type="text/css">{scrollBarStyle}</style>
       <div
         className={`scroll-bar ${
           isHover ? "overflow-hidden" : "overflow-auto"

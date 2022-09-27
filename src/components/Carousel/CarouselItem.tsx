@@ -2,7 +2,7 @@ import React from 'react';
 
 const CarouselItem = ({image, containerClassName = '', imageClassName = ''}: any) => {
     return (
-        <div className={`px-4 ${containerClassName}`}>
+        <div className={`pr-4 ${containerClassName}`}>
           <img
             className={`rounded ${imageClassName}`}
             src={image}
