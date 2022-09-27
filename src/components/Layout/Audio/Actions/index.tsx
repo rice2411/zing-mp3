@@ -5,6 +5,7 @@ import { VscMultipleWindows } from "react-icons/vsc";
 import Volume from "./Volume";
 import useTheme from "../../../../hooks/useTheme";
 import PlayList from "./Playlist";
+import ButtonIcon from "../../../../shared/small_components/Button";
 
 const Actions = () => {
   const { styles }: any = useTheme();
@@ -13,21 +14,21 @@ const Actions = () => {
       <div
         className={`flex  gap-x-3  ${styles.audio.player.textColor}  text-xl  `}
       >
-        <div
-          className={`${styles.audio.controls.hoverStyle} flex justify-center items-center p-3`}
+        <ButtonIcon
+          className={`${styles.audio.controls.hoverStyle} cursor-pointer  p-3`}
         >
-          <MdOutlineOndemandVideo className={`cursor-pointer`} />
-        </div>
-        <div
-          className={`${styles.audio.controls.hoverStyle} flex justify-center items-center p-3`}
+          <MdOutlineOndemandVideo />
+        </ButtonIcon>
+        <ButtonIcon
+          className={`${styles.audio.controls.hoverStyle} cursor-pointer  p-3`}
         >
-          <GiMicrophone className={`cursor-pointer`} />
-        </div>
-        <div
-          className={`${styles.audio.controls.hoverStyle} flex justify-center items-center p-3`}
+          <GiMicrophone />
+        </ButtonIcon>
+        <ButtonIcon
+          className={`${styles.audio.controls.hoverStyle} cursor-pointer  p-3`}
         >
-          <VscMultipleWindows className={`cursor-pointer`} />
-        </div>
+          <VscMultipleWindows />
+        </ButtonIcon>
 
         <Volume />
       </div>

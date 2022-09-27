@@ -8,7 +8,7 @@ import useTheme from "../../../../hooks/useTheme";
 const Actions = () => {
   const { styles }: any = useTheme();
   return (
-    <div className="ml-auto mr-10 gap-x-2 flex">
+    <div className="ml-auto  gap-x-2 flex">
       <ButtonIcon className={`${styles.navbar.item.backgroundColor} h-10 w-10`}>
         <FaTshirt />
       </ButtonIcon>

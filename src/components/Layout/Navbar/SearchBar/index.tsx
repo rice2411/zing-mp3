@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import useTheme from "../../../../hooks/useTheme";
 import { FaPlay, FaSlideshare } from "react-icons/fa";
 import Scrollbar from "../../../../shared/small_components/Scrollbar";
-import SuggestList from "./SearchItems/Suggest";
-import CurrentSearchList from "./SearchItems/CurrentSearch";
+import SuggestList from "./Items/Suggest";
+import CurrentSearchList from "./Items/CurrentResult";
 
 const SearchBar = () => {
   const [isFocusSearch, setIsFocusSearch] = useState(false);
@@ -17,24 +17,21 @@ const SearchBar = () => {
   };
   const handlBlur = (e: any) => {
     // searchRef.current.classList.add("hidden");
-    if (!e.relatedTarget)
-      setIsFocusSearch(() => false);
+    if (!e.relatedTarget) setIsFocusSearch(() => false);
   };
   const handleChange = (e: any) => {
-    if (e.target.value)
-      setIsSearching(() => true);
-    else 
-      setIsSearching(() => false);
+    if (e.target.value) setIsSearching(() => true);
+    else setIsSearching(() => false);
     // setSearchWord(() => e.target.value);
-    setSearchWord(() => "chưa")
-  }
+    setSearchWord(() => "chưa");
+  };
   return (
     <div className="min-w-[500px] w-[500px] relative">
       <div className="relative">
         <div className="flex absolute inset-y-0 left-0 pl-3  items-center pointer-events-none">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-gray-500 "
+            className="w-5 h-5 "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -53,21 +50,23 @@ const SearchBar = () => {
           onFocus={handleFocus}
           onBlur={handlBlur}
           onChange={handleChange}
-          className={` ${styles.navbar.item.backgroundColor} block  pl-10  w-full text-sm text-white  rounded-2xl border focus:border-transparent focus:ring-0 focus:rounded-br-none focus:rounded-bl-none`}
+          className={` ${styles.navbar.item.backgroundColor} block  pl-10  w-full text-sm border-none  rounded-2xl border focus:border-transparent focus:ring-0 focus:rounded-br-none focus:rounded-bl-none`}
           placeholder="Tìm kiếm bài hát, nghệ sĩ, lời bài hát.."
         />
       </div>
-      {isFocusSearch && 
-        <div className="absolute top-full left-0 right-0 bg-[#432275] rounded-br-2xl rounded-bl-2xl px-2.5 py-3.5 text-sm">
-          <Scrollbar 
-            isHover={false} 
-            className="min-h-0 h-[auto] max-h-[500px]"
-          >
+      {isFocusSearch && (
+        <div
+          className={` ${styles.navbar.search.suggest.backgroundColor} absolute top-full left-0 right-0  rounded-br-2xl rounded-bl-2xl px-2.5 py-3.5 text-sm`}
+        >
+          <Scrollbar isHover={false} className="min-h-0 h-[auto] max-h-[500px]">
             <SuggestList isSearching={isSearching} searchWord={searchWord} />
-            <CurrentSearchList isSearching={isSearching} searchWord={searchWord} />
+            <CurrentSearchList
+              isSearching={isSearching}
+              searchWord={searchWord}
+            />
           </Scrollbar>
         </div>
-      }
+      )}
     </div>
   );
 };

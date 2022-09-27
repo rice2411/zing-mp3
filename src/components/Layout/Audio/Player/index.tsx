@@ -29,13 +29,12 @@ const Player = ({ tracks }: any) => {
   // Destructure for conciseness
   // @ts-ignore: Object is possibly 'null'.
   const { duration } = audioRef.current || 0;
-  // console.log(duration);
-  // console.log(new Date(219.392 * 1000).toISOString().slice(11, 19));
+
   const currentPercentage = duration
     ? `${(trackProgress / duration) * 100}%`
     : "0%";
   const trackStyling = `
-    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
+    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, ${styles.audio.track.color}), color-stop(${currentPercentage}, #777))
   `;
   const timeFormat = (second: any) => {
     return new Date(second * 1000).toISOString().slice(14, 19);

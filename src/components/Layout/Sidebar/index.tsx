@@ -50,7 +50,7 @@ export default function SiderBar() {
         >
           <HeaderSideBar isToggle={isToggle} />
           <BodySideBar isToggle={isToggle} />
-          <div className="flex justify-center mt-auto  ">
+          <div className="flex justify-center  ">
             <FooterSideBar
               handleToggleSidebar={handleToggleSidebar}
               isToggle={isToggle}

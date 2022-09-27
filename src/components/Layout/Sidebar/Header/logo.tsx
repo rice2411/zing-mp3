@@ -1,6 +1,8 @@
 import React from "react";
+import useTheme from "../../../../hooks/useTheme";
 
 export default function Logo({ isToggle }: any) {
+  const { theme }: any = useTheme();
   return (
     <div className="px-3">
       <a
@@ -9,7 +11,11 @@ export default function Logo({ isToggle }: any) {
           isToggle ? "flex" : "hidden"
         } items-center pl-2.5 mb-5 xl:flex lg:flex `}
       >
-        <img src="/icon/logo.svg" className="mr-3 h-8" alt="zingmp3" />
+        <img
+          src={`${theme == "dark" ? "/icon/logo.svg" : "/icon/logo-light.svg"}`}
+          className="mr-3 h-8"
+          alt="zingmp3"
+        />
       </a>
       <a
         href="#"

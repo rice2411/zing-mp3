@@ -1,6 +1,7 @@
 import React from "react";
 import { RiPlayListLine } from "react-icons/ri";
 import useTheme from "../../../../../hooks/useTheme";
+import ButtonIcon from "../../../../../shared/small_components/Button";
 const PlayList = () => {
   const { styles }: any = useTheme();
   const handleMouseEnter = (e: any) => {
@@ -13,17 +14,21 @@ const PlayList = () => {
   };
   return (
     <div
-      className={` ${styles.audio.player.textColor} p-5  border-l`}
+      className="border-l"
       style={{
         borderColor: styles.sideBar.divide.color,
       }}
     >
-      <RiPlayListLine
-        className={`cursor-pointer h-6 w-6 p-1 rounded`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        style={{ backgroundColor: styles.audio.playlist.backgroundColor }}
-      />
+      <ButtonIcon
+        className={` ${styles.audio.player.textColor}  cursor-pointer p-2  rounded`}
+      >
+        <RiPlayListLine
+          className={` p-0.5 h-6 w-6`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          style={{ backgroundColor: styles.audio.playlist.backgroundColor }}
+        />
+      </ButtonIcon>
     </div>
   );
 };
