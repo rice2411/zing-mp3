@@ -14,7 +14,6 @@ function BlankModal({ ...props }: any) {
   const navigate = useNavigate();
 
   function onSubmit() {
-    console.log(data);
     if (data.onSubmit) {
       data.onSubmit();
       handleModalBlank({
