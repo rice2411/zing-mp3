@@ -11,11 +11,17 @@ const SearchBar = () => {
   const [searchWord, setSearchWord] = useState(null);
   const searchRef = useRef(null);
   const { styles }: any = useTheme();
-  const handleFocus = () => {
+  const handleFocus = (e: any) => {
+    const element = e.target.classList;
+    element.remove(styles.navbar.item.backgroundColor);
+    element.add(styles.navbar.search.suggest.backgroundColor);
     // searchRef.current.classList.remove("hidden");
     setIsFocusSearch(() => true);
   };
   const handlBlur = (e: any) => {
+    const element = e.target.classList;
+    element.add(styles.navbar.item.backgroundColor);
+    element.remove(styles.navbar.search.suggest.backgroundColor);
     // searchRef.current.classList.add("hidden");
     if (!e.relatedTarget) setIsFocusSearch(() => false);
   };

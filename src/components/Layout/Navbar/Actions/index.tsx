@@ -7,18 +7,40 @@ import { FiSettings } from "react-icons/fi";
 import useTheme from "../../../../hooks/useTheme";
 import useModal from "../../../../hooks/useModal";
 import BlankModal from "../../../../shared/small_components/Modal/Blank";
+import ThemeOption from "./Theme";
+import { data } from "./Theme/data";
 const Actions = () => {
-  const { styles, handleChangeTheme }: any = useTheme();
+  const { styles, theme, color, handleChangeTheme }: any = useTheme();
+
   const { handleModalBlank }: any = useModal();
+  const handleKeepingTheme = () => {
+    handleChangeTheme(theme, color);
+  };
   const handleOpenModalTheme = () => {
     handleModalBlank({
       isShow: true,
       text: {
         title: "Giao diện",
       },
+      onSubmit: handleKeepingTheme,
     });
   };
-
+  const renderChildrenTheme = (item: any) => {
+    return (
+      <div className="mb-5">
+        <h2 className="font-bold text-md pb-3">{item.name}</h2>
+        <div className="flex gap-x-4">
+          {item.children.map((_item: any, index: number) => (
+            <ThemeOption
+              key={item.id + index}
+              data={_item}
+              theme={item.theme}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="ml-auto  gap-x-2 flex">
       <ButtonIcon
@@ -48,27 +70,9 @@ const Actions = () => {
         <FaTshirt />
       </ButtonIcon>
       <BlankModal>
-        <button
-          onClick={() => {
-            handleChangeTheme("dark", "red");
-          }}
-        >
-          RED
-        </button>
-        <button
-          onClick={() => {
-            handleChangeTheme("dark", "purple");
-          }}
-        >
-          PURPLE
-        </button>
-        <button
-          onClick={() => {
-            handleChangeTheme("light", "light green");
-          }}
-        >
-          LIGHT GREEN
-        </button>
+        {data.map((item, index) => (
+          <h2 key={index + item.id}>{renderChildrenTheme(item)}</h2>
+        ))}
       </BlankModal>
     </div>
   );

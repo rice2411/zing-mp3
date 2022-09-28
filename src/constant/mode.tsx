@@ -5,6 +5,14 @@ export const MODE = [
       {
         queryName: "purple",
         components: {
+          modal: {
+            backgroundColor: "bg-[#432275]",
+            textColor: "text-white",
+            button: {
+              backgroundColor: "bg-[#5D0082]",
+              borderColor: "outline-[#5D0082]",
+            },
+          },
           scrollBar: {
             color: "#6c6474",
           },
@@ -100,6 +108,14 @@ export const MODE = [
       {
         queryName: "red",
         components: {
+          modal: {
+            backgroundColor: "bg-[#883236]",
+            textColor: "text-white",
+            button: {
+              backgroundColor: "bg-[#AA1C1C]",
+              borderColor: "outline-[#AA1C1C]",
+            },
+          },
           scrollBar: {
             color: "#6c6474",
           },
@@ -197,6 +213,14 @@ export const MODE = [
       {
         queryName: "light green",
         components: {
+          modal: {
+            backgroundColor: "bg-[#E1E8E8]",
+            textColor: "text-black",
+            button: {
+              backgroundColor: "bg-[#239292]",
+              borderColor: "outline-[#239292]",
+            },
+          },
           scrollBar: {
             color: "#c3c1be",
           },
