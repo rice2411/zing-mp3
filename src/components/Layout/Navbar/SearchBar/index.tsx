@@ -56,7 +56,7 @@ const SearchBar = () => {
       </div>
       {isFocusSearch && (
         <div
-          className={` ${styles.navbar.search.suggest.backgroundColor} absolute top-full left-0 right-0  rounded-br-2xl rounded-bl-2xl px-2.5 py-3.5 text-sm`}
+          className={` ${styles.navbar.search.suggest.backgroundColor} absolute top-full left-0 right-0  rounded-br-2xl rounded-bl-2xl px-2.5 py-3.5 text-sm z-[100]`}
         >
           <Scrollbar isHover={false} className="min-h-0 h-[auto] max-h-[500px]">
             <SuggestList isSearching={isSearching} searchWord={searchWord} />

@@ -16,7 +16,7 @@ const Carousel = ({ props = null }: any) => {
     const customArrow = (onclickHandler: any, hasPrev: any, label: any, isPrev = true) => {
         return (
             hasPrev && (
-                <button onClick={onclickHandler} onKeyDown={onclickHandler} title={label} className={`absolute top-1/2 ${isPrev ? 'left' : 'right'}-[25px] transform -translate-y-1/2 z-50 bg-[#ffffff26] w-[55px] h-[55px] flex items-center justify-center rounded-full opacity-0 hover:brightness-90 group-hover:opacity-100`}>
+                <button onClick={onclickHandler} onKeyDown={onclickHandler} title={label} className={`absolute top-1/2 ${isPrev ? 'left-[25px]' : 'right-[25px]'} transform -translate-y-1/2 z-50 bg-[#ffffff26] w-[55px] h-[55px] flex items-center justify-center rounded-full opacity-0 hover:brightness-90 group-hover:opacity-100`}>
                     {isPrev ? <BsChevronLeft className="text-white text-3xl ml-[-3px]" /> : <BsChevronRight className="text-white text-3xl mr-[-3px]" />}
                 </button>
             )
