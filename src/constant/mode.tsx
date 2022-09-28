@@ -62,6 +62,9 @@ export const MODE = [
             textColor: "text-white",
             item: {
               backgroundColor: "bg-[#2F2739]",
+              hover: {
+                backgroundColor: "hover:bg-[#2C2436]",
+              },
             },
             search: {
               suggest: {
@@ -150,6 +153,9 @@ export const MODE = [
             textColor: "text-white",
             item: {
               backgroundColor: "bg-[#812F2F]",
+              hover: {
+                backgroundColor: "hover:bg-[#7E2C2C]",
+              },
             },
             search: {
               suggest: {
@@ -244,6 +250,9 @@ export const MODE = [
             textColor: "text-[#32323D]",
             item: {
               backgroundColor: "bg-[#DDE4E4]",
+              hover: {
+                backgroundColor: "hover:bg-[#D5DCDC]",
+              },
             },
             search: {
               suggest: {

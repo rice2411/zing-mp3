@@ -1,15 +1,16 @@
-import React from 'react';
+import React from "react";
 
-const CarouselItem = ({image, containerClassName = '', imageClassName = ''}: any) => {
-    return (
-        <div className={`px-4 ${containerClassName}`}>
-          <img
-            className={`rounded ${imageClassName}`}
-            src={image}
-            alt="..."
-          />
-        </div>
-    );
-}
+const CarouselItem = ({
+  image,
+  containerClassName = "",
+  imageClassName = "",
+  index,
+}: any) => {
+  return (
+    <div className={`pr-4 ${containerClassName}`}>
+      <img className={`rounded ${imageClassName}`} src={image} alt="..." />
+    </div>
+  );
+};
 
 export default CarouselItem;

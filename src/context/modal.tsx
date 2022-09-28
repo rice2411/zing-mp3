@@ -15,7 +15,10 @@ export const ModalProvider = ({ children }: any) => {
   const [modalSuccess, setModalSuccess] = useState(defaultValue);
   const [modalError, setModalError] = useState(defaultValue);
   const [modalConfirm, setModalConfirm] = useState(defaultValue);
-
+  const [modalBlank, setModalBlank] = useState(defaultValue);
+  function handleModalBlank(modalSuccess: any) {
+    setModalBlank(modalSuccess);
+  }
   function handleModalSuccess(modalSuccess: any) {
     setModalSuccess(modalSuccess);
   }
@@ -33,12 +36,15 @@ export const ModalProvider = ({ children }: any) => {
         modalSuccess,
         modalError,
         modalConfirm,
+        modalBlank,
+        setModalBlank,
         setModalSuccess,
         setModalError,
         setModalConfirm,
         handleModalSuccess,
         handleModalError,
         handleModalConfirm,
+        handleModalBlank,
       }}
     >
       {children}
