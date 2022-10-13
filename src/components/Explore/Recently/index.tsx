@@ -21,7 +21,7 @@ const Recently = () => {
       </div>
       <div className="flex gap-x-4 justify-between mt-3">
         {data.map((item) => (
-          <div>
+          <div key={item.id}>
             <img src={item.avatar} />
             <h3
               className={`${styles.body.subTextColor} ${styles.body.hover.textColor} `}
