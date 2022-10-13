@@ -1,13 +1,14 @@
 import React from "react";
+import "./carousel.scss";
 
 const CarouselItem = ({
   image,
-  containerClassName = "",
+  pos = "",
   imageClassName = "",
 }: any) => {
   return (
-    <div className={`pr-4 ${containerClassName}`}>
-      <img className={`rounded ${imageClassName}`} src={image} alt="..." />
+    <div className={`slider-item w-1/3 ${pos}`}>
+      <img className={`slider-image ${imageClassName}`} src={image} alt="..." />
     </div>
   );
 };
