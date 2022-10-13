@@ -5,17 +5,20 @@ import { MODE } from "../constant/mode";
 const ThemeContext = createContext({});
 export const ThemeProvider = ({ children }: any) => {
   const [theme, setTheme] = useState(
-    typeof localStorage.getItem("theme") !== "undefined"
+    typeof localStorage.getItem("theme") !== "undefined" &&
+      localStorage.getItem("theme") !== null
       ? localStorage.getItem("theme")
       : MODE[0].queryName
   );
   const [color, setColor] = useState(
-    typeof localStorage.getItem("color") !== "undefined"
+    typeof localStorage.getItem("color") !== "undefined" &&
+      localStorage.getItem("color") !== null
       ? localStorage.getItem("color")
       : MODE[0].children[0].queryName
   );
   const [styles, setStyles] = useState(
-    typeof localStorage.getItem("styles") !== "undefined"
+    typeof localStorage.getItem("styles") !== "undefined" &&
+      localStorage.getItem("styles") !== null
       ? JSON.parse(localStorage.getItem("styles"))
       : MODE[0].children[0].components
   );

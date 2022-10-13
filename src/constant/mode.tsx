@@ -18,6 +18,11 @@ export const MODE = [
           },
           body: {
             backgroundColor: "bg-[#170F23]",
+            textColor: "text-white",
+            subTextColor: "text-[#86828C]",
+            hover: {
+              textColor: "hover:text-[#c662ef]",
+            },
           },
           sideBar: {
             backgroundColor: "bg-[#2A213A]",
@@ -121,6 +126,11 @@ export const MODE = [
           },
           body: {
             backgroundColor: "bg-[#731717]",
+            textColor: "text-white",
+            subTextColor: "text-[#86828C]",
+            hover: {
+              textColor: "hover:text-[#f36565]",
+            },
           },
           sideBar: {
             backgroundColor: "bg-[#7A2323]",
@@ -226,6 +236,11 @@ export const MODE = [
           },
           body: {
             backgroundColor: "bg-[#CED9D9]",
+            textColor: "text-black",
+            subTextColor: "text-[#696969]",
+            hover: {
+              textColor: "hover:text-[#239292]",
+            },
           },
           sideBar: {
             backgroundColor: "bg-[#DDE4E4]",
