@@ -11,13 +11,6 @@ export const data = [
         image:
           "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme/purple.jpg",
       },
-      {
-        id: 1,
-        color: "red",
-        name: "Đỏ",
-        image:
-          "https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/theme/red.jpg",
-      },
     ],
   },
   {

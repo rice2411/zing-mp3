@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import { RiArrowRightSLine } from "react-icons/ri";
 import useTheme from "../../../hooks/useTheme";
 import { data } from "./data";
 
+import Item from "../../Shared/Item";
+
 const Recently = () => {
   const { styles }: any = useTheme();
+
   return (
     <>
       <div className="flex justify-between">
@@ -19,16 +22,11 @@ const Recently = () => {
           <RiArrowRightSLine />
         </a>
       </div>
-      <div className="flex gap-x-4 justify-between mt-3">
-        {data.map((item) => (
-          <div>
-            <img src={item.avatar} />
-            <h3
-              className={`${styles.body.subTextColor} ${styles.body.hover.textColor} `}
-            >
-              {item.name}
-            </h3>
-          </div>
+      <div className="flex justify-between mt-3">
+        {data.map((item, index) => (
+          <>
+            <Item index={index} item={item} />
+          </>
         ))}
       </div>
     </>

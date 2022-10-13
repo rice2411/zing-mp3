@@ -1,8 +1,8 @@
 import React from "react";
-import { AiOutlinePlayCircle, AiOutlinePauseCircle } from "react-icons/ai";
+import { AiOutlinePauseCircle } from "react-icons/ai";
 import { ImNext2, ImPrevious2, ImLoop } from "react-icons/im";
 import { FaRandom } from "react-icons/fa";
-
+import { BsPlayCircle } from "react-icons/bs";
 import useTheme from "../../../../hooks/useTheme";
 export default function Controls({
   isPlaying,
@@ -35,7 +35,7 @@ export default function Controls({
             className={` ${styles.audio.controls.colorHover} h-10 w-10 cursor-pointer`}
           />
         ) : (
-          <AiOutlinePlayCircle
+          <BsPlayCircle
             onClick={() => onPlayPauseClick()}
             className={` ${styles.audio.controls.colorHover} h-10 w-10 cursor-pointer`}
           />

@@ -110,111 +110,6 @@ export const MODE = [
           },
         },
       },
-      {
-        queryName: "red",
-        components: {
-          modal: {
-            backgroundColor: "bg-[#883236]",
-            textColor: "text-white",
-            button: {
-              backgroundColor: "bg-[#AA1C1C]",
-              borderColor: "outline-[#AA1C1C]",
-            },
-          },
-          scrollBar: {
-            color: "#6c6474",
-          },
-          body: {
-            backgroundColor: "bg-[#731717]",
-            textColor: "text-white",
-            subTextColor: "text-[#86828C]",
-            hover: {
-              textColor: "hover:text-[#f36565]",
-            },
-          },
-          sideBar: {
-            backgroundColor: "bg-[#7A2323]",
-            textColor: "text-[#dadada]",
-            border: "none",
-            hover: {
-              text: "hover:text-white",
-              textDark: "hover:text-[#dadada]",
-            },
-            active: {
-              textColor: "text-white",
-              backgroundColor: "bg-[#883939]",
-              borderColor: "#aa1c1c",
-            },
-            divide: {
-              color: "rgba(255,255,255,0.1)",
-            },
-          },
-          audio: {
-            backgroundColor: "bg-[#5C1212] ",
-            info: {
-              textColor: "text-white",
-              textDark: "text-[#dadada]",
-            },
-            player: {
-              textColor: "text-white",
-              textDark: "text-[#dadada]",
-            },
-            thumb: {
-              color: "white",
-            },
-            track: {
-              color: "#fff",
-            },
-            controls: {
-              color: "text-white",
-              colorHover: "hover:text-[#f36565]",
-              hoverStyle: "hover:bg-[#6A2828] hover:rounded-[50%] ",
-            },
-            playlist: {
-              backgroundColor: "rgba(255,255,255,0.1)",
-              hoverColor: "rgba(255,255,255,0.2)",
-            },
-          },
-          navbar: {
-            textColor: "text-white",
-            item: {
-              backgroundColor: "bg-[#812F2F]",
-              hover: {
-                backgroundColor: "hover:bg-[#7E2C2C]",
-              },
-            },
-            search: {
-              suggest: {
-                backgroundColor: "bg-[#883236]",
-                item: {
-                  hover: {
-                    textColor: "hover:text-[#f36565]",
-                    backgroundColor: "hover:bg-[#94474A]",
-                  },
-                  icon: {
-                    textColor: "text-[#ffffff80]",
-                  },
-                },
-              },
-              currentResult: {
-                deleteColor: "text-[#f36565] ",
-                item: {
-                  textColor: "text-[#ffffff80]",
-
-                  hover: {
-                    textColor: "hover:text-[#f36565]",
-                    backgroundColor: "hover:bg-[#94474A]",
-                  },
-                },
-              },
-            },
-            navigation: {
-              color: "text-[#dadada]",
-              active: "text-white",
-            },
-          },
-        },
-      },
     ],
   },
   {
@@ -237,7 +132,7 @@ export const MODE = [
           body: {
             backgroundColor: "bg-[#CED9D9]",
             textColor: "text-black",
-            subTextColor: "text-[#696969]",
+            subTextColor: "text-black",
             hover: {
               textColor: "hover:text-[#239292]",
             },
