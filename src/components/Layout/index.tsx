@@ -14,7 +14,7 @@ export default function Layout({ route, ...props }: any) {
     <div className={`${styles.body.backgroundColor}`}>
       <div className="flex h-screen">
         <SiderBar />
-        <div className="flex flex-col w-full  ">
+        <div className="flex flex-col w-full h-[calc(100vh_-_90px)] ">
           <div className="mx-10">
             <Navbar />
           </div>
