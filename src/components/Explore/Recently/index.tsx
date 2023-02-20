@@ -10,7 +10,7 @@ const Recently = () => {
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-10">
         <h2 className={`${styles.body.textColor} text-xl font-bold`}>
           Gần đây
         </h2>
@@ -25,7 +25,7 @@ const Recently = () => {
       <div className="flex justify-between mt-3">
         {data.map((item, index) => (
           <>
-            <Item index={index} item={item} />
+            <Item index={index} item={item} className={` h-36 w-36 `} />
           </>
         ))}
       </div>
