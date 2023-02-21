@@ -7,8 +7,10 @@ const Explore = () => {
   return (
     <>
       <Carousel />
-      <Recently />
-      <Suggest />
+      <div className="px-4">
+        <Recently />
+        <Suggest />
+      </div>
     </>
   );
 };

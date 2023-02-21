@@ -56,7 +56,7 @@ const Item = ({ item, index, className }: any) => {
         </div>
       </div>
       <h3
-        className={`${styles.body.textColor} ${styles.body.hover.textColor} font-bold text-sm mt-3 `}
+        className={`${styles.body.textColor} ${styles.body.hover.textColor} font-bold text-sm mt-3 max-w-[130px]`}
       >
         {item.name}
       </h3>

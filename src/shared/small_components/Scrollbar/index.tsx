@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
+
 import useTheme from "../../../hooks/useTheme";
 
 export default function Scrollbar({
@@ -38,7 +39,7 @@ export default function Scrollbar({
         {scrollBarStyle}
       </style>
       <div
-        className={`scroll-bar ${
+        className={`scroll-bar  ${
           isHover ? "overflow-hidden" : "overflow-auto"
         }  ${className ? className : ""}`}
         ref={scrollRef}
