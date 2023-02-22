@@ -1,7 +1,8 @@
 import React from 'react';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import useTheme from '../../../hooks/useTheme';
-import NewReleaseItem from './items';
+import Button from '../../Shared/Button';
+import NewReleaseItem from '../../Shared/NewReleaseItem';
 
 const NewRelease = () => {
   const { styles }: any = useTheme();
@@ -11,6 +12,19 @@ const NewRelease = () => {
         <h2 className={`${styles.body.textColor} text-xl font-bold`}>
           Mới Phát Hành
         </h2>
+      </div>
+      <div className="flex my-6 justify-between">
+        <div>
+          <span className="mr-4">
+            <Button text="TẤT CẢ" active />
+          </span>
+          <span className="mr-4">
+            <Button text="VIỆT NAM" />
+          </span>
+          <span>
+            <Button text="QUỐC TẾ" />
+          </span>
+        </div>
         <a
           href="#"
           className={`${styles.body.subTextColor} ${styles.body.hover.textColor} text-sm uppercase flex items-center justify-center`}
@@ -35,9 +49,10 @@ const NewRelease = () => {
           />
           <NewReleaseItem
             title="Vo tu"
-            singger="huyR"
-            time="Hom Qua"
+            singger="huyR, jdkj, wejbfkhwb, whefj jb"
+            time="Hom nay"
             image="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/d/5/4/1/d541890d76d309d35a9ee683501bc5d0.jpg"
+            vip
           />
           <NewReleaseItem
             title="diu mia may"
