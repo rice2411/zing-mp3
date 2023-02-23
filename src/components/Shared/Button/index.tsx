@@ -9,7 +9,7 @@ function Button({ text, active }: any) {
         className={`${
           styles.body.textColor
         } leading-normal text-sm py-1 px-[28px] ${
-          active ? 'bg-purple-800' : ''
+          active ? 'bg-[#c662ef]' : ''
         }  font-normal  hover:text-white py-2 px-4 border border-[hsla(0,0%,100%,0.1)] hover:opacity-80 rounded-full`}
       >
         {text}

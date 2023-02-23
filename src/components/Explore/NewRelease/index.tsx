@@ -3,6 +3,7 @@ import { RiArrowRightSLine } from 'react-icons/ri';
 import useTheme from '../../../hooks/useTheme';
 import Button from '../../Shared/Button';
 import NewReleaseItem from '../../Shared/NewReleaseItem';
+import { data } from './data';
 
 const NewRelease = () => {
   const { styles }: any = useTheme();
@@ -34,32 +35,12 @@ const NewRelease = () => {
         </a>
       </div>
       <div className="flex justify-between mt-3">
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-4">
-          <NewReleaseItem
-            title="Khong yeu tra dep toi ve jagfuigzkvbzjkdgk"
-            singger="huyR"
-            time="Hom Qua"
-            image="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/d/5/4/1/d541890d76d309d35a9ee683501bc5d0.jpg"
-          />
-          <NewReleaseItem
-            title="diu mia may"
-            singger="huyR"
-            time="Hom Qua"
-            image="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/d/5/4/1/d541890d76d309d35a9ee683501bc5d0.jpg"
-          />
-          <NewReleaseItem
-            title="Vo tu"
-            singger="huyR, jdkj, wejbfkhwb, whefj jb"
-            time="Hom nay"
-            image="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/d/5/4/1/d541890d76d309d35a9ee683501bc5d0.jpg"
-            vip
-          />
-          <NewReleaseItem
-            title="diu mia may"
-            singger="huyR"
-            time="Hom Qua"
-            image="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/d/5/4/1/d541890d76d309d35a9ee683501bc5d0.jpg"
-          />
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-4 w-full">
+          {data.map((item, index) => (
+            <>
+              <NewReleaseItem index={index} item={item} className="" />
+            </>
+          ))}
         </div>
       </div>
     </>
