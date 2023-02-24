@@ -1,3 +1,4 @@
 export const ROUTER = {
-  INDEX: "/",
+  INDEX: '/',
+  ALBUM: '/album',
 };
