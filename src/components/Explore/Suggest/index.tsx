@@ -15,7 +15,12 @@ const Suggest = () => {
       <div className="flex justify-between mt-3">
         {data.map((item, index) => (
           <>
-            <Item index={index} item={item} className={`h-52 w-52`} />
+            <Item
+              index={index}
+              item={item}
+              isShowDesc={true}
+              className={`h-52 w-52`}
+            />
           </>
         ))}
       </div>

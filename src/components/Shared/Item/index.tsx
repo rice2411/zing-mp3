@@ -56,15 +56,16 @@ const Item = ({ item, index, className }: any) => {
         </div>
       </div>
       <h3
-        className={`${styles.body.textColor} ${styles.body.hover.textColor} font-bold text-sm mt-3 max-w-[130px]`}
+        className={`${styles.body.textColor} ${styles.body.hover.textColor} font-bold text-sm mt-3 max-w-[130px] truncate`}
       >
         {item.name}
       </h3>
 
-      <h6 className="text-gray-500 font-normal text-xs leading-3 mt-1.5">
+      <h6 className="text-gray-500 font-normal text-xs leading-3 mt-1.5 leading-tight">
         {item.author?.map((author: any, idx: any) => (
           <>{idx != item.author.length - 1 ? author + ", " : author}</>
         ))}
+        {item.desc ?? ""}
       </h6>
     </div>
   );

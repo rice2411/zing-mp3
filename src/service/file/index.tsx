@@ -5,11 +5,11 @@ const router = {
   upload: `${env.apiUrl}/api/v1/file`,
 };
 
-class FileSerivce {
+class FileService {
   static upload(params: object) {
     let uri = router.upload;
     return fetch.post(uri, params);
   }
 }
 
-export default FileSerivce;
+export default FileService;

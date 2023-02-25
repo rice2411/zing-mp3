@@ -1,5 +1,6 @@
 import React from "react";
 import Carousel from "./Carousel";
+import DailyTopic from "./DailyTopic";
 import Recently from "./Recently";
 import Suggest from "./Suggest";
 
@@ -10,6 +11,7 @@ const Explore = () => {
       <div className="px-4">
         <Recently />
         <Suggest />
+        <DailyTopic />
       </div>
     </>
   );
