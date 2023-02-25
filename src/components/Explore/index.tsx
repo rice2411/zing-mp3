@@ -13,8 +13,8 @@ const Explore = () => {
       <div className="px-4">
         <Recently />
         <Suggest />
-        <DailyTopic />
         <NewRelease />
+        <DailyTopic />
       </div>
     </>
   );
