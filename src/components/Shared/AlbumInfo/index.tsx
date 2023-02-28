@@ -7,21 +7,14 @@ import ButtonIcon from '../../../shared/small_components/Button';
 import Button from '../Button';
 import Item from '../Item';
 
-const AlbumInfo = ({ className }: any) => {
-  const data = {
-    id: 1,
-    avatar:
-      'https://photo-resize-zmp3.zmdcdn.me/w600_r1x1_webp/cover/3/f/f/0/3ff09c937cebb4baf930abe7eb02074c.jpg',
-    name: 'Đất Việt',
-  };
-
+const AlbumInfo = ({ className, info }: any) => {
   const { styles }: any = useTheme();
   return (
     <>
       <div className={`flex xl:flex-col ${className} `}>
         <div className="mr-5 xl:mr-0">
           <Item
-            item={data}
+            item={info}
             className={`xl:h-[300px] xl:w-[300px] h-[200px] w-[200px] rounded-xl`}
             small
           />
@@ -34,20 +27,25 @@ const AlbumInfo = ({ className }: any) => {
             <h2
               className={`${styles.body.textColor} font-bold text-xl leading-normal`}
             >
-              V-Pop: Hits Quốc dân
+              {info.category}: {info.name}
             </h2>
             <div
               className={`${styles.body.subTextColor} text-xs leading-relaxed `}
             >
-              <h5>Cập nhật: 31/12/2022</h5>
-              <a>ERIK, MONO, Hoàng Thuỳ Linh</a>
-              <h5>177k người yêu thích</h5>
+              <h5>Cập nhật: {info.date}</h5>
+              {info.author.map((name: any, index: any) => (
+                <>
+                  <a className="cursor-pointer hover:decoration-1 hover:underline">
+                    {name}
+                    {info.author.length - 1 === index ? '' : ', '}
+                  </a>
+                </>
+              ))}
+              <h5>{info.like} người yêu thích</h5>
             </div>
             <div className={`mt-4 text-sm xl:hidden`}>
               <span className={`${styles.body.subTextColor}  `}>Lời tựa </span>
-              <span className={`${styles.body.textColor} `}>
-                Những bản V-Pop 'thuộc nằm lòng' của mọi nhà
-              </span>
+              <span className={`${styles.body.textColor} `}>{info.note}</span>
             </div>
           </div>
           <div className={`flex xl:mt-3.5 xl:flex-col xl:mx-auto `}>

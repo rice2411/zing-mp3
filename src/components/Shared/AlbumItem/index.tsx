@@ -7,8 +7,12 @@ import { GiMicrophone } from 'react-icons/gi';
 import useTheme from '../../../hooks/useTheme';
 import ButtonIcon from '../../../shared/small_components/Button';
 
-const AlbumItem = ({ active }: any) => {
+const AlbumItem = ({ active, item }: any) => {
   const { styles }: any = useTheme();
+
+  const timeFormat = (time: number) => {
+    return new Date(time * 1000).toISOString().slice(14, 19);
+  };
   return (
     <>
       <div
@@ -31,10 +35,7 @@ const AlbumItem = ({ active }: any) => {
             </div>
           </div>
           <div className="w-[40px] h-[40px] overflow-hidden rounded relative cursor-pointer">
-            <img
-              src="https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/e/7/7/2/e772358978fef8a02eefd34f6a4ca6f3.jpg"
-              alt=""
-            />
+            <img src={item.avatar} alt="" />
             <div className="text-xl text-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 hidden group-hover:block hover:opacity-80">
               <BsPlayFill />
             </div>
@@ -44,13 +45,18 @@ const AlbumItem = ({ active }: any) => {
             <h3
               className={`${styles.body.textColor} text-sm font-medium truncate`}
             >
-              Vi mẹ anh bắt chia tay
+              {item.name}
             </h3>
-            <a
-              className={`${styles.body.subTextColor} text-xs mt-1 font-normal truncate cursor-pointer hover:decoration-1 hover:underline`}
-            >
-              MONO
-            </a>
+            {item.author.map((name: any, index: any) => (
+              <>
+                <a
+                  className={`${styles.body.subTextColor} text-xs mt-1 font-normal truncate cursor-pointer hover:decoration-1 hover:underline`}
+                >
+                  {name}
+                  {item.author.length - 1 === index ? '' : ', '}
+                </a>
+              </>
+            ))}
           </div>
         </div>
         <div
@@ -59,7 +65,7 @@ const AlbumItem = ({ active }: any) => {
           <a
             className={`${styles.body.subTextColor} text-xs font-normal  cursor-pointer hover:decoration-1 hover:underline hover:text-[#c662ef]`}
           >
-            Vì mẹ anh bắt chia tay (Single)
+            {item.albumName}
           </a>
         </div>
         <div
@@ -68,7 +74,7 @@ const AlbumItem = ({ active }: any) => {
           <h4
             className={`${styles.body.subTextColor} text-xs font-normal truncate text-right mr-2 group-hover:hidden`}
           >
-            04:12
+            {timeFormat(item.duration)}
           </h4>
           <div className={`hidden group-hover:block text-right`}>
             <ButtonIcon
