@@ -1,4 +1,4 @@
 export default {
-  apiUrl: process.env.NEXT_PUBLIC_API_URL,
-  staticFileUrl: process.env.NEXT_PUBLIC_STATIC_FILE_URL,
+  apiUrl: process.env.REACT_APP_API_URL,
+  staticFileUrl: process.env.REACT_APP_STATIC_FILE_URL,
 };

@@ -5,9 +5,10 @@
 @import "scrollbar.scss";
 body{
     font-family: 'Inter', sans-serif;
+
 }
 #root{
     min-width: 100vw;
     min-height: 100vh;
-    
+    overflow-x: hidden; 
 }

@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { useState, useEffect, SetStateAction } from "react";
-import { MODE } from "../constant/mode";
+import { MODE } from "../constant/mode/index";
 
 const ThemeContext = createContext({});
 export const ThemeProvider = ({ children }: any) => {

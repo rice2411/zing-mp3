@@ -1,14 +1,21 @@
 import React from "react";
 import Carousel from "./Carousel";
+import DailyTopic from "./DailyTopic";
 import Recently from "./Recently";
 import Suggest from "./Suggest";
+
+import NewRelease from "./NewRelease";
 
 const Explore = () => {
   return (
     <>
       <Carousel />
-      <Recently />
-      <Suggest />
+      <div className="px-4">
+        <Recently />
+        <Suggest />
+        <NewRelease />
+        <DailyTopic />
+      </div>
     </>
   );
 };

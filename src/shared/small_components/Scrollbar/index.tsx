@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
+
 import useTheme from "../../../hooks/useTheme";
 
 export default function Scrollbar({

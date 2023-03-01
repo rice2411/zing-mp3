@@ -4,7 +4,7 @@ import { BsPlayCircle } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import useTheme from "../../../hooks/useTheme";
 
-const Item = ({ item, index }: any) => {
+const Item = ({ item, index, className }: any) => {
   const itemRef = useRef([]);
   const imageRef = useRef([]);
   const { styles }: any = useTheme();
@@ -33,12 +33,12 @@ const Item = ({ item, index }: any) => {
 
   return (
     <div
-      className="cursor-pointer"
+      className="cursor-pointer max-w-[200px] h-max"
       key={index}
       onMouseEnter={() => handleMouseEnter(index)}
       onMouseLeave={() => handleMouseLeave(index)}
     >
-      <div className="overflow-hidden h-36 w-36 relative">
+      <div className={`  overflow-hidden relative ${className}`}>
         <img
           src={item.avatar}
           ref={(node) => adNodeImage(index, node)}
@@ -56,10 +56,17 @@ const Item = ({ item, index }: any) => {
         </div>
       </div>
       <h3
-        className={`${styles.body.textColor} ${styles.body.hover.textColor} font-bold text-sm mt-3 `}
+        className={`${styles.body.textColor} ${styles.body.hover.textColor} font-bold text-sm mt-3 max-w-[130px] truncate`}
       >
         {item.name}
       </h3>
+
+      <h6 className="text-gray-500 font-normal text-xs leading-3 mt-1.5 leading-tight">
+        {item.author?.map((author: any, idx: any) => (
+          <>{idx != item.author.length - 1 ? author + ", " : author}</>
+        ))}
+        {item.desc ?? ""}
+      </h6>
     </div>
   );
 };
