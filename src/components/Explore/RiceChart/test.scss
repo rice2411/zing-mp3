@@ -1,0 +1,32 @@
+.my-blur{
+ 
+    background-image: linear-gradient(180deg,#740091,#2d1a4c);
+    opacity: .95;
+}
+.img{
+    background: url('https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.8.38/static/media/bg-chart.fd766403.jpg') top/cover no-repeat;
+}
+.recharts-cartesian-axis-tick-value{
+    color: white !important;;
+    font-size: 12px;
+} 
+.recharts-cartesian-axis-line{
+    display: none;
+}
+.recharts-cartesian-axis-tick-line{
+    display: none;
+}
+.yAxis{
+    display: none;
+}
+.recharts-cartesian-grid-vertical{
+    display: none;
+}
+.number{
+    width: 22px;
+    min-width: 0;
+    margin: 0!important;
+    -webkit-text-stroke: 1px #4a90e2;
+    opacity: 1;
+    color: rgba(74,144,226,0);
+}

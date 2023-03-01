@@ -1,7 +1,7 @@
 import React from "react";
 import { RiPlayListLine } from "react-icons/ri";
 import useTheme from "../../../../../hooks/useTheme";
-import ButtonIcon from "../../../../../shared/small_components/Button";
+import ButtonIcon from "../../../../../shared/small_components/Button/Icon";
 const PlayList = () => {
   const { styles }: any = useTheme();
   const handleMouseEnter = (e: any) => {

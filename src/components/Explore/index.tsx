@@ -5,6 +5,7 @@ import Recently from "./Recently";
 import Suggest from "./Suggest";
 
 import NewRelease from "./NewRelease";
+import RiceChart from "./RiceChart";
 
 const Explore = () => {
   return (
@@ -15,6 +16,7 @@ const Explore = () => {
         <Suggest />
         <NewRelease />
         <DailyTopic />
+        <RiceChart />
       </div>
     </>
   );

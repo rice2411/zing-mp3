@@ -5,7 +5,7 @@ import { VscMultipleWindows } from "react-icons/vsc";
 import Volume from "./Volume";
 import useTheme from "../../../../hooks/useTheme";
 import PlayList from "./Playlist";
-import ButtonIcon from "../../../../shared/small_components/Button";
+import ButtonIcon from "../../../../shared/small_components/Button/Icon";
 
 const Actions = () => {
   const { styles }: any = useTheme();

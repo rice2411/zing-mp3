@@ -1,5 +1,5 @@
 import React from "react";
-import ButtonIcon from "../../../../shared/small_components/Button";
+import ButtonIcon from "../../../../shared/small_components/Button/Icon";
 import { FaTshirt } from "react-icons/fa";
 import { IoDiamondOutline } from "react-icons/io5";
 import { AiOutlineUpload } from "react-icons/ai";

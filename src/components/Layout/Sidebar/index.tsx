@@ -18,7 +18,7 @@ export default function SiderBar() {
 
   const handleToggleSidebar = () => {
     if (withDefault === widthDefaultValue) {
-      setWithDefault("w-64");
+      setWithDefault("w-60");
       setIsToggle(true);
     } else {
       setWithDefault(widthDefaultValue);
@@ -42,7 +42,7 @@ export default function SiderBar() {
   return (
     <>
       <aside
-        className={`h-screen  xl:w-64 lg:w-64 ${withDefault} transition-all `}
+        className={`h-screen  xl:w-60 lg:w-60 ${withDefault} transition-all`}
         ref={sidebarRef}
       >
         <div

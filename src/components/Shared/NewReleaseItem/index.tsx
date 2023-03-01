@@ -1,8 +1,9 @@
-import React from 'react';
-import { BsPlayFill } from 'react-icons/bs';
-import { FiMoreHorizontal } from 'react-icons/fi';
-import { RiVipFill } from 'react-icons/ri';
-import useTheme from '../../../hooks/useTheme';
+import React from "react";
+import { BsPlayFill } from "react-icons/bs";
+import { FiMoreHorizontal } from "react-icons/fi";
+import { RiVipFill } from "react-icons/ri";
+import useTheme from "../../../hooks/useTheme";
+import "./styles.scss";
 
 const NewReleaseItem = ({ item, index, className }: any) => {
   const { styles }: any = useTheme();
@@ -23,18 +24,18 @@ const NewReleaseItem = ({ item, index, className }: any) => {
               className={`${
                 styles.body.textColor
               } text-sm truncate cursor-default mr-2 font-medium ${
-                item.vip ? 'opacity-60' : ''
+                item.vip ? "opacity-60" : ""
               }`}
             >
               {item.name}
             </h2>
             <div
               className={`text-yellow-300 text-xl flex flex-col items-center justify-center ${
-                item.vip ? '' : 'hidden'
+                item.vip ? "" : "hidden"
               } `}
             >
               <span className="overflow-hidden ">
-                <RiVipFill className="rounded-lg" />
+                <div className="vip_label"></div>
               </span>
             </div>
           </div>
@@ -45,11 +46,11 @@ const NewReleaseItem = ({ item, index, className }: any) => {
                   className={`${styles.body.subTextColor} ${
                     styles.body.hover.textColor
                   } ${
-                    item.vip ? 'opacity-60' : ''
+                    item.vip ? "opacity-60" : ""
                   } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
                 >
                   {name}
-                  {item.author.length - 1 === index ? '' : ', '}
+                  {item.author.length - 1 === index ? "" : ", "}
                 </a>
               </>
             ))}

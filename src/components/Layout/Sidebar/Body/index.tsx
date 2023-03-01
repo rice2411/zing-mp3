@@ -17,7 +17,7 @@ export default function BodySideBar({ isToggle }: any) {
           style={{ borderColor: styles.sideBar.divide.color }}
         ></div>
       </div>
-      <Scrollbar isHover={true} className="h-[300px] ">
+      <Scrollbar isHover={true} className="h-[300px]  overflow-x-hidden ">
         <Items data={data.scroll} className="pt-3" isToggle={isToggle} />
         <div className="pl-3 pb-3 xl:pb-0 lg:pb-0">
           <CTAButton />

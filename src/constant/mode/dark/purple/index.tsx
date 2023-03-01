@@ -28,7 +28,7 @@ export const PURPLE = {
       textColor: STYLES.text.third,
       border: STYLES.border.first,
       hover: {
-        text: STYLES.text.second,
+        text: STYLES.text.hover.second,
         textDark: STYLES.text.hover.fourth,
       },
       active: {

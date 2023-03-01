@@ -1,12 +1,17 @@
-import React from 'react';
-import { RiArrowRightSLine } from 'react-icons/ri';
-import useTheme from '../../../hooks/useTheme';
-import Button from '../../Shared/Button';
-import NewReleaseItem from '../../Shared/NewReleaseItem';
-import { data } from './data';
+import React from "react";
+import { RiArrowRightSLine } from "react-icons/ri";
+import useTheme from "../../../hooks/useTheme";
+import Button from "../../../shared/small_components/Button/Basic";
+import NewReleaseItem from "../../Shared/NewReleaseItem";
+import { data } from "./data";
 
 const NewRelease = () => {
   const { styles }: any = useTheme();
+  const classButton = `text-xs hover:text-white py-1 px-6 border border-[hsla(0,0%,100%,0.1)]  rounded-full`;
+  const activeButtonClass = [
+    "bg-[#9b4de0] hover:bg-[#8B45CA]",
+    "hover:opacity-80",
+  ];
   return (
     <>
       <div className="flex justify-between mt-10">
@@ -17,13 +22,26 @@ const NewRelease = () => {
       <div className="flex my-6 justify-between">
         <div>
           <span className="mr-4">
-            <Button text="TẤT CẢ" active />
+            <Button
+              text="TẤT CẢ"
+              isActive={true}
+              className={classButton}
+              activeClass={activeButtonClass}
+            />
           </span>
           <span className="mr-4">
-            <Button text="VIỆT NAM" />
+            <Button
+              text="VIỆT NAM"
+              className={classButton}
+              activeClass={activeButtonClass}
+            />
           </span>
           <span>
-            <Button text="QUỐC TẾ" />
+            <Button
+              text="QUỐC TẾ"
+              className={classButton}
+              activeClass={activeButtonClass}
+            />
           </span>
         </div>
         <a
