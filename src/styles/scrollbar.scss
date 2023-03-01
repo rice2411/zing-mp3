@@ -2,10 +2,18 @@ html{
   font-family: 'Inter';
 }
 
+.scroll-bar.scroll-hidden{
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
+}
+
+.scroll-bar.scroll-hidden::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
 .scroll-bar::-webkit-scrollbar {
     width: 5px;
     height: 20px;
-  
   }
 
   .scroll-bar::-webkit-scrollbar-thumb {
