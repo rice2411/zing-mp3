@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlinePlayCircle } from "react-icons/ai";
 import {
   LineChart,
@@ -8,9 +8,11 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
+import Button from "../../../shared/small_components/Button/Basic";
 import NewReleaseItem from "../../Shared/NewReleaseItem";
 import { data } from "../NewRelease/data";
-import "./test.scss";
+import ItemChart from "./item";
+import "./styles.scss";
 const RiceChart = () => {
   const data2 = [
     {
@@ -86,8 +88,15 @@ const RiceChart = () => {
       amt: 2100,
     },
   ];
+  const colorArr = ["#4A90E2", "#27BD9C", "#E35050"];
+  const [color, setColor] = useState(colorArr[0]);
+  const [dataHightlight, setDataHightlight] = useState(data[0]);
+  const handleMouseEnterLine = (index: number, data: any) => {
+    setColor(colorArr[index]);
+    setDataHightlight(data);
+  };
   const getIntroOfPage = (label: any) => {
-    if (label === "Page A") {
+    if (label === "09:00") {
       return "Page A is about men's clothing";
     }
     if (label === "Page B") {
@@ -107,13 +116,25 @@ const RiceChart = () => {
     }
     return "";
   };
+
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="custom-tooltip">
-          <p className="label">{`${label} : ${payload[0].value}`}</p>
-          <p className="intro">{getIntroOfPage(label)}</p>
-          <p className="desc">Anything you want can be displayed here.</p>
+        <div
+          className={` border-0 rounded min-w-[250px] w-full`}
+          style={{ backgroundColor: color }}
+        >
+          <div className="p-2 flex text-white items-center">
+            <img
+              src={dataHightlight.avatar}
+              className={"h-10 w-10 rounded mr-2"}
+            />
+            <div className="text-xs ">
+              <p className="font-bold ">{dataHightlight.name}</p>
+              <p className="text-gray-300">{dataHightlight.author[0]}</p>
+            </div>
+            <div className="ml-auto text-xs font-bold">39%</div>
+          </div>
         </div>
       );
     }
@@ -121,29 +142,46 @@ const RiceChart = () => {
     return null;
   };
   return (
-    <div className="w-auto  h-[400px] mt-10 rounded">
+    <div className="w-auto  h-[430px] mt-10 rounded">
       <div className="img  w-auto  h-full relative rounded">
         <div className=" w-auto my-blur h-full rounded">
           <div className="px-5 py-4">
             <div className="flex  items-center mb-3 ">
-              <h1 className="text-white text-3xl font-bold">#ricechart</h1>
+              <h1 className="text-white text-2xl font-bold mb-2">#ricechart</h1>
             </div>
             <div className="flex mr-auto justify-between ">
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center">
                 {data.slice(0, 3).map((item, index) => (
-                  <div className="flex items-center">
-                    <span className="number text-4xl font-black">
-                      {index + 1}
-                    </span>
-                    <NewReleaseItem index={index} item={item} className="" />
-                  </div>
+                  <ItemChart item={item} index={index} />
                 ))}
+                <Button
+                  text="Xem thêm"
+                  className="text-sm rounded-full border border-1 border-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
+                />
               </div>
-              <LineChart width={780} height={300} data={data2}>
-                <Line type="monotone" dataKey="uv" stroke="#4A90E2" />
-                <Line type="monotone" dataKey="pv" stroke="#27BD9C" />
-                <Line type="monotone" dataKey="amt" stroke="#E35050" />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 3" />
+              <LineChart width={700} height={300} data={data2}>
+                <Line
+                  type="monotone"
+                  dataKey="uv"
+                  stroke="#27BD9C"
+                  dot={false}
+                  onMouseEnter={() => handleMouseEnterLine(1, data[1])}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="pv"
+                  stroke="#4A90E2"
+                  dot={false}
+                  onMouseEnter={() => handleMouseEnterLine(0, data[0])}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="amt"
+                  stroke="#E35050"
+                  dot={false}
+                  onMouseEnter={() => handleMouseEnterLine(2, data[2])}
+                />
+                <CartesianGrid stroke="#ccc" strokeDasharray="2 4" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip content={<CustomTooltip />} />

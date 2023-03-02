@@ -8,7 +8,9 @@ function Button({ text, isActive, className, activeClass }: any) {
       <button
         className={`${styles.body.textColor} ${
           className ? className : "h-10 w-10"
-        } ${isActive ? activeClass[0] : activeClass[1]}`}
+        } ${
+          isActive != null ? (isActive ? activeClass[0] : activeClass[1]) : ""
+        }`}
       >
         {text ? text : "button"}
       </button>

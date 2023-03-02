@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsPlayFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { RiVipFill } from "react-icons/ri";
@@ -6,13 +6,27 @@ import useTheme from "../../../hooks/useTheme";
 import "./styles.scss";
 
 const NewReleaseItem = ({ item, index, className }: any) => {
+  const [isHover, setIsHover] = useState(false);
+  const handleMouseEnter = () => {
+    setIsHover(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHover(false);
+  };
   const { styles }: any = useTheme();
   return (
-    <div className="group items-center w-full hover:bg-[hsla(0,0%,100%,0.1)] rounded-md overflow-hidden">
+    <div
+      onMouseEnter={() => handleMouseEnter()}
+      onMouseLeave={() => handleMouseLeave()}
+      className="group items-center w-full hover:bg-[hsla(0,0%,100%,0.1)] rounded-md overflow-hidden"
+    >
       <div className="p-2 flex items-center grid grid-cols-5 place-content-center">
         <div className="relative hover:cursor-pointer flex items-center justify-center">
           <div className="w-[60px] h-[60px] overflow-hidden rounded-md ">
-            <img src={item.avatar} className="w-full h-full" />
+            <img
+              src={item.avatar}
+              className={`w-full h-full ${isHover ? "opacity-50" : ""}`}
+            />
           </div>
           <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white flex  items-center justify-between px-5 hidden group-hover:block hover:opacity-75">
             <BsPlayFill className="text-3xl " />

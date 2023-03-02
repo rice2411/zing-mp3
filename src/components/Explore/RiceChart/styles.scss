@@ -19,14 +19,38 @@
 .yAxis{
     display: none;
 }
+line{
+    stroke: grey;
+}
 .recharts-cartesian-grid-vertical{
     display: none;
+}
+.recharts-tooltip-wrapper{
+    border: none!important;
+    &:focus{
+        border :none!important;
+    }
+}
+.recharts-tooltip-wrapper-bottom{
+    border: none!important;
+}
+.recharts-tooltip-wrapper-right{
+    border: none!important;
 }
 .number{
     width: 22px;
     min-width: 0;
     margin: 0!important;
-    -webkit-text-stroke: 1px #4a90e2;
+  
     opacity: 1;
     color: rgba(74,144,226,0);
+    &_1{
+        -webkit-text-stroke: 1px #4a90e2;
+    }
+    &_2{
+        -webkit-text-stroke: 1px #50e3c2;
+    }
+    &_3{
+        -webkit-text-stroke: 1px #e35050;
+    }
 }
