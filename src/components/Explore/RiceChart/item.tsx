@@ -6,13 +6,16 @@ import useTheme from "../../../hooks/useTheme";
 import Button from "../../../shared/small_components/Button/Basic";
 import NewReleaseItem from "../../Shared/NewReleaseItem";
 
-const ItemChart = ({ item, index }: any) => {
+const ItemChart = ({ item, index, handleHightLightLine, rank }: any) => {
   const { styles }: any = useTheme();
   const [isHover, setIsHover] = useState(false);
   const handleMouseEnter = () => {
+    handleHightLightLine(index);
     setIsHover(true);
   };
+
   const handleMouseLeave = () => {
+    handleHightLightLine(-1);
     setIsHover(false);
   };
   const rankSong = (index: number) => {
@@ -23,7 +26,9 @@ const ItemChart = ({ item, index }: any) => {
     <div
       onMouseEnter={() => handleMouseEnter()}
       onMouseLeave={() => handleMouseLeave()}
-      className="mb-3 flex items-center hover:bg-[hsla(0,0%,100%,.2)]  rounded-md w-full min-w-[428.875px] px-2 py-1 bg-[hsla(0,0%,100%,.07)] "
+      className={`mb-3 flex items-center ${
+        isHover || rank ? "bg-[hsla(0,0%,100%,.2)]" : ""
+      } rounded-md w-full min-w-[428.875px] px-2 py-1 bg-[hsla(0,0%,100%,.07)] `}
     >
       <span className={`number ${rankSong(index)} text-4xl font-black mx-2`}>
         {index + 1}
@@ -33,14 +38,18 @@ const ItemChart = ({ item, index }: any) => {
           <div className="relative hover:cursor-pointer flex items-center justify-center">
             <div className="w-[60px] h-[60px] overflow-hidden rounded-md relative">
               <img src={item.avatar} className={`w-full h-full absolute `} />
-              {/* ${isHover ? "opacity-25" : ""} */}
+
               <div
                 className={`bg-gray-900 w-full h-full  ${
-                  isHover ? " absolute opacity-50" : ""
+                  isHover || rank ? "absolute opacity-50" : ""
                 }`}
               ></div>
             </div>
-            <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white flex  items-center justify-between px-5 hidden group-hover:block hover:opacity-75">
+            <div
+              className={`absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white flex  items-center justify-between px-5  ${
+                isHover || rank ? "opacity-75" : "hidden"
+              }  `}
+            >
               <BsPlayFill className="text-3xl " />
             </div>
           </div>
@@ -81,11 +90,6 @@ const ItemChart = ({ item, index }: any) => {
                 </>
               ))}
             </div>
-            <h3
-              className={`${styles.body.subTextColor} text-xs font-normal mt-1 truncate cursor-default`}
-            >
-              {item.time}
-            </h3>
           </div>
         </div>
       </div>

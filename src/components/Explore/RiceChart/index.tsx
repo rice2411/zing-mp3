@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AiOutlinePlayCircle } from "react-icons/ai";
+import ReactDOMServer from "react-dom/server";
 import {
   LineChart,
   Line,
@@ -13,6 +13,7 @@ import NewReleaseItem from "../../Shared/NewReleaseItem";
 import { data } from "../NewRelease/data";
 import ItemChart from "./item";
 import "./styles.scss";
+import WorldChart from "./WorldChart";
 const RiceChart = () => {
   const data2 = [
     {
@@ -89,11 +90,103 @@ const RiceChart = () => {
     },
   ];
   const colorArr = ["#4A90E2", "#27BD9C", "#E35050"];
+  const templateTooltip = (
+    data: any,
+    color: string,
+    isCustomStyles: boolean = false
+  ) => {
+    const styles = {
+      backgroundColor: color,
+      transform: "translate(304.091px, 188px);",
+      top: "0px",
+      left: "0px",
+      pointerEvents: "none",
+      visibility: "visible",
+      position: "absolute",
+      transition: " -webkit-transform 400ms ease 0s;",
+    } as React.CSSProperties;
+    return (
+      <div
+        className="border-0 rounded min-w-[250px] w-full"
+        style={isCustomStyles ? styles : { backgroundColor: color }}
+      >
+        <div className="p-2 flex text-white items-center">
+          <img src={data.avatar} className="h-10 w-10 rounded mr-2" />
+          <div className="text-xs">
+            <p className="font-bold">{data.name}</p>
+            <p className="text-gray-300">{data.author[0]}</p>
+          </div>
+          <div className="ml-auto text-xs font-bold">39%</div>
+        </div>
+      </div>
+    );
+  };
+
   const [color, setColor] = useState(colorArr[0]);
   const [dataHightlight, setDataHightlight] = useState(data[0]);
+  const [lineHightlight, setLineHightlight] = useState([false, false, false]);
+  const [rank1, setRank1] = useState(false);
+  const [rank2, setRank2] = useState(false);
+  const [rank3, setRank3] = useState(false);
+
+  const handleHightLightLine = async (index: number) => {
+    const toolTipWrapper = document.getElementsByClassName(
+      "recharts-tooltip-wrapper"
+    )[0];
+    if (index == -1) {
+      setLineHightlight([false, false, false]);
+      setRank1(false);
+      setRank2(false);
+      setRank3(false);
+      // @ts-ignore: Object is possibly 'null'.
+      toolTipWrapper.style.visibility = "hidden";
+      toolTipWrapper.classList.remove("recharts-tooltip-wrapper-right");
+      toolTipWrapper.classList.remove("recharts-tooltip-wrapper-bottom");
+      toolTipWrapper.innerHTML = "";
+      return;
+    }
+
+    toolTipWrapper.classList.add("recharts-tooltip-wrapper-right");
+    toolTipWrapper.classList.add("recharts-tooltip-wrapper-bottom");
+
+    const arrLineHightlight = [...lineHightlight];
+    arrLineHightlight[index] = true;
+    const newData = data[index];
+    const newColor = colorArr[index];
+    setLineHightlight(arrLineHightlight);
+    setDataHightlight(newData);
+    setColor(newColor);
+
+    toolTipWrapper.innerHTML += ReactDOMServer.renderToString(
+      templateTooltip(newData, newColor, true)
+    );
+    // @ts-ignore: Object is possibly 'null'.
+    toolTipWrapper.style.visibility = "visible";
+  };
+  const handleMouseLeaveLine = () => {
+    setLineHightlight([false, false, false]);
+    setRank1(false);
+    setRank2(false);
+    setRank3(false);
+  };
   const handleMouseEnterLine = (index: number, data: any) => {
     setColor(colorArr[index]);
     setDataHightlight(data);
+    if (index == 0) {
+      setRank1(true);
+      setRank2(false);
+      setRank3(false);
+    }
+    if (index == 1) {
+      setRank1(false);
+      setRank2(true);
+      setRank3(false);
+    }
+    if (index == 2) {
+      setRank1(false);
+      setRank2(false);
+      setRank3(true);
+    }
   };
   const getIntroOfPage = (label: any) => {
     if (label === "09:00") {
@@ -117,80 +210,118 @@ const RiceChart = () => {
     return "";
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip = ({ active, payload, coordinate }: any) => {
     if (active && payload && payload.length) {
-      return (
-        <div
-          className={` border-0 rounded min-w-[250px] w-full`}
-          style={{ backgroundColor: color }}
-        >
-          <div className="p-2 flex text-white items-center">
-            <img
-              src={dataHightlight.avatar}
-              className={"h-10 w-10 rounded mr-2"}
-            />
-            <div className="text-xs ">
-              <p className="font-bold ">{dataHightlight.name}</p>
-              <p className="text-gray-300">{dataHightlight.author[0]}</p>
-            </div>
-            <div className="ml-auto text-xs font-bold">39%</div>
-          </div>
-        </div>
-      );
+      return templateTooltip(dataHightlight, color);
     }
 
     return null;
   };
+
   return (
-    <div className="w-auto  h-[430px] mt-10 rounded">
-      <div className="img  w-auto  h-full relative rounded">
-        <div className=" w-auto my-blur h-full rounded">
-          <div className="px-5 py-4">
-            <div className="flex  items-center mb-3 ">
-              <h1 className="text-white text-2xl font-bold mb-2">#ricechart</h1>
-            </div>
-            <div className="flex mr-auto justify-between ">
-              <div className="flex flex-col items-center">
-                {data.slice(0, 3).map((item, index) => (
-                  <ItemChart item={item} index={index} />
-                ))}
-                <Button
-                  text="Xem thêm"
-                  className="text-sm rounded-full border border-1 border-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
-                />
+    <>
+      {" "}
+      <div className="w-auto  h-[430px] mt-10 rounded overflow-hidden mb-5">
+        <div className="img  w-auto  h-full relative rounded ">
+          <div className=" w-auto my-blur h-full rounded">
+            <div className="px-5 py-4">
+              <div className="flex  items-center mb-3 ">
+                <h1 className="text-white text-2xl font-bold mb-2">
+                  #ricechart
+                </h1>
               </div>
-              <LineChart width={700} height={300} data={data2}>
-                <Line
-                  type="monotone"
-                  dataKey="uv"
-                  stroke="#27BD9C"
-                  dot={false}
-                  onMouseEnter={() => handleMouseEnterLine(1, data[1])}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="pv"
-                  stroke="#4A90E2"
-                  dot={false}
-                  onMouseEnter={() => handleMouseEnterLine(0, data[0])}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="amt"
-                  stroke="#E35050"
-                  dot={false}
-                  onMouseEnter={() => handleMouseEnterLine(2, data[2])}
-                />
-                <CartesianGrid stroke="#ccc" strokeDasharray="2 4" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip content={<CustomTooltip />} />
-              </LineChart>
+              <div className="flex mr-auto justify-between ">
+                <div className="flex flex-col items-center">
+                  {data.slice(0, 3).map((item, index) => (
+                    <ItemChart
+                      item={item}
+                      index={index}
+                      handleHightLightLine={handleHightLightLine}
+                      rank={
+                        index == 0
+                          ? rank1
+                          : index == 1
+                          ? rank2
+                          : index == 2
+                          ? rank3
+                          : null
+                      }
+                    />
+                  ))}
+                  <Button
+                    text="Xem thêm"
+                    className="text-sm rounded-full border border-1 border-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
+                  />
+                </div>
+                <LineChart width={700} height={300} data={data2}>
+                  <Line
+                    type="monotone"
+                    dataKey="pv"
+                    stroke="#4A90E2"
+                    strokeWidth={2}
+                    activeDot={{
+                      onMouseEnter(props, event) {
+                        handleMouseEnterLine(0, data[0]);
+                      },
+                      onMouseLeave() {
+                        handleMouseLeaveLine();
+                      },
+                      strokeWidth: 3,
+                    }}
+                    dot={lineHightlight[0]}
+                    onMouseEnter={() => handleMouseEnterLine(0, data[0])}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="uv"
+                    stroke="#27BD9C"
+                    strokeWidth={2}
+                    activeDot={{
+                      onMouseEnter(props, event) {
+                        handleMouseEnterLine(1, data[1]);
+                      },
+                      onMouseLeave() {
+                        handleMouseLeaveLine();
+                      },
+                      strokeWidth: 3,
+                    }}
+                    dot={lineHightlight[1]}
+                    onMouseEnter={() => handleMouseEnterLine(1, data[1])}
+                  />
+
+                  <Line
+                    type="monotone"
+                    dataKey="amt"
+                    stroke="#E35050"
+                    strokeWidth={2}
+                    activeDot={{
+                      onMouseEnter(props, event) {
+                        handleMouseEnterLine(2, data[2]);
+                      },
+                      onMouseLeave() {
+                        handleMouseLeaveLine();
+                      },
+                      strokeWidth: 3,
+                    }}
+                    dot={lineHightlight[2]}
+                    onMouseEnter={() => handleMouseEnterLine(2, data[2])}
+                  />
+                  <CartesianGrid stroke="#ccc" strokeDasharray="2 4" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip
+                    content={<CustomTooltip />}
+                    active={true}
+                    cursor={false}
+                  />
+                </LineChart>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <WorldChart />
+    </>
   );
 };
 
