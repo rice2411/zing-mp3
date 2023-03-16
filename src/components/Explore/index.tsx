@@ -6,6 +6,11 @@ import Suggest from "./Suggest";
 
 import NewRelease from "./NewRelease";
 import RiceChart from "./RiceChart";
+import Singer from "./Singer";
+import Top100 from "./Top100";
+import MixTape from "./MixTaxpe";
+import Suggest2 from "./Suggest2";
+import Partner from "./Partner/index,";
 
 const Explore = () => {
   return (
@@ -17,6 +22,11 @@ const Explore = () => {
         <NewRelease />
         <DailyTopic />
         <RiceChart />
+        <Singer />
+        <Top100 />
+        <MixTape />
+        <Suggest2 />
+        <Partner />
       </div>
     </>
   );

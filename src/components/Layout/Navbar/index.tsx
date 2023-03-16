@@ -1,5 +1,6 @@
 import React from "react";
 import useTheme from "../../../hooks/useTheme";
+import LoginModal from "../../Login";
 import Actions from "./Actions";
 import Navigation from "./Navigation";
 import SearchBar from "./SearchBar";
@@ -13,6 +14,7 @@ const Navbar = () => {
       <Navigation />
       <SearchBar />
       <Actions />
+      <LoginModal />
     </div>
   );
 };

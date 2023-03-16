@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useTheme from "../../../../hooks/useTheme";
 
-function BlankModal({ ...props }: any) {
+function BlankModal({ isShow, handleClose, className, ...props }: any) {
   const { modalBlank, handleModalBlank }: any = useModal();
   const [data, setData] = useState(modalBlank);
   const { styles }: any = useTheme();
@@ -40,16 +40,15 @@ function BlankModal({ ...props }: any) {
   return (
     <>
       <div
-        id="defaultModal"
         aria-hidden="true"
         className={`${
-          data && data.isShow ? "" : "hidden"
+          (data && data.isShow) || isShow ? "" : "hidden"
         } z-[999] flex justify-center items-center bg-gray-900 bg-opacity-50  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0  w-full md:inset-0 h-modal md:h-full`}
       >
-        <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
+        <div className={`relative p-4 w-full max-w-2xl h-full md:h-auto `}>
           {/* Modal content */}
           <div
-            className={`${styles.modal.backgroundColor} ${styles.modal.textColor}  relative rounded-lg shadow`}
+            className={`${styles.modal.backgroundColor} ${styles.modal.textColor}  ${className}  relative rounded-lg shadow`}
           >
             {/* Modal header */}
             <div className="flex justify-between items-start p-4 rounded-t border-b ">
@@ -57,9 +56,12 @@ function BlankModal({ ...props }: any) {
                 {data && data.text && data.text.title}
               </h3>
               <button
-                onClick={onSubmit}
+                onClick={() => {
+                  onSubmit();
+                  handleClose();
+                }}
                 type="button"
-                className=" bg-transparent hover:bg-gray-200 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                className=" bg-transparent hover:bg-gray-600 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
                 data-modal-toggle="defaultModal"
               >
                 <svg
@@ -78,7 +80,7 @@ function BlankModal({ ...props }: any) {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <div className="p-6"> {props.children}</div>
+            <div className="py-6 px-4"> {props.children}</div>
           </div>
         </div>
       </div>

@@ -1,11 +1,12 @@
 import React from "react";
 import useTheme from "../../../../hooks/useTheme";
 
-function Button({ text, isActive, className, activeClass }: any) {
+function Button({ text, isActive, className, activeClass, onClick }: any) {
   const { styles }: any = useTheme();
   return (
     <>
       <button
+        onClick={onClick}
         className={`${styles.body.textColor} ${
           className ? className : "h-10 w-10"
         } ${

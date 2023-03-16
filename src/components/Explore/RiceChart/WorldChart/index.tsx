@@ -27,8 +27,8 @@ const WorldChart = () => {
           <div
             key={index}
             onMouseEnter={() => handleMouseEnter(index)}
-            className="rounded max-w-[374px] max-h-[107px] cursor-pointer overflow-hidden"
             onMouseLeave={() => handleMouseLeave(index)}
+            className="rounded max-w-[374px] max-h-[107px] cursor-pointer overflow-hidden"
           >
             <img
               ref={(node) => adNodeImage(index, node)}

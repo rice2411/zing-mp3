@@ -1,14 +1,7 @@
 import cookie from "js-cookie";
 
-function login({ token, user_permissions, user }: any) {
+function Login(token: string) {
   cookie.set("token", token);
-
-  cookie.set("profile", JSON.stringify(user));
-
-  cookie.set("userId", user._id);
-
-  cookie.set("user_permission", JSON.stringify(user_permissions));
-
   return true;
 }
 
@@ -43,4 +36,4 @@ function getCurrentUser() {
   }
 }
 
-export { login, logout, getCurrentUser, getCurrentToken };
+export { Login, logout, getCurrentUser, getCurrentToken };

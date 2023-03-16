@@ -1,0 +1,66 @@
+export const data = [
+  {
+    id: 1,
+    name: "Mixtape That Girl",
+    images: [
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/5/7/a/a/57aac9d89579d091f7299e6dc4d7bd24.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/covers/c/d/cd5e9fea8071c159d382eded303e3a8c_1509329820.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/6/a/3/e/6a3e3be0d4931bcea1577f2ff3f5192c.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/8/9/c/0/89c099b67bafd877034fab1c40dd6112.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/5/d/9/d/5d9dca818daf9e61c85cb88c8d08e1f2.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/covers/3/9/39247dd8f7a4a85f35647cf2d43d82ea_1487647777.jpg",
+    ],
+    authors: ["Olly Murs", "Lost Frequencies", ".."],
+  },
+  {
+    id: 1,
+    name: "Mixtape Long Cao",
+    images: [
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/6/5/6/5/65654d96600dc9330e2b848a5525c7d4.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/covers/4/5/457c14d821c6d51094be36d7e448a113_1477469839.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/avatars/1/9/1984d81195fd84b347d2550270a5eee0_1466476722.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_png/covers/d/a/dacfad0ca86ac0ec30befe55e3430fde_1508506033.png",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/4/7/a/6/47a603c28ee43fea3795384dd03e3289.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/7/e/7/5/7e757e880f94106b3b93b53bc420912e.jpg",
+    ],
+    authors: ["  Olly Murs", "Lost Frequencies", ".."],
+  },
+  {
+    id: 1,
+    name: "Mixtape Bản Tình Ca Đầu Tiên",
+    images: [
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_png/covers/c/c/cc100e241b8f55ff709a44b981d5764d_1294980752.png",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/f/6/a/b/f6ab94cda33ac9c190a7ac8cd0315270.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/e/2/7/1/e271782467a84390a22cb9a28301b0e9.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/a/9/e/d/a9ed142c215560ab45f6b2b433907f90.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/7/f/1/c/7f1c0611c731eea322b0c3f9291df3ac.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/4/0/6/b/406b5324276ed23168cfc11822039372.jpg",
+    ],
+  },
+  {
+    id: 1,
+    name: "Mixtape Sạc Pin Trái Tim",
+    images: [
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/5/2/f/d/52fd8c01127caad0cf37cff2e09b9af1.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/3/f/0/3/3f035d71e691e8dc165522b71279c0f7.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/2/5/2/a/252a8edb603e657ce3902ae2086a0c57.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/e/f/0/b/ef0ba88bd785b42462208f355623976e.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/a/3/c/c/a3cc0c1caa97c18ea7700c9543fb2f0b.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/d/6/3/b/d63b7f9a8995b45a8d600df4adb0ed18.jpg",
+    ],
+    authors: ["  Olly Murs", "Lost Frequencies", ".."],
+  },
+  {
+    id: 1,
+    name: "Mixtape Huy Vạc",
+    images: [
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/a/a/e/d/aaed81fb46322646057b957d4327dba5.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/3/0/2/a/302a13a16f4bcd798116903cf7ee1768.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/8/2/a/f/82afcc633cc979c20481d8ddbae41386.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/b/c/8/4/bc840ca23c5161f99ab7741c218fa002.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/d/8/1/1/d8110a427e47f40b66e8956e3bab700c.jpg",
+      "https://photo-resize-zmp3.zmdcdn.me/w480_r1x1_jpeg/cover/e/d/0/a/ed0a679e268de7bc37503469a777b07a.jpg",
+    ],
+    authors: ["  Olly Murs", "Lost Frequencies", ".."],
+  },
+];

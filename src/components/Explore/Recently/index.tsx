@@ -43,7 +43,12 @@ const Recently = () => {
       <div className="flex justify-between mt-3">
         {data.map((item, index) => (
           <>
-            <Item index={index} item={item} className={` h-36 w-36 `} />
+            <Item
+              key={index}
+              index={index}
+              item={item}
+              className={` h-36 w-36 `}
+            />
           </>
         ))}
       </div>
