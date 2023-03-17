@@ -52,4 +52,8 @@ export const STYLES = {
     backgroundColor: "#BCD5D5",
     hoverColor: "",
   },
+  button: {
+    backgroundColor: "bg-[#0E8080]",
+    border: "rgba(0,0,0,0.1)",
+  },
 };

@@ -250,7 +250,7 @@ const RiceChart = () => {
                   ))}
                   <Button
                     text="Xem thêm"
-                    className="text-sm rounded-full border border-1 border-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
+                    className="text-sm rounded-full border border-1 border-white !text-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
                   />
                 </div>
                 <LineChart width={700} height={300} data={data2}>

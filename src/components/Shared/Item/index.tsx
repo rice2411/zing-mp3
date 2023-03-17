@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsPlayCircle } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { getFile } from "../../../constant/file";
 import useTheme from "../../../hooks/useTheme";
 
 const Item = ({ item, index, className }: any) => {
@@ -40,7 +41,7 @@ const Item = ({ item, index, className }: any) => {
     >
       <div className={`  overflow-hidden relative ${className}`}>
         <img
-          src={item.avatar}
+          src={item.avatar ? item.avatar : getFile(item.image)}
           ref={(node) => adNodeImage(index, node)}
           className="rounded duration-700  absolute "
         />

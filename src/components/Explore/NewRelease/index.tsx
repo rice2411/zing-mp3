@@ -7,10 +7,9 @@ import { data } from "./data";
 
 const NewRelease = () => {
   const { styles }: any = useTheme();
-  const classButton = `text-xs hover:text-white py-1 px-6 border border-[hsla(0,0%,100%,0.1)]  rounded-full`;
+  const classButton = `text-xs  py-1 px-6 border border-[${styles.button.border}] border-gray-500  rounded-full`;
   const activeButtonClass = [
-    "bg-[#9b4de0] hover:bg-[#8B45CA]",
-    "hover:opacity-80",
+    `${styles.button.backgroundColor} !text-white hover:opacity-80`,
   ];
   return (
     <>

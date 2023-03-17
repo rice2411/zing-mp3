@@ -18,7 +18,9 @@ const Suggest2 = () => {
               />
               <div>
                 <p className="uppercase text-gray-500">Bạn đã nghe nhiều</p>
-                <span className="font-bold text-xl text-white ">
+                <span
+                  className={`font-bold text-xl ${styles.body.textColor} ${styles.body.hover.textColor} `}
+                >
                   {item.type}
                 </span>
               </div>

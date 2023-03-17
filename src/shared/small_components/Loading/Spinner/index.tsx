@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loader = () => {
+const Spinner = () => {
   return (
     <div
       aria-hidden="true"
@@ -32,4 +32,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default Spinner;

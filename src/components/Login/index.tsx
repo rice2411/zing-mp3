@@ -4,16 +4,18 @@ import { BsFacebook } from "react-icons/bs";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
+import useTheme from "../../hooks/useTheme";
 import AuthService from "../../service/auth";
 import Button from "../../shared/small_components/Button/Basic";
 import ButtonIcon from "../../shared/small_components/Button/Icon";
-import Loader from "../../shared/small_components/Loader";
+import Loader from "../../shared/small_components/Loading/Spinner";
 import BlankModal from "../../shared/small_components/Modal/Blank";
 import { Login } from "../../utils/auth";
 
 const LoginModal = () => {
   const { isOpenModalLogin, handleCloseModalLogin, setIsAuthenticated }: any =
     useAuth();
+  const { styles }: any = useTheme();
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -133,7 +135,7 @@ const LoginModal = () => {
                 )}
                 <Button
                   text={"Đăng nhập"}
-                  className="w-full text-white bg-[#9b4de0] focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  className={`w-full !text-white ${styles.button.backgroundColor} focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center   `}
                 />
 
                 <p className="text-sm font-light ">

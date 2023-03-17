@@ -5,12 +5,16 @@ import { data } from "./data";
 
 import Item from "../../Shared/Item";
 import PlaylistService from "../../../service/playlist";
+import Skeleton from "../../../shared/small_components/Loading/Skeleton";
 
 const Recently = () => {
+  const numberOfItem = 7;
   const { styles }: any = useTheme();
   const [recentPlaylist, setRecentPlaylist] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchRecentPlayList = async () => {
+    setIsLoading(true);
     const params = {
       userId: "62ba690129c1260f0cb734bc",
     };
@@ -21,6 +25,8 @@ const Recently = () => {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -41,16 +47,29 @@ const Recently = () => {
         </a>
       </div>
       <div className="flex justify-between mt-3">
-        {data.map((item, index) => (
+        {isLoading ? (
           <>
-            <Item
-              key={index}
-              index={index}
-              item={item}
-              className={` h-36 w-36 `}
-            />
+            {[...Array(numberOfItem)].map((e, i) => (
+              <div key={i}>
+                <Skeleton className="h-36 w-36" />
+                <Skeleton className="h-5 w-36 mt-2" />
+              </div>
+            ))}
           </>
-        ))}
+        ) : (
+          <>
+            {recentPlaylist.map((item, index) => (
+              <>
+                <Item
+                  key={index}
+                  index={index}
+                  item={item}
+                  className={` h-36 w-36 `}
+                />
+              </>
+            ))}
+          </>
+        )}
       </div>
     </>
   );

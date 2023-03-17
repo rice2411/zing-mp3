@@ -53,4 +53,8 @@ export const STYLES = {
     backgroundColor: "rgba(255,255,255,0.1)",
     hoverColor: "rgba(255,255,255,0.2)",
   },
+  button: {
+    backgroundColor: "bg-[#9B4DE0]",
+    border: "hsla(0,0%,100%,0.1)",
+  },
 };

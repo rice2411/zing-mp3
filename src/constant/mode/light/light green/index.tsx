@@ -3,6 +3,10 @@ import { STYLES } from "./class";
 export const LIGHTGREEN = {
   queryName: "light green",
   components: {
+    button: {
+      backgroundColor: STYLES.button.backgroundColor,
+      border: STYLES.button.border,
+    },
     modal: {
       backgroundColor: STYLES.backgroundColor.first,
       textColor: STYLES.text.first,

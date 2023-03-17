@@ -7,11 +7,9 @@ function Button({ text, isActive, className, activeClass, onClick }: any) {
     <>
       <button
         onClick={onClick}
-        className={`${styles.body.textColor} ${
-          className ? className : "h-10 w-10"
-        } ${
-          isActive != null ? (isActive ? activeClass[0] : activeClass[1]) : ""
-        }`}
+        className={`${className ? className : "h-10 w-10"} ${
+          styles.body.textColor
+        }  ${isActive ? activeClass : ""}`}
       >
         {text ? text : "button"}
       </button>

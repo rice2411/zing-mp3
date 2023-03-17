@@ -14,13 +14,11 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { BsFacebook } from "react-icons/bs";
 import useAuth from "../../../../hooks/useAuth";
+import Dropdown from "../../../../shared/small_components/DropDown";
 const Actions = () => {
   const { styles, theme, color, handleChangeTheme }: any = useTheme();
-  const classButton = `text-xs hover:text-white py-1 px-6 border border-[hsla(0,0%,100%,0.1)]  rounded-full`;
-  const activeButtonClass = [
-    "bg-[#9b4de0] hover:bg-[#8B45CA]",
-    "hover:opacity-80",
-  ];
+  const classButton = `text-xs py-1 px-6 border border-[hsla(0,0%,100%,0.1)]  rounded-full !text-white`;
+  const activeButtonClass = [`${styles.button.backgroundColor}`];
   const { handleModalBlank }: any = useModal();
   const { handleOpenModalLogin, isAuthenticated }: any = useAuth();
 
@@ -79,13 +77,19 @@ const Actions = () => {
         <FiSettings />
       </ButtonIcon>
       {isAuthenticated ? (
-        <div className="h-10 w-10 flex flex-col items-center justify-center relative">
-          <img
-            src="https://s120.avatar.talk.zdn.vn/9/9/2/2/25/120/6a9dcd0606bf38a33e772894ae90ebdf.jpg"
-            className="rounded-full  p-0.5 border border-[#fccc2e] border-2 "
-            alt=""
-          />
-          <div className="vip_label  absolute bottom-0"></div>
+        <div className="relative">
+          <a
+            href="#"
+            className="h-10 w-10 flex flex-col items-center justify-center relative"
+          >
+            <img
+              src="https://s120.avatar.talk.zdn.vn/9/9/2/2/25/120/6a9dcd0606bf38a33e772894ae90ebdf.jpg"
+              className="rounded-full  p-0.5 border border-[#fccc2e] border-2 "
+              alt=""
+            />
+            <div className="vip_label  absolute bottom-0"></div>
+          </a>
+          <Dropdown className="absolute right-0 mt-3" />
         </div>
       ) : (
         <Button

@@ -56,9 +56,7 @@ const ItemChart = ({ item, index, handleHightLightLine, rank }: any) => {
           <div className="leading-6 col-span-4 ml-2 group-hover:col-span-3">
             <div className="flex">
               <h2
-                className={`${
-                  styles.body.textColor
-                } text-sm truncate cursor-default mr-2 font-medium ${
+                className={`text-white text-sm truncate cursor-default mr-2 font-medium ${
                   item.vip ? "opacity-60" : ""
                 }`}
               >
@@ -78,9 +76,7 @@ const ItemChart = ({ item, index, handleHightLightLine, rank }: any) => {
               {item.author.map((name: any, index: any) => (
                 <>
                   <a
-                    className={`${styles.body.subTextColor} ${
-                      styles.body.hover.textColor
-                    } ${
+                    className={`text-[#86828C] ${styles.body.hover.textColor} ${
                       item.vip ? "opacity-60" : ""
                     } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
                   >
