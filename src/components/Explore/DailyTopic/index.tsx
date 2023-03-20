@@ -8,7 +8,7 @@ const DailyTopic = () => {
   return (
     <>
       {data.map((item, index) => (
-        <>
+        <div key={index}>
           <div className="flex justify-between mt-10">
             <h2 className={`${styles.body.textColor} text-xl font-bold`}>
               {item.topic}
@@ -16,10 +16,10 @@ const DailyTopic = () => {
           </div>
           <div className="flex justify-between mt-3">
             {item.data.map((i, idx) => (
-              <Item index={idx} item={i} className={`h-52 w-52`} />
+              <Item key={idx} index={idx} item={i} className={`h-52 w-52`} />
             ))}
           </div>
-        </>
+        </div>
       ))}
     </>
   );

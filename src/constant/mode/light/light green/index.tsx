@@ -3,9 +3,18 @@ import { STYLES } from "./class";
 export const LIGHTGREEN = {
   queryName: "light green",
   components: {
+    dropdown: {
+      backgroundColor: STYLES.backgroundColor.first,
+      textColor: STYLES.text.third,
+      subTextColor: STYLES.text.second,
+      borderColor: STYLES.border.third,
+      hover: {
+        backgroundColor: STYLES.backgroundColor.hover.second,
+      },
+    },
     button: {
-      backgroundColor: STYLES.button.backgroundColor,
-      border: STYLES.button.border,
+      backgroundColor: STYLES.backgroundColor.nineth,
+      border: STYLES.border.third,
     },
     modal: {
       backgroundColor: STYLES.backgroundColor.first,

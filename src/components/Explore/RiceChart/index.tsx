@@ -234,6 +234,7 @@ const RiceChart = () => {
                 <div className="flex flex-col items-center">
                   {data.slice(0, 3).map((item, index) => (
                     <ItemChart
+                      key={index}
                       item={item}
                       index={index}
                       handleHightLightLine={handleHightLightLine}

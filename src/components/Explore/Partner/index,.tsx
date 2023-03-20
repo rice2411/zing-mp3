@@ -7,7 +7,7 @@ const Partner = () => {
       <p className="text-gray-500 font-bold text-xs mb-5">ĐỐI TÁC ÂM NHẠC</p>
       <div className="flex flex-wrap  justify-center items-center">
         {data.map((item, index) => (
-          <div className="rounded  bg-white  mr-5 mb-5">
+          <div className="rounded  bg-white  mr-5 mb-5" key={index}>
             <img src={item} className="w-[121px] h-[68px] p-2 object-contain" />
           </div>
         ))}

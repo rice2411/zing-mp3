@@ -8,7 +8,7 @@ const Suggest2 = () => {
   return (
     <>
       {data.map((item, index) => (
-        <>
+        <div key={index}>
           <div className="flex justify-between mt-10">
             <div className="flex ">
               <img
@@ -28,17 +28,16 @@ const Suggest2 = () => {
           </div>
           <div className="flex justify-between mt-3">
             {item.children.map((song, idx) => (
-              <>
-                <Item
-                  index={idx}
-                  item={song}
-                  isShowDesc={true}
-                  className={`h-52 w-52`}
-                />
-              </>
+              <Item
+                key={idx}
+                index={idx}
+                item={song}
+                isShowDesc={true}
+                className={`h-52 w-52`}
+              />
             ))}
           </div>
-        </>
+        </div>
       ))}
     </>
   );

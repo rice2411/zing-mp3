@@ -8,6 +8,7 @@ export const STYLES = {
     sixth: "bg-[#B4D0D0]", //
     seventh: "bg-[#120C1C]",
     eighth: "bg-[#2F2739]",
+    nineth: "bg-[#0E8080]",
     hover: {
       first: "hover:bg-[#D5DCDC]",
       second: "hover:bg-[#EAEFEF]",
@@ -35,6 +36,7 @@ export const STYLES = {
   border: {
     first: "none",
     second: "#239292",
+    third: "rgba(0,0,0,0.1)",
   },
   divide: {
     first: "#C6CDCD",
@@ -51,9 +53,5 @@ export const STYLES = {
   playlist: {
     backgroundColor: "#BCD5D5",
     hoverColor: "",
-  },
-  button: {
-    backgroundColor: "bg-[#0E8080]",
-    border: "rgba(0,0,0,0.1)",
   },
 };

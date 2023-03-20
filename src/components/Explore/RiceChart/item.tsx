@@ -74,16 +74,15 @@ const ItemChart = ({ item, index, handleHightLightLine, rank }: any) => {
             </div>
             <div>
               {item.author.map((name: any, index: any) => (
-                <>
-                  <a
-                    className={`text-[#86828C] ${styles.body.hover.textColor} ${
-                      item.vip ? "opacity-60" : ""
-                    } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
-                  >
-                    {name}
-                    {item.author.length - 1 === index ? "" : ", "}
-                  </a>
-                </>
+                <a
+                  key={index}
+                  className={`text-[#86828C] ${styles.body.hover.textColor} ${
+                    item.vip ? "opacity-60" : ""
+                  } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
+                >
+                  {name}
+                  {item.author.length - 1 === index ? "" : ", "}
+                </a>
               ))}
             </div>
           </div>

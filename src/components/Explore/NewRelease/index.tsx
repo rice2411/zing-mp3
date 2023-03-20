@@ -54,9 +54,12 @@ const NewRelease = () => {
       <div className="flex justify-between mt-3">
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-4 w-full">
           {data.map((item, index) => (
-            <>
-              <NewReleaseItem index={index} item={item} className="" />
-            </>
+            <NewReleaseItem
+              key={index}
+              index={index}
+              item={item}
+              className=""
+            />
           ))}
         </div>
       </div>

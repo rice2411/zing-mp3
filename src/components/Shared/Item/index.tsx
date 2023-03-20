@@ -62,9 +62,11 @@ const Item = ({ item, index, className }: any) => {
         {item.name}
       </h3>
 
-      <h6 className="text-gray-500 font-normal text-xs leading-3 mt-1.5 leading-tight">
+      <h6 className="text-gray-500 font-normal text-xs leading-3 mt-1.5  leading-tight">
         {item.author?.map((author: any, idx: any) => (
-          <>{idx != item.author.length - 1 ? author + ", " : author}</>
+          <span key={idx}>
+            {idx != item.author.length - 1 ? author + ", " : author}
+          </span>
         ))}
         {item.desc ?? ""}
       </h6>

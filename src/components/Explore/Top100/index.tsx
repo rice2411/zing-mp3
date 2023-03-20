@@ -14,7 +14,7 @@ const Top100 = () => {
       </div>
       <div className="flex justify-between mt-3">
         {data.map((i, idx) => (
-          <Item index={idx} item={i} className={`h-52 w-52`} />
+          <Item key={idx} index={idx} item={i} className={`h-52 w-52`} />
         ))}
       </div>
     </>

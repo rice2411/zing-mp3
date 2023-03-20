@@ -30,10 +30,10 @@ const MixTape = () => {
       <div className=" flex justify-between ">
         {" "}
         {data.map((item, index) => (
-          <div className="max-w-[200px] h-[213px] ">
+          <div className="max-w-[200px] h-[213px] " key={index}>
             <Fade autoplay={true} duration={2000} {...properties}>
               {item.images.map((img, idx) => (
-                <>
+                <div key={idx}>
                   {" "}
                   <div className="each-slide-effect w-auto h-auto">
                     <div
@@ -66,13 +66,13 @@ const MixTape = () => {
                         {item.name}
                       </p>
                       <span className="text-xs text-gray-200 font-light ">
-                        {item?.authors?.map((auth) => (
-                          <>{auth},</>
+                        {item?.authors?.map((auth, i) => (
+                          <div key={i}>{auth},</div>
                         ))}
                       </span>
                     </div>
                   </div>{" "}
-                </>
+                </div>
               ))}
             </Fade>
           </div>

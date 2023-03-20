@@ -3,9 +3,18 @@ import { STYLES } from "./class";
 export const PURPLE = {
   queryName: "purple",
   components: {
+    dropdown: {
+      backgroundColor: STYLES.backgroundColor.nineth,
+      textColor: STYLES.text.third,
+      subTextColor: STYLES.text.second,
+      borderColor: STYLES.border.third,
+      hover: {
+        backgroundColor: STYLES.backgroundColor.hover.second,
+      },
+    },
     button: {
-      backgroundColor: STYLES.button.backgroundColor,
-      border: STYLES.button.border,
+      backgroundColor: STYLES.backgroundColor.tenth,
+      border: STYLES.border.third,
     },
     modal: {
       backgroundColor: STYLES.backgroundColor.first,

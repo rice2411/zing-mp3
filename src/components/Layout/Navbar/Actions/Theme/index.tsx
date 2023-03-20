@@ -3,7 +3,7 @@ import useModal from "../../../../../hooks/useModal";
 import useTheme from "../../../../../hooks/useTheme";
 import { data } from "./data";
 
-const ThemeOption = ({ data, theme }: any) => {
+const ThemeOption = ({ data, theme, handleCloseModalTheme }: any) => {
   const { styles, handleChangeTheme }: any = useTheme();
   const { handleModalBlank }: any = useModal();
   const themeRef = useRef(null);
@@ -16,7 +16,7 @@ const ThemeOption = ({ data, theme }: any) => {
     themeRef.current.classList.add("hidden");
   };
   const handleApplyTheme = () => {
-    handleModalBlank({ isShow: false });
+    handleCloseModalTheme(false);
     handleChangeTheme(theme, data.color);
   };
   const handlePreviewTheme = () => {

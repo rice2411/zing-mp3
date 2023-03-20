@@ -16,6 +16,7 @@ const NewReleaseItem = ({ item, index, className }: any) => {
   const { styles }: any = useTheme();
   return (
     <div
+      key={index}
       onMouseEnter={() => handleMouseEnter()}
       onMouseLeave={() => handleMouseLeave()}
       className="group items-center w-full hover:bg-[hsla(0,0%,100%,0.1)] rounded-md overflow-hidden"
@@ -55,18 +56,17 @@ const NewReleaseItem = ({ item, index, className }: any) => {
           </div>
           <div>
             {item.author.map((name: any, index: any) => (
-              <>
-                <a
-                  className={`${styles.body.subTextColor} ${
-                    styles.body.hover.textColor
-                  } ${
-                    item.vip ? "opacity-60" : ""
-                  } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
-                >
-                  {name}
-                  {item.author.length - 1 === index ? "" : ", "}
-                </a>
-              </>
+              <a
+                key={index}
+                className={`${styles.body.subTextColor} ${
+                  styles.body.hover.textColor
+                } ${
+                  item.vip ? "opacity-60" : ""
+                } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
+              >
+                {name}
+                {item.author.length - 1 === index ? "" : ", "}
+              </a>
             ))}
           </div>
           <h3

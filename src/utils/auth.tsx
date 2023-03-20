@@ -1,14 +1,19 @@
 import cookie from "js-cookie";
 
-function Login(token: string) {
-  cookie.set("token", token);
+function setToken(token: string) {
+  cookie.set("token", token, { expires: 365 });
+
+  return true;
+}
+function setUser(user: string) {
+  cookie.set("user", user, { expires: 365 });
+
   return true;
 }
 
-function logout() {
+function Logout() {
   cookie.remove("token");
-  cookie.remove("profile");
-  cookie.remove("userId");
+  cookie.remove("user");
   if (typeof window != "undefined") {
     window.localStorage.setItem("logout", Date.now().toString());
   }
@@ -20,7 +25,7 @@ function getCurrentToken() {
     if (JSON.parse(token)) {
       return JSON.parse(token);
     } else {
-      logout();
+      Logout();
     }
   }
 }
@@ -31,9 +36,9 @@ function getCurrentUser() {
     if (JSON.parse(user)) {
       return JSON.parse(user);
     } else {
-      logout();
+      Logout();
     }
   }
 }
 
-export { Login, logout, getCurrentUser, getCurrentToken };
+export { setToken, setUser, Logout, getCurrentUser, getCurrentToken };

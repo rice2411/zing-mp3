@@ -6,15 +6,20 @@ import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import useTheme from "../../hooks/useTheme";
 import AuthService from "../../service/auth";
+import UserService from "../../service/user";
 import Button from "../../shared/small_components/Button/Basic";
 import ButtonIcon from "../../shared/small_components/Button/Icon";
 import Loader from "../../shared/small_components/Loading/Spinner";
 import BlankModal from "../../shared/small_components/Modal/Blank";
-import { Login } from "../../utils/auth";
+import { setToken, setUser } from "../../utils/auth";
 
 const LoginModal = () => {
-  const { isOpenModalLogin, handleCloseModalLogin, setIsAuthenticated }: any =
-    useAuth();
+  const {
+    isOpenModalLogin,
+    handleCloseModalLogin,
+    setIsAuthenticated,
+    setUserProfile,
+  }: any = useAuth();
   const { styles }: any = useTheme();
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -26,11 +31,16 @@ const LoginModal = () => {
         password: values.password,
       };
       setIsLoading(true);
-      const response: any = await AuthService.login(params);
-      if (response?.data?.data) {
-        Login(response?.data?.data.token);
+      const responseAuth: any = await AuthService.login(params);
+      if (responseAuth?.data?.data) {
         setIsAuthenticated(true);
         handleCloseModalLogin();
+        setToken(responseAuth?.data?.data.token);
+        const response: any = await UserService.getMe();
+        if (response?.data?.data) {
+          setUserProfile(response?.data?.data);
+          setUser(JSON.stringify(response?.data?.data));
+        }
       }
     } catch (err) {
       if (err?.response) {

@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: any) => {
   );
 
   const [userProfile, setUserProfile] = useState(
-    JSON.parse(cookie.get("profile") || `{"name":"default"}`) || {}
+    JSON.parse(cookie.get("user") || `{"name":"default"}`) || {}
   );
 
   return (
@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }: any) => {
         setIsAuthenticated,
         handleOpenModalLogin,
         handleCloseModalLogin,
+        setUserProfile,
       }}
     >
       {children}
