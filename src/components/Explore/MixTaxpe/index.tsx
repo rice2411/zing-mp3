@@ -67,7 +67,7 @@ const MixTape = () => {
                       </p>
                       <span className="text-xs text-gray-200 font-light ">
                         {item?.authors?.map((auth, i) => (
-                          <div key={i}>{auth},</div>
+                          <span key={i}>{auth},</span>
                         ))}
                       </span>
                     </div>

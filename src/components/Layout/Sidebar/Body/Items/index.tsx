@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useTheme from "../../../../../hooks/useTheme";
 import { widthDefaultValue } from "../../styles";
 
@@ -58,8 +58,8 @@ export default function Items({ data, className, isToggle }: any) {
                 : "",
           }}
         >
-          <a
-            href="/home"
+          <Link
+            to={item.route}
             className="flex items-center p-2 text-base  rounded-lg transition duration-7"
           >
             {item.icon}
@@ -76,7 +76,7 @@ export default function Items({ data, className, isToggle }: any) {
             >
               {item.canPlay ? item.canPlay : ""}
             </div>
-          </a>
+          </Link>
         </li>
       ))}
     </ul>

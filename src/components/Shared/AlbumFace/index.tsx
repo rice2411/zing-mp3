@@ -2,10 +2,11 @@ import React, { useRef } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BsPlayCircle } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import { getFile } from "../../../constant/file";
 import useTheme from "../../../hooks/useTheme";
 
-const Item = ({ item, index, className }: any) => {
+const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
   const itemRef = useRef([]);
   const imageRef = useRef([]);
   const { styles }: any = useTheme();
@@ -33,7 +34,9 @@ const Item = ({ item, index, className }: any) => {
   };
 
   return (
-    <div
+    <Link
+      to={"/album"}
+      state={item._id}
       className="cursor-pointer max-w-[200px] h-max"
       key={index}
       onMouseEnter={() => handleMouseEnter(index)}
@@ -63,15 +66,20 @@ const Item = ({ item, index, className }: any) => {
       </h3>
 
       <h6 className="text-gray-500 font-normal text-xs leading-3 mt-1.5  leading-tight">
+        {item.authors?.map((author: any, idx: any) => (
+          <span key={idx}>
+            {idx != item.authors.length - 1 ? author.name + ", " : author.name}
+          </span>
+        ))}
         {item.author?.map((author: any, idx: any) => (
           <span key={idx}>
             {idx != item.author.length - 1 ? author + ", " : author}
           </span>
         ))}
-        {item.desc ?? ""}
+        {isShowDesc ? item.description : ""}
       </h6>
-    </div>
+    </Link>
   );
 };
 
-export default Item;
+export default AlbumFace;

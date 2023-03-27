@@ -93,14 +93,14 @@ const Carousel = ({ props = null }: any) => {
   };
 
   useEffect(() => {
-    if (!pause) {
+    if (!pause && data) {
       const id = setInterval(slide, 5000);
       setAnimationId(id);
       return () => clearInterval(id);
     } else {
       clearInterval(animationId);
     }
-  }, [pause]);
+  }, [pause, data]);
 
   useEffect(() => {
     fetchData();

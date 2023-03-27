@@ -3,25 +3,25 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import useTheme from "../../../hooks/useTheme";
 import { data } from "./data";
 
-import Item from "../../Shared/Item";
-import PlaylistService from "../../../service/playlist";
 import Skeleton from "../../../shared/small_components/Loading/Skeleton";
 import useAuth from "../../../hooks/useAuth";
+import AlbumFace from "../../Shared/AlbumFace";
+import AlbumService from "../../../service/album";
 
 const Recently = () => {
   const numberOfItem = 7;
   const { styles }: any = useTheme();
   const { isAuthenticated }: any = useAuth();
-  const [recentPlaylist, setRecentPlaylist] = useState([]);
+  const [recentAlbum, setRecentAlbum] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchRecentPlayList = async () => {
+  const fetchRecentAlbum = async () => {
     setIsLoading(true);
 
     try {
-      const response: any = await PlaylistService.recentPlaylist();
+      const response: any = await AlbumService.recentAlbum();
       if (response?.data?.data) {
-        setRecentPlaylist(response.data.data);
+        setRecentAlbum(response.data.data);
       }
     } catch (err) {
       console.log(err);
@@ -30,7 +30,7 @@ const Recently = () => {
     }
   };
   useEffect(() => {
-    if (isAuthenticated) fetchRecentPlayList();
+    if (isAuthenticated) fetchRecentAlbum();
   }, [isAuthenticated]);
   return (
     <>
@@ -60,12 +60,13 @@ const Recently = () => {
               </>
             ) : (
               <>
-                {recentPlaylist.map((item, index) => (
-                  <Item
+                {recentAlbum.map((item, index) => (
+                  <AlbumFace
                     key={index}
                     index={index}
                     item={item}
                     className={` h-36 w-36 `}
+                    isShowDesc={false}
                   />
                 ))}
               </>

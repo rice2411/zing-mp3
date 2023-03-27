@@ -3,6 +3,13 @@ import { STYLES } from "./class";
 export const PURPLE = {
   queryName: "purple",
   components: {
+    album: {
+      textColor: STYLES.text.third,
+      subTextColor: STYLES.text.second,
+      button: {
+        backgroundColor: STYLES.backgroundColor.tenth,
+      },
+    },
     dropdown: {
       backgroundColor: STYLES.backgroundColor.nineth,
       textColor: STYLES.text.third,

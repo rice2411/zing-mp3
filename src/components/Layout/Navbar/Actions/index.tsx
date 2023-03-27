@@ -22,6 +22,7 @@ import { Logout } from "../../../../utils/auth";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { getFile } from "../../../../constant/file";
+import Divide from "../../../../shared/small_components/Divide";
 
 const Actions = () => {
   const { styles, theme, color, handleChangeTheme }: any = useTheme();
@@ -149,9 +150,7 @@ const Actions = () => {
           </a>
         </DropdownItem>
         <DropdownItem>
-          <div
-            className={` border-t-[1px] border-[${styles.dropdown.borderColor}] my-2`}
-          ></div>
+          <Divide />
         </DropdownItem>
         <DropdownItem>
           <a
@@ -257,9 +256,7 @@ const Actions = () => {
             </a>
           </DropdownItem>
           <DropdownItem>
-            <div
-              className={` border-t-[1px] border-[${styles.dropdown.borderColor}]`}
-            ></div>
+            <Divide />
           </DropdownItem>
           <DropdownItem>
             <a

@@ -5,10 +5,13 @@ import FooterSideBar from "./Footer/index";
 import { widthDefaultValue } from "./styles";
 
 import useWindowSize from "../../../hooks/useWindowSize";
-import { Audio } from "../Audio";
+
 import useTheme from "../../../hooks/useTheme";
+import Player from "../Audio/Player";
+import useAudio from "../../../hooks/useAudio";
 
 export default function SiderBar() {
+  const { audio }: any = useAudio();
   const { width }: any = useWindowSize();
   const { styles }: any = useTheme();
   const [withDefault, setWithDefault] = useState(widthDefaultValue);
@@ -56,7 +59,7 @@ export default function SiderBar() {
               isToggle={isToggle}
             />
           </div>
-          <Audio />
+          {audio != null ? <Player /> : <></>}
         </div>
       </aside>
     </>

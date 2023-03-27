@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { BsPlayFill } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { RiVipFill } from "react-icons/ri";
+import { getFile } from "../../../constant/file";
 import useTheme from "../../../hooks/useTheme";
 import "./styles.scss";
+import Moment from "react-moment";
+import "moment/locale/vi";
+import useAudio from "../../../hooks/useAudio";
 
 const NewReleaseItem = ({ item, index, className }: any) => {
   const [isHover, setIsHover] = useState(false);
+  const { handlePlayOneSong }: any = useAudio();
   const handleMouseEnter = () => {
     setIsHover(true);
   };
@@ -22,10 +27,15 @@ const NewReleaseItem = ({ item, index, className }: any) => {
       className="group items-center w-full hover:bg-[hsla(0,0%,100%,0.1)] rounded-md overflow-hidden"
     >
       <div className="p-2 flex items-center grid grid-cols-5 place-content-center">
-        <div className="relative hover:cursor-pointer flex items-center justify-center">
+        <div
+          className="relative hover:cursor-pointer flex items-center justify-center"
+          onClick={() => {
+            handlePlayOneSong(item);
+          }}
+        >
           <div className="w-[60px] h-[60px] overflow-hidden rounded-md ">
             <img
-              src={item.avatar}
+              src={getFile(item.image)}
               className={`w-full h-full ${isHover ? "opacity-50" : ""}`}
             />
           </div>
@@ -39,14 +49,14 @@ const NewReleaseItem = ({ item, index, className }: any) => {
               className={`${
                 styles.body.textColor
               } text-sm truncate cursor-default mr-2 font-medium ${
-                item.vip ? "opacity-60" : ""
+                item.is_vip ? "opacity-60" : ""
               }`}
             >
               {item.name}
             </h2>
             <div
               className={`text-yellow-300 text-xl flex flex-col items-center justify-center ${
-                item.vip ? "" : "hidden"
+                item.is_vip ? "" : "hidden"
               } `}
             >
               <span className="overflow-hidden ">
@@ -55,24 +65,20 @@ const NewReleaseItem = ({ item, index, className }: any) => {
             </div>
           </div>
           <div>
-            {item.author.map((name: any, index: any) => (
-              <a
-                key={index}
-                className={`${styles.body.subTextColor} ${
-                  styles.body.hover.textColor
-                } ${
-                  item.vip ? "opacity-60" : ""
-                } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
-              >
-                {name}
-                {item.author.length - 1 === index ? "" : ", "}
-              </a>
-            ))}
+            <a
+              className={`${styles.body.subTextColor} ${
+                styles.body.hover.textColor
+              } ${
+                item.vip ? "opacity-60" : ""
+              } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
+            >
+              {item.artist.name}
+            </a>
           </div>
           <h3
             className={`${styles.body.subTextColor} text-xs font-normal mt-1 truncate cursor-default`}
           >
-            {item.time}
+            <Moment fromNow>{item.createdAt}</Moment>
           </h3>
         </div>
         <div className="item-center flex justify-end mr-2">

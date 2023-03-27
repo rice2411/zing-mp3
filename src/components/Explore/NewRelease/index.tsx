@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { RiArrowRightSLine } from "react-icons/ri";
+import useAudio from "../../../hooks/useAudio";
 import useTheme from "../../../hooks/useTheme";
+import SongService from "../../../service/song";
 import Button from "../../../shared/small_components/Button/Basic";
 import NewReleaseItem from "../../Shared/NewReleaseItem";
-import { data } from "./data";
 
 const NewRelease = () => {
   const { styles }: any = useTheme();
+
+  const [data, setData] = useState([]);
   const classButton = `text-xs  py-1 px-6 border border-[${styles.button.border}] border-gray-500  rounded-full`;
   const activeButtonClass = [
     `${styles.button.backgroundColor} !text-white hover:opacity-80`,
   ];
+
+  const fetchData = async () => {
+    try {
+      const response: any = await SongService.getNewRelease();
+      if (response?.data?.data) {
+        setData(response?.data?.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <>
       <div className="flex justify-between mt-10">
@@ -53,7 +71,7 @@ const NewRelease = () => {
       </div>
       <div className="flex justify-between mt-3">
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-4 w-full">
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <NewReleaseItem
               key={index}
               index={index}

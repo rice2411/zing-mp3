@@ -6,23 +6,35 @@ import "./styles.scss";
 import Actions from "../Actions";
 import Info from "../Info";
 import useTheme from "../../../../hooks/useTheme";
-const Player = ({ tracks }: any) => {
+import useAudio from "../../../../hooks/useAudio";
+import { getFile } from "../../../../constant/file";
+const Player = () => {
   // State
-  const [trackIndex, setTrackIndex] = useState(0);
+  const {
+    playlist,
+    audioRef,
+    isPlaying,
+    setIsPlaying,
+    trackIndex,
+    setTrackIndex,
+    timeEnd,
+    setTimeEnd,
+    artist,
+    name,
+    image,
+    handlePlay,
+  }: any = useAudio();
+
   const [isDirty, setIsDirty] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
   const [timeRunning, setTimeRunning] = useState(0);
-  const [timeEnd, setTimeEnd] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+
   const { styles }: any = useTheme();
   //alo
   // Destructure for conciseness
-  const { title, artist, image, audioSrc } = tracks[trackIndex];
 
   // Refs
-  const audioRef = useRef(
-    typeof Audio !== "undefined" ? new Audio(audioSrc) : undefined
-  );
+
   const intervalRef = useRef();
   const isReady = useRef(false);
 
@@ -33,7 +45,7 @@ const Player = ({ tracks }: any) => {
   const currentPercentage = duration
     ? `${(trackProgress / duration) * 100}%`
     : "0%";
-  const trackStyling = `
+  const playlisttyling = `
     -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, ${styles.audio.track.color}), color-stop(${currentPercentage}, #777))
   `;
   const timeFormat = (second: any) => {
@@ -44,6 +56,8 @@ const Player = ({ tracks }: any) => {
     clearInterval(intervalRef.current); // @ts-ignore: Object is possibly 'null'.
     intervalRef.current = setInterval(() => {
       if (audioRef.current.ended) {
+        setIsPlaying(false);
+        audioRef.current.pause();
         toNextTrack();
       } else {
         setTimeRunning(Math.round(audioRef.current.currentTime));
@@ -61,11 +75,6 @@ const Player = ({ tracks }: any) => {
     setTimeRunning(Math.round(audioRef.current.currentTime));
     setTrackProgress(audioRef.current.currentTime);
   };
-  const handlePlay = () => {
-    setIsPlaying((preState) => !preState);
-    const duration: any = audioRef.current?.duration;
-    setTimeEnd(duration);
-  };
 
   const onScrubEnd = () => {
     // If not already playing, start
@@ -77,14 +86,14 @@ const Player = ({ tracks }: any) => {
 
   const toPrevTrack = () => {
     if (trackIndex - 1 < 0) {
-      setTrackIndex(tracks.length - 1);
+      setTrackIndex(playlist.length - 1);
     } else {
       setTrackIndex(trackIndex - 1);
     }
   };
 
   const toNextTrack = () => {
-    if (trackIndex < tracks.length - 1) {
+    if (trackIndex < playlist.length - 1) {
       setTrackIndex(trackIndex + 1);
     } else {
       setTrackIndex(0);
@@ -99,10 +108,10 @@ const Player = ({ tracks }: any) => {
     if (isPlaying) {
       audioRef.current
         .play()
-        .then((_) => {
+        .then((_: any) => {
           // Autoplay started!
         })
-        .catch((error) => {
+        .catch((error: any) => {
           // Autoplay was prevented.
           // Show a "Play" button so that user can start playback.
         });
@@ -112,7 +121,7 @@ const Player = ({ tracks }: any) => {
     }
   }, [isPlaying]);
 
-  // Handles cleanup and setup when changing tracks
+  // Handles cleanup and setup when changing playlist
   useEffect(() => {
     audioRef.current?.addEventListener("loadeddata", function () {
       setTimeEnd(this.duration);
@@ -120,18 +129,18 @@ const Player = ({ tracks }: any) => {
     if (isDirty) {
       audioRef.current.pause();
 
-      audioRef.current =
-        typeof Audio !== "undefined" ? new Audio(audioSrc) : undefined;
+      // audioRef.current =
+      //   typeof Audio !== "undefined" ? new Audio(getFile(audio)) : undefined;
 
       setTrackProgress(audioRef.current.currentTime);
 
       if (isReady.current) {
         audioRef.current
           .play()
-          .then((_) => {
+          .then((_: any) => {
             // Autoplay started!
           })
-          .catch((error) => {
+          .catch((error: any) => {
             // Autoplay was prevented.
             // Show a "Play" button so that user can start playback.
           });
@@ -159,7 +168,7 @@ const Player = ({ tracks }: any) => {
       <div
         className={`${styles.audio.backgroundColor} mt-auto h-[90px] z-50  w-screen audio  flex justify-between items-center `}
       >
-        <Info title={title} artist={artist} image={image} />
+        <Info title={name} artist={artist.name} image={getFile(image)} />
         <div
           className={`player w-3/4 min-w-[300px] ${styles.audio.player.textColor} mr-auto`}
         >
@@ -167,7 +176,9 @@ const Player = ({ tracks }: any) => {
             isPlaying={isPlaying}
             onPrevClick={toPrevTrack}
             onNextClick={toNextTrack}
-            onPlayPauseClick={handlePlay}
+            onPlayPauseClick={() => {
+              handlePlay(audioRef.current.duration);
+            }}
           />
           <div className="flex w-full justify-center items-center">
             <span className={`text-xs ${styles.audio.player.textDark} `}>
@@ -184,7 +195,7 @@ const Player = ({ tracks }: any) => {
               onMouseEnter={handleMouseEnter}
               // onMouseUp={onScrubEnd}
               // onKeyUp={onScrubEnd}
-              style={{ background: trackStyling }}
+              style={{ background: playlisttyling }}
             />
             <span className={`text-xs ${styles.audio.player.textColor} `}>
               {timeFormat(timeEnd)}
