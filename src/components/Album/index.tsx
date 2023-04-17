@@ -1,37 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { AiOutlineHeart } from "react-icons/ai";
+import React, { useState, useEffect, useRef } from "react";
+import { AiOutlineHeart, AiOutlinePause } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { FaPlay } from "react-icons/fa";
+import { FaPause, FaPlay } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
-import { date } from "yup";
 import { getFile } from "../../constant/file";
 import useTheme from "../../hooks/useTheme";
 import AlbumService from "../../service/album";
 import ButtonIcon from "../../shared/small_components/Button/Icon";
-import { stringToFormatDate } from "../../utils/helpers";
 import { TbArrowsSort } from "react-icons/tb";
 import Divide from "../../shared/small_components/Divide";
+import { BsMusicNoteBeamed, BsPauseCircle, BsPlayCircle } from "react-icons/bs";
+import { IoMusicalNotesOutline } from "react-icons/io5";
+import Song from "../Shared/Song";
+import useAudio from "../../hooks/useAudio";
+import { convertToDate, cutString, totalTimeString } from "./helper";
+import ArtistService from "../../service/artist";
+import AlbumFace from "../Shared/AlbumFace";
+import ArtistFace from "../Shared/ArtistFace";
 
 const Album = () => {
   const location = useLocation();
+  const { albumId } = location.state;
 
   const { styles }: any = useTheme();
 
   const [data, setData]: any = useState({});
+  const [appearIn, setAppearIn]: any = useState({});
+  const [neighbour, setNeighbour] = useState([]);
   const [timeData, setTimeData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isHover, setIsHover] = useState(false);
 
-  const handleMouseEnter = () => {
-    setIsHover(true);
+  const itemRef = useRef(null);
+  const imageRef = useRef(null);
+  const { isPlaying, setIsPlaying, handlePlayAlbum }: any = useAudio();
+
+  const handleMouseEnter = (id: any) => {
+    if (isPlaying && albumId == id) {
+      imageRef.current.classList.add("scale-110");
+    } else {
+      itemRef.current.classList.remove("hidden");
+      itemRef.current.classList.add("flex");
+      imageRef.current.classList.add("scale-110");
+    }
   };
-  const handleMouseLeave = () => {
-    setIsHover(false);
+  const handleMouseLeave = (id: any) => {
+    if (isPlaying && albumId == id) {
+      imageRef.current.classList.remove("scale-110");
+    } else {
+      itemRef.current.classList.remove("flex");
+      itemRef.current.classList.add("hidden");
+      imageRef.current.classList.remove("scale-110");
+    }
   };
 
   const fetchData = async () => {
     setIsLoading(true);
-    const albumId = location.state;
+
     try {
       const response: any = await AlbumService.detailAlbum(albumId);
       const dataRaw = response?.data?.data;
@@ -53,7 +77,12 @@ const Album = () => {
             return time;
           })
         );
+
         setTimeData(times);
+        fetchDataAppearIn(dataRaw?.authors?._id);
+        const typeId = dataRaw.typeIds[0];
+
+        fetchDataNeighbour(typeId);
       }
     } catch (err) {
       console.log(err);
@@ -61,61 +90,37 @@ const Album = () => {
       setIsLoading(false);
     }
   };
+  const fetchDataNeighbour = async (typeId: string) => {
+    try {
+      const response: any = await AlbumService.getNeighBour(typeId);
+      const dataRaw = response?.data?.data;
 
-  function cutString(s: String, n: number) {
-    var cut = s.indexOf(" ", n);
-    if (cut == -1) return s;
-    return s.substring(0, cut);
-  }
-
-  const convertToDate = (date: string) => {
-    return new Date(Date.parse(date));
-  };
-
-  function zeroPad(num: any) {
-    var str = String(num);
-    if (str.length < 2) {
-      return "0" + str;
+      if (dataRaw) {
+        setNeighbour(dataRaw);
+      }
+    } catch (err) {
+      console.log(err);
     }
-
-    return str;
-  }
-
-  // assuming your time strings will always be (H*:)(m{0,2}:)s{0,2} and never negative
-  function totalTimeString(timeStrings: any) {
-    var totals = timeStrings.reduce(
-      function (a: any, timeString: any) {
-        var parts = timeString.split(":");
-        var temp;
-        if (parts.length > 0) {
-          temp = Number(parts.pop()) + a.seconds;
-          a.seconds = temp % 60;
-          if (parts.length > 0) {
-            temp = Number(parts.pop()) + a.minutes + (temp - a.seconds) / 60;
-            a.minutes = temp % 60;
-            a.hours = a.hours + (temp - a.minutes) / 60;
-            if (parts.length > 0) {
-              a.hours += Number(parts.pop());
-            }
+  };
+  const fetchDataAppearIn = async (artistId: string) => {
+    try {
+      const response: any = await ArtistService.appearIn(artistId);
+      const dataRaw = response?.data?.data;
+      if (dataRaw) {
+        let index = -1;
+        for (let i = 0; i < dataRaw.album.length; i++) {
+          if (dataRaw.album[i]._id == albumId) {
+            index = i;
           }
         }
+        if (index !== -1) dataRaw.album.splice(index, 1);
 
-        return a;
-      },
-      {
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
+        setAppearIn(dataRaw);
       }
-    );
-
-    // returned string will be HH(H+):mm:ss
-    return [
-      totals.hours + " giờ",
-      totals.minutes + " phút",
-      // zeroPad(totals.seconds),
-    ].join(" ");
-  }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -126,115 +131,211 @@ const Album = () => {
       {isLoading ? (
         ""
       ) : (
-        <div className="flex px-4 py-3">
-          <div className="min-w-[300px]">
-            <img
-              src={getFile(data.image)}
-              className={`h-[300px] w-[300px] rounded-md`}
-              alt=""
-            />
-            <div className="mt-4  text-center">
-              <h1 className={`${styles.album.textColor} font-bold text-xl`}>
-                {data.name}
-              </h1>
-              <p className={`${styles.album.subTextColor} text-xs mt-1`}>
-                {data?.authors?.name} •{" "}
-                {convertToDate(data.publicationYear).getFullYear()}
-              </p>
-              <p className={`${styles.album.subTextColor} text-xs mt-1`}>
-                {data.likes} người yêu thích
-              </p>
-              <ButtonIcon
-                className={`mt-5 px-8 py-1.5 ${styles.album.button.backgroundColor} ${styles.album.textColor} rounded-full flex items-center`}
+        <>
+          <div className="flex px-4 py-3 ">
+            <div className="min-w-[300px] sticky top-[0] left-0  h-[calc(100vh - 200px)] z-50 self-start">
+              <div
+                className={`  overflow-hidden relative h-[300px] w-[300px] `}
+                onMouseEnter={() => handleMouseEnter(data._id)}
+                onMouseLeave={() => handleMouseLeave(data._id)}
               >
-                <FaPlay className={`${styles.album.textColor} mr-1`} />
-                Tiếp tục nghe
-              </ButtonIcon>
-              <div className="mt-5">
-                <ButtonIcon
-                  className={`${styles.navbar.item.backgroundColor} ${styles.navbar.item.hover.backgroundColor} ${styles.album.textColor}  rounded-full h-10 w-10`}
+                <img
+                  ref={imageRef}
+                  src={getFile(data.image)}
+                  className={`h-[300px] w-[300px] rounded-md cursor-pointer duration-700 absolute cursor-pointer`}
+                  alt=""
+                />
+
+                <div
+                  className={`cursor-pointer bg-gray-900 bg-opacity-70 h-full w-full absolute z-50   justify-center items-center ${
+                    isPlaying && albumId == data._id ? "flex" : "hidden"
+                  } `}
+                  ref={itemRef}
                 >
-                  <AiOutlineHeart />
-                </ButtonIcon>
-                <ButtonIcon
-                  className={`${styles.navbar.item.backgroundColor} ${styles.navbar.item.hover.backgroundColor} ${styles.album.textColor}  rounded-full h-10 w-10`}
-                >
-                  <FiMoreHorizontal />
-                </ButtonIcon>
+                  <div className="text-white flex  items-center justify-center w-full px-5">
+                    {isPlaying && albumId == data._id ? (
+                      <>
+                        <BsPauseCircle
+                          className="text-5xl "
+                          onClick={() => {
+                            setIsPlaying((preState: any) => !preState);
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <BsPlayCircle
+                          className="text-5xl "
+                          onClick={() => {
+                            handlePlayAlbum(data._id);
+                          }}
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4  text-center">
+                <h1 className={`${styles.album.textColor} font-bold text-xl`}>
+                  {data.name}
+                </h1>
+                <p className={`${styles.album.subTextColor} text-xs mt-1`}>
+                  {data?.authors?.name} •{" "}
+                  {convertToDate(data.publicationYear).getFullYear()}
+                </p>
+                <p className={`${styles.album.subTextColor} text-xs mt-1`}>
+                  {data.likes} người yêu thích
+                </p>
+
+                {data?.songs?.length && (
+                  <ButtonIcon
+                    onClick={() => {
+                      setIsPlaying((preState: any) => !preState);
+                    }}
+                    className={`mt-5 px-8 py-1.5 ${styles.album.button.backgroundColor} ${styles.album.textColor} rounded-full flex items-center`}
+                  >
+                    {isPlaying ? (
+                      <>
+                        <FaPause className={`${styles.album.textColor} mr-1`} />
+                        Tạm dừng
+                      </>
+                    ) : (
+                      <>
+                        <FaPlay className={`${styles.album.textColor} mr-1`} />
+                        Tiếp tục nghe
+                      </>
+                    )}
+                  </ButtonIcon>
+                )}
+
+                <div className="mt-5">
+                  <ButtonIcon
+                    className={`${styles.navbar.item.backgroundColor} ${styles.navbar.item.hover.backgroundColor} ${styles.album.textColor}  rounded-full h-10 w-10 cursor`}
+                  >
+                    <AiOutlineHeart />
+                  </ButtonIcon>
+                  <ButtonIcon
+                    className={`${styles.navbar.item.backgroundColor} ${styles.navbar.item.hover.backgroundColor} ${styles.album.textColor}  rounded-full h-10 w-10`}
+                  >
+                    <FiMoreHorizontal />
+                  </ButtonIcon>
+                </div>
               </div>
             </div>
-          </div>
-          <div className={`${styles.album.textColor} ml-5 text-sm`}>
-            <span className={`${styles.album.subTextColor}`}>Lời tựa:</span>{" "}
-            {data?.description?.length <= 350 ? (
-              data?.description
-            ) : (
-              <>
-                {cutString(data?.description ?? "", 350)}{" "}
-                <span className="uppercase font-bold text-xs">
-                  ... Xem thêm
-                </span>
-              </>
-            )}
-            <div className="mt-4">
-              <div
-                className={`flex justify-between mb-3  px-2 font-bold uppercase text-xs ${styles.album.subTextColor}`}
-              >
-                <div className="flex items-center">
-                  <TbArrowsSort className="mr-5" />
-                  <span>Bài hát</span>
-                </div>
-                <p>Thời gian</p>
-              </div>
-              <div>
-                <Divide />
-                {data?.songs?.map((song: any, index: number) => (
-                  <div
-                    key={index}
-                    onMouseEnter={() => handleMouseEnter()}
-                    onMouseLeave={() => handleMouseLeave()}
-                  >
+            <div
+              className={`${styles.album.textColor} ml-5 text-sm overflow-auto w-full`}
+            >
+              {data?.songs?.length ? (
+                <>
+                  {" "}
+                  <span className={`${styles.album.subTextColor}`}>
+                    Lời tựa:
+                  </span>{" "}
+                  {data?.description?.length <= 350 ? (
+                    data?.description
+                  ) : (
+                    <>
+                      {cutString(data?.description ?? "", 350)}{" "}
+                      <span className="uppercase font-bold text-xs">
+                        ... Xem thêm
+                      </span>
+                    </>
+                  )}
+                  <div className="mt-4">
                     <div
-                      className={`flex items-center py-3 hover:bg-[hsla(0,0%,100%,0.1)]  rounded  border-b-[1px] border-[${styles.dropdown.borderColor}]`}
+                      className={`flex justify-between mb-3  px-2 font-bold uppercase text-xs ${styles.album.subTextColor}`}
                     >
-                      <p
-                        className={`${styles.album.subTextColor} flex items-center font-bold mr-5 pl-2`}
-                      >
-                        {index + 1}
-                      </p>
-                      <div className="flex">
-                        <img
-                          src={getFile(song.image)}
-                          className="h-[40px] w-[40px] rounded"
-                          alt=""
-                        />
-                        <div className="ml-2">
-                          <p
-                            className={`${styles.album.textColor} font-bold text-sm`}
-                          >
-                            {song.name}
-                          </p>
-                          <p className={`${styles.album.subTextColor} text-xs`}>
-                            {data.authors.name}
-                          </p>
-                        </div>
+                      <div className="flex items-center">
+                        <TbArrowsSort className="mr-5" />
+                        <span>Bài hát</span>
                       </div>
+                      <p>Thời gian</p>
+                    </div>
+                    <div>
+                      <Divide />
+
+                      {data?.songs?.map((song: any, index: number) => (
+                        <div key={index}>
+                          <Song
+                            song={song}
+                            index={index}
+                            timeData={timeData[index]}
+                            authorName={data.authors.name}
+                            listSongs={data?.songs}
+                          />
+                        </div>
+                      ))}
                       <p
-                        className={`ml-auto pr-2 text-xs ${styles.album.subTextColor}`}
+                        className={`${styles.album.subTextColor} text-xs mt-2`}
                       >
-                        {timeData[index]}
+                        {data?.songs?.length} bài hát •
+                        {" " + totalTimeString(timeData)}
                       </p>
                     </div>
                   </div>
-                ))}
-                <p className={`${styles.album.subTextColor} text-xs mt-2`}>
-                  {data?.songs?.length} bài hát •
-                  {" " + totalTimeString(timeData)}
-                </p>
-              </div>
+                </>
+              ) : (
+                <>
+                  <div
+                    className={` ${styles.album.subTextColor} bg-[#2F2739] h-[180px] flex flex-col items-center justify-center w-[850px] font bold`}
+                  >
+                    <IoMusicalNotesOutline className="h-24   w-24 " />
+                    <span className="  ">
+                      Không có bài hát trong playlist của bạn
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        </div>
+          {data?.songs?.length && (
+            <div className={`mt-5 ${styles.album.textColor} text-xl font-bold`}>
+              <h1>{data?.authors?.name ?? ""} Xuất Hiện Trong</h1>
+              <div
+                className={`mt-3 flex ${
+                  appearIn?.album?.length < 4 ? "gap-x-14" : "justify-between"
+                } `}
+              >
+                <ArtistFace
+                  key={0}
+                  index={0}
+                  item={appearIn?.artist}
+                  isShowDesc={true}
+                  className={`h-52 w-52`}
+                />
+                {appearIn?.album?.map((item: any, index: any) => (
+                  <AlbumFace
+                    key={index}
+                    index={index}
+                    item={item}
+                    isShowDesc={true}
+                    className={`h-52 w-52`}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+          {data?.songs?.length && (
+            <div className={`mt-5 ${styles.album.textColor} text-xl font-bold`}>
+              <h1>Có thể bạn quan tâm</h1>
+              <div className="mt-3 flex justify-between">
+                {neighbour
+                  ?.reverse()
+                  .slice(0, 5)
+                  .map((item: any, index: any) => (
+                    <AlbumFace
+                      key={index}
+                      index={index}
+                      item={item}
+                      isShowDesc={true}
+                      className={`h-52 w-52`}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
     </>
   );

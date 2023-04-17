@@ -10,7 +10,7 @@ export const data = {
     {
       id: 1,
       icon: <MdOutlineLibraryMusic className={`${iconStyles}`} />,
-      title: "Cá nhân",
+      title: "Thư Viện",
       route: "/mymusic",
       canPlay: <AiOutlinePlayCircle />,
     },

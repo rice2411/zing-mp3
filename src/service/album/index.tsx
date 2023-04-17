@@ -8,12 +8,16 @@ const router = {
   top100: `${env.apiUrl}/api/v1/album/get-top100`,
   suggestType: `${env.apiUrl}/api/v1/album/get-suggest-type`,
   detailAlbum: `${env.apiUrl}/api/v1/album/{albumId}`,
+  getNeighbour: `${env.apiUrl}/api/v1/album/get-neighbour/{typeId}`,
 };
 
 class AlbumService {
+  static getNeighBour(typeId: string) {
+    let uri = fmt(router.getNeighbour, { typeId });
+    return fetch.get(uri);
+  }
   static detailAlbum(albumId: string) {
     let uri = fmt(router.detailAlbum, { albumId });
-
     return fetch.get(uri);
   }
   static recentAlbum() {

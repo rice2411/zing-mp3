@@ -1,20 +1,65 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { debounce } from "lodash";
 import useTheme from "../../../../hooks/useTheme";
 import { FaPlay, FaSlideshare } from "react-icons/fa";
 import Scrollbar from "../../../../shared/small_components/Scrollbar";
 import SuggestList from "./Items/Suggest";
 import CurrentSearchList from "./Items/CurrentResult";
+import SearchService from "../../../../service/search";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
+  const { styles }: any = useTheme();
   const [isFocusSearch, setIsFocusSearch] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [searchWord, setSearchWord] = useState(null);
-  const searchRef = useRef(null);
-  const { styles }: any = useTheme();
+
+  const [contentSearch, setContentSearch] = useState("");
+  const [data, setData] = useState([]);
+
+  const navigate = useNavigate();
+
+  const params = {
+    search: contentSearch || "",
+  };
+
+  const fetchSearchData = async (params: any) => {
+    const param = {
+      search: params.search || "",
+    };
+
+    try {
+      const response: any = await SearchService.searchSuggest(param);
+      if (response?.data?.data) {
+        setData(response?.data?.data);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+    }
+  };
+
+  const handleChangeSearch = (e: any) => {
+    if (e.target.value) setIsSearching(() => true);
+    else setIsSearching(() => false);
+    setContentSearch(e.target.value);
+    handleDebounceSearch(e.target.value);
+  };
+  // eslint-disable-next-line
+  const handleDebounceSearch = useCallback(
+    debounce((searchValue: any) => {
+      fetchSearchData({
+        search: searchValue,
+      });
+    }, 400),
+    []
+  );
+
   const handleFocus = (e: any) => {
     const element = e.target.classList;
     element.remove(styles.navbar.item.backgroundColor);
     element.add(styles.navbar.search.suggest.backgroundColor);
+    element.add("focus:rounded-br-none");
+    element.add("focus:rounded-bl-none");
     // searchRef.current.classList.remove("hidden");
     setIsFocusSearch(() => true);
   };
@@ -22,15 +67,24 @@ const SearchBar = () => {
     const element = e.target.classList;
     element.add(styles.navbar.item.backgroundColor);
     element.remove(styles.navbar.search.suggest.backgroundColor);
+    element.remove("focus:rounded-br-none");
+    element.remove("focus:rounded-bl-none");
     // searchRef.current.classList.add("hidden");
     if (!e.relatedTarget) setIsFocusSearch(() => false);
   };
-  const handleChange = (e: any) => {
-    if (e.target.value) setIsSearching(() => true);
-    else setIsSearching(() => false);
-    // setSearchWord(() => e.target.value);
-    setSearchWord(() => "chưa");
+  const handlePressEnter = (e: any) => {
+    if (e.key === "Enter") {
+      handlBlur(e);
+      navigate("/tim-kiem/tat-ca", {
+        state: { key: contentSearch },
+      });
+    }
   };
+  useEffect(() => {
+    setContentSearch("");
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div className="min-w-[500px] w-[500px] relative">
       <div className="relative">
@@ -55,9 +109,11 @@ const SearchBar = () => {
           type="search"
           onFocus={handleFocus}
           onBlur={handlBlur}
-          onChange={handleChange}
-          className={` ${styles.navbar.item.backgroundColor} block  pl-10  w-full text-sm border-none  rounded-2xl border focus:border-transparent focus:ring-0 focus:rounded-br-none focus:rounded-bl-none`}
+          onChange={handleChangeSearch}
+          onKeyDown={handlePressEnter}
+          className={` ${styles.navbar.item.backgroundColor} focus:ring-0 block  pl-10  w-full text-sm border-none  rounded-2xl border focus:border-transparent `}
           placeholder="Tìm kiếm bài hát, nghệ sĩ, lời bài hát.."
+          value={contentSearch}
         />
       </div>
       {isFocusSearch && (
@@ -65,10 +121,17 @@ const SearchBar = () => {
           className={` ${styles.navbar.search.suggest.backgroundColor} absolute top-full left-0 right-0  rounded-br-2xl rounded-bl-2xl px-2.5 py-3.5 text-sm z-[100]`}
         >
           <Scrollbar isHover={false} className="min-h-0 h-[auto] max-h-[500px]">
-            <SuggestList isSearching={isSearching} searchWord={searchWord} />
-            <CurrentSearchList
+            <SuggestList
               isSearching={isSearching}
-              searchWord={searchWord}
+              searchWord={contentSearch}
+              setIsFocusSearch={setIsFocusSearch}
+              setContentSearch={setContentSearch}
+              data={data}
+            />
+            <CurrentSearchList
+              data={data}
+              isSearching={isSearching}
+              searchWord={contentSearch}
             />
           </Scrollbar>
         </div>

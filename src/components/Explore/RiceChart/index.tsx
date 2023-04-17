@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOMServer from "react-dom/server";
 import {
   LineChart,
@@ -8,87 +8,15 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
+import { getFile } from "../../../constant/file";
+import ChartService from "../../../service/chart";
 import Button from "../../../shared/small_components/Button/Basic";
 import NewReleaseItem from "../../Shared/NewReleaseItem";
-import { data } from "../NewRelease/data";
+
 import ItemChart from "./item";
 import "./styles.scss";
 import WorldChart from "./WorldChart";
 const RiceChart = () => {
-  const data2 = [
-    {
-      name: "19:00",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "21:00",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "23:00",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: "01:00",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: "03:00",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: "05:00",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: "07:00",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-    {
-      name: "09:00",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-    {
-      name: "11:00",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-    {
-      name: "13:00",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-    {
-      name: "15:00",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-    {
-      name: "17:00",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
   const colorArr = ["#4A90E2", "#27BD9C", "#E35050"];
   const templateTooltip = (
     data: any,
@@ -97,9 +25,10 @@ const RiceChart = () => {
   ) => {
     const styles = {
       backgroundColor: color,
-      transform: "translate(304.091px, 188px);",
-      top: "0px",
-      left: "0px",
+      transform: "",
+      top: "0",
+      left: "0",
+      right: "0",
       pointerEvents: "none",
       visibility: "visible",
       position: "absolute",
@@ -111,10 +40,10 @@ const RiceChart = () => {
         style={isCustomStyles ? styles : { backgroundColor: color }}
       >
         <div className="p-2 flex text-white items-center">
-          <img src={data.avatar} className="h-10 w-10 rounded mr-2" />
+          <img src={getFile(data?.image)} className="h-10 w-10 rounded mr-2" />
           <div className="text-xs">
-            <p className="font-bold">{data.name}</p>
-            <p className="text-gray-300">{data.author[0]}</p>
+            <p className="font-bold">{data?.name}</p>
+            <p className="text-gray-300">{data?.artist?.name}</p>
           </div>
           <div className="ml-auto text-xs font-bold">39%</div>
         </div>
@@ -123,11 +52,41 @@ const RiceChart = () => {
   };
 
   const [color, setColor] = useState(colorArr[0]);
-  const [dataHightlight, setDataHightlight] = useState(data[0]);
+  const [data, setData]: any = useState([]);
+  const [dataLine, setDataLine] = useState([]);
+  const [dataHightlight, setDataHightlight] = useState({});
   const [lineHightlight, setLineHightlight] = useState([false, false, false]);
   const [rank1, setRank1] = useState(false);
   const [rank2, setRank2] = useState(false);
   const [rank3, setRank3] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      const resposne: any = await ChartService.get();
+      const dataRaw = resposne?.data?.data.data;
+      if (dataRaw) {
+        setData(dataRaw);
+        setDataHightlight(dataRaw[0].info);
+        const times = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23];
+
+        const result: any = await Promise.all(
+          times.map((value: number, index: number) => {
+            const template = {
+              name: `${value}:00`,
+              st: dataRaw[0].viewsData[index],
+              nd: dataRaw[1].viewsData[index],
+              rd: dataRaw[2].viewsData[index],
+            };
+            return template;
+          })
+        );
+
+        setDataLine(result);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleHightLightLine = async (index: number) => {
     const toolTipWrapper = document.getElementsByClassName(
@@ -151,7 +110,7 @@ const RiceChart = () => {
 
     const arrLineHightlight = [...lineHightlight];
     arrLineHightlight[index] = true;
-    const newData = data[index];
+    const newData = data[index].info;
     const newColor = colorArr[index];
     setLineHightlight(arrLineHightlight);
     setDataHightlight(newData);
@@ -188,27 +147,6 @@ const RiceChart = () => {
       setRank3(true);
     }
   };
-  const getIntroOfPage = (label: any) => {
-    if (label === "09:00") {
-      return "Page A is about men's clothing";
-    }
-    if (label === "Page B") {
-      return "Page B is about women's dress";
-    }
-    if (label === "Page C") {
-      return "Page C is about women's bag";
-    }
-    if (label === "Page D") {
-      return "Page D is about household goods";
-    }
-    if (label === "Page E") {
-      return "Page E is about food";
-    }
-    if (label === "Page F") {
-      return "Page F is about baby food";
-    }
-    return "";
-  };
 
   const CustomTooltip = ({ active, payload, coordinate }: any) => {
     if (active && payload && payload.length) {
@@ -218,10 +156,14 @@ const RiceChart = () => {
     return null;
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       {" "}
-      <div className="w-auto  h-[430px] mt-10 rounded overflow-hidden mb-5">
+      <div className="  h-[430px] mt-10 rounded overflow-hidden mb-5">
         <div className="img  w-auto  h-full relative rounded ">
           <div className=" w-auto my-blur h-full rounded">
             <div className="px-5 py-4">
@@ -230,12 +172,12 @@ const RiceChart = () => {
                   #ricechart
                 </h1>
               </div>
-              <div className="flex mr-auto justify-between ">
+              <div className="flex mr-auto ">
                 <div className="flex flex-col items-center">
-                  {data.slice(0, 3).map((item, index) => (
+                  {data?.slice(0, 3).map((item: any, index: any) => (
                     <ItemChart
                       key={index}
-                      item={item}
+                      item={item?.info}
                       index={index}
                       handleHightLightLine={handleHightLightLine}
                       rank={
@@ -249,20 +191,21 @@ const RiceChart = () => {
                       }
                     />
                   ))}
+
                   <Button
                     text="Xem thêm"
                     className="text-sm rounded-full border border-1 border-white !text-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
                   />
                 </div>
-                <LineChart width={700} height={300} data={data2}>
+                <LineChart width={790} height={300} data={dataLine}>
                   <Line
                     type="monotone"
-                    dataKey="pv"
+                    dataKey="st"
                     stroke="#4A90E2"
                     strokeWidth={2}
                     activeDot={{
                       onMouseEnter(props, event) {
-                        handleMouseEnterLine(0, data[0]);
+                        handleMouseEnterLine(0, data[0].info);
                       },
                       onMouseLeave() {
                         handleMouseLeaveLine();
@@ -270,16 +213,16 @@ const RiceChart = () => {
                       strokeWidth: 3,
                     }}
                     dot={lineHightlight[0]}
-                    onMouseEnter={() => handleMouseEnterLine(0, data[0])}
+                    onMouseEnter={() => handleMouseEnterLine(0, data[0].info)}
                   />
                   <Line
                     type="monotone"
-                    dataKey="uv"
+                    dataKey="nd"
                     stroke="#27BD9C"
                     strokeWidth={2}
                     activeDot={{
                       onMouseEnter(props, event) {
-                        handleMouseEnterLine(1, data[1]);
+                        handleMouseEnterLine(1, data[1].info);
                       },
                       onMouseLeave() {
                         handleMouseLeaveLine();
@@ -287,17 +230,17 @@ const RiceChart = () => {
                       strokeWidth: 3,
                     }}
                     dot={lineHightlight[1]}
-                    onMouseEnter={() => handleMouseEnterLine(1, data[1])}
+                    onMouseEnter={() => handleMouseEnterLine(1, data[1].info)}
                   />
 
                   <Line
                     type="monotone"
-                    dataKey="amt"
+                    dataKey="rd"
                     stroke="#E35050"
                     strokeWidth={2}
                     activeDot={{
                       onMouseEnter(props, event) {
-                        handleMouseEnterLine(2, data[2]);
+                        handleMouseEnterLine(2, data[2].info);
                       },
                       onMouseLeave() {
                         handleMouseLeaveLine();
@@ -305,7 +248,7 @@ const RiceChart = () => {
                       strokeWidth: 3,
                     }}
                     dot={lineHightlight[2]}
-                    onMouseEnter={() => handleMouseEnterLine(2, data[2])}
+                    onMouseEnter={() => handleMouseEnterLine(2, data[2].info)}
                   />
                   <CartesianGrid stroke="#ccc" strokeDasharray="2 4" />
                   <XAxis dataKey="name" />

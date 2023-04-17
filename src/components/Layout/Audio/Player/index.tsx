@@ -23,6 +23,7 @@ const Player = () => {
     name,
     image,
     handlePlay,
+    handlePlayNextSong,
   }: any = useAudio();
 
   const [isDirty, setIsDirty] = useState(false);
@@ -58,7 +59,7 @@ const Player = () => {
       if (audioRef.current.ended) {
         setIsPlaying(false);
         audioRef.current.pause();
-        toNextTrack();
+        handlePlayNextSong();
       } else {
         setTimeRunning(Math.round(audioRef.current.currentTime));
 
@@ -70,7 +71,6 @@ const Player = () => {
 
   const onScrub = (value: any) => {
     clearInterval(intervalRef.current);
-
     audioRef.current.currentTime = value;
     setTimeRunning(Math.round(audioRef.current.currentTime));
     setTrackProgress(audioRef.current.currentTime);
@@ -92,13 +92,6 @@ const Player = () => {
     }
   };
 
-  const toNextTrack = () => {
-    if (trackIndex < playlist.length - 1) {
-      setTrackIndex(trackIndex + 1);
-    } else {
-      setTrackIndex(0);
-    }
-  };
   const handleMouseEnter = (e: any) => {
     const style = document.getElementById("thumbPlayerStyle");
     style.innerHTML = `.progress:hover::-webkit-slider-thumb {  background: ${styles.audio.thumb.color};}`;
@@ -168,16 +161,22 @@ const Player = () => {
       <div
         className={`${styles.audio.backgroundColor} mt-auto h-[90px] z-50  w-screen audio  flex justify-between items-center `}
       >
-        <Info title={name} artist={artist.name} image={getFile(image)} />
+        <Info
+          title={name ?? ""}
+          artist={artist.name ?? ""}
+          image={getFile(image)}
+        />
         <div
           className={`player w-3/4 min-w-[300px] ${styles.audio.player.textColor} mr-auto`}
         >
           <AudioControls
             isPlaying={isPlaying}
             onPrevClick={toPrevTrack}
-            onNextClick={toNextTrack}
+            onNextClick={() => {
+              handlePlayNextSong();
+            }}
             onPlayPauseClick={() => {
-              handlePlay(audioRef.current.duration);
+              setIsPlaying((preState: any) => !preState);
             }}
           />
           <div className="flex w-full justify-center items-center">
@@ -193,8 +192,8 @@ const Player = () => {
               className="progress mx-2.5"
               onChange={(e) => onScrub(e.target.value)}
               onMouseEnter={handleMouseEnter}
-              // onMouseUp={onScrubEnd}
-              // onKeyUp={onScrubEnd}
+              onMouseUp={onScrubEnd}
+              onKeyUp={onScrubEnd}
               style={{ background: playlisttyling }}
             />
             <span className={`text-xs ${styles.audio.player.textColor} `}>

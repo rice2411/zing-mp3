@@ -1,51 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import useTheme from "../../../../../../hooks/useTheme";
 import CurrentSearchItem from "./item";
+import SearchService from "../../../../../../service/search";
 
-const CurrentSearchList = ({ isSearching, searchWord }: any) => {
+const CurrentSearchList = ({ isSearching, searchWord, data }: any) => {
   const { styles }: any = useTheme();
-  const latestSearchList = [
-    {
-      type: "song",
-      image:
-        "https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/0/8/8/5/0885c3d5fa3ad0b1322f40257aa6fe75.jpg",
-      name: "Một ngàn nỗi đau Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda numquam quasi vitae nihil minus vero recusandae, sapiente excepturi mollitia beatae tenetur sequi, laboriosam soluta debitis quas similique consectetur accusantium expedita.",
-      subtitle: "Văn Mai Hương, Hứa Kim Tuyền",
-      href: "#",
-    },
-    {
-      type: "song",
-      image:
-        "https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/3/8/9/7/38971d899d0cc07423626e26dcae595c.jpg",
-      name: "Đông Miên / 冬眠",
-      href: "#",
-    },
-    {
-      type: "album",
-      image:
-        "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/cover/f/8/0/c/f80c8800ed8141a5e0be62d729048223.jpg",
-      name: "Album Vol 1: DẰM TRONG TIM",
-      subtitle: "Bạch Công Khanh",
-      href: "#",
-    },
-    {
-      type: "song",
-      image:
-        "https://photo-resize-zmp3.zmdcdn.me/w94_r1x1_webp/cover/d/f/7/2/df72a19eb4db31f6ceb33db1208ba583.jpg",
-      name: "Lemon",
-      subtitle: "Kenshi Yonezu",
-      href: "#",
-    },
-    {
-      type: "author",
-      image:
-        "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_webp/avatars/0/6/6/2/066226e19d50a7e928fdba0bb2a68377.jpg",
-      name: "Fujii Kaze",
-      subtitle: "93 quan tâm",
-      href: "#",
-    },
-  ];
 
   const currentSearchList = [
     {
@@ -97,11 +57,9 @@ const CurrentSearchList = ({ isSearching, searchWord }: any) => {
       href: "#",
     },
   ];
-
-  const render = () => {
-    const list = !isSearching ? latestSearchList : currentSearchList;
-    return (
-      list.length > 0 && (
+  return (
+    <>
+      {data.length > 0 && data && (
         <div className="mt-2.5 pt-2.5 border-t border-[#ffffff1a]">
           <div className="px-2.5 pb-2 flex justify-between items-center">
             <span className="font-bold">
@@ -115,26 +73,15 @@ const CurrentSearchList = ({ isSearching, searchWord }: any) => {
               </span>
             )}
           </div>
-          {renderSearchList()}
+          <ul>
+            {data?.map((item: any, idx: number) => (
+              <CurrentSearchItem key={idx} item={item} />
+            ))}{" "}
+          </ul>
         </div>
-      )
-    );
-  };
-
-  const renderSearchList = () => {
-    const list = !isSearching ? latestSearchList : currentSearchList;
-    return (
-      <ul>
-        {list.map((latestSearchItem, index) => {
-          return (
-            <CurrentSearchItem key={index} searchResult={latestSearchItem} />
-          );
-        })}
-      </ul>
-    );
-  };
-
-  return render();
+      )}
+    </>
+  );
 };
 
 export default CurrentSearchList;

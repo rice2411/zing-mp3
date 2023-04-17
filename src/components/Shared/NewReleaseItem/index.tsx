@@ -8,10 +8,12 @@ import "./styles.scss";
 import Moment from "react-moment";
 import "moment/locale/vi";
 import useAudio from "../../../hooks/useAudio";
+import useAuth from "../../../hooks/useAuth";
 
 const NewReleaseItem = ({ item, index, className }: any) => {
   const [isHover, setIsHover] = useState(false);
   const { handlePlayOneSong }: any = useAudio();
+  const { userProfile }: any = useAuth();
   const handleMouseEnter = () => {
     setIsHover(true);
   };
@@ -49,7 +51,7 @@ const NewReleaseItem = ({ item, index, className }: any) => {
               className={`${
                 styles.body.textColor
               } text-sm truncate cursor-default mr-2 font-medium ${
-                item.is_vip ? "opacity-60" : ""
+                item.is_vip && !userProfile?.is_vip ? "opacity-60" : ""
               }`}
             >
               {item.name}

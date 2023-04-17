@@ -59,7 +59,7 @@ export default function SiderBar() {
               isToggle={isToggle}
             />
           </div>
-          {audio != null ? <Player /> : <></>}
+          {audio != "" ? <Player /> : <></>}
         </div>
       </aside>
     </>

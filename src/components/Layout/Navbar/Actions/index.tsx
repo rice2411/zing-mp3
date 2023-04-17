@@ -16,13 +16,14 @@ import DropdownButton from "../../../../shared/small_components/DropDown/Button"
 import DropdownItem from "../../../../shared/small_components/DropDown/Item";
 import { RiAdvertisementLine, RiVipFill, RiVipLine } from "react-icons/ri";
 import { BsArrowUpRight, BsTelephone, BsUpload } from "react-icons/bs";
-import { TbShieldCheck } from "react-icons/tb";
+import { TbError404Off, TbShieldCheck } from "react-icons/tb";
 import { HiOutlineBan } from "react-icons/hi";
 import { Logout } from "../../../../utils/auth";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { getFile } from "../../../../constant/file";
 import Divide from "../../../../shared/small_components/Divide";
+import { Link } from "react-router-dom";
 
 const Actions = () => {
   const { styles, theme, color, handleChangeTheme }: any = useTheme();
@@ -35,6 +36,9 @@ const Actions = () => {
   const { handleOpenModalLogin, isAuthenticated }: any = useAuth();
 
   const [isOpenModalTheme, setIsOpenModalTheme] = useState(false);
+  const [isOpenModalIntro, setIsOpenModalIntro] = useState(false);
+  const [isOpenModal404, setIsOpenModal404] = useState(false);
+
   const [isShowDropdownProfile, setIsShowDropdownProfile] = useState(false);
   const [isShowDropdownSetting, setIsShowDropdownSetting] = useState(false);
 
@@ -46,6 +50,7 @@ const Actions = () => {
 
   const dropDownItemClass = `${styles.dropdown.hover.backgroundColor} rounded block px-4 py-2  flex text-xs  items-center`;
   const dropDownIconClass = `h-[20px] w-[20px] mr-2`;
+
   const closeOpenMenus = (e: any) => {
     if (buttonActiveDropdownProfile.current.contains(e.target)) {
       return;
@@ -95,6 +100,25 @@ const Actions = () => {
     });
     setIsOpenModalTheme(true);
   };
+
+  const handleOpenModal404 = () => {
+    handleModalBlank({
+      text: {
+        title: "Xin lỗi",
+      },
+      onSubmit: null,
+    });
+    setIsOpenModal404(true);
+  };
+
+  const handleCloseModal404 = () => {
+    setIsOpenModal404(false);
+  };
+
+  const handleCloseModalIntro = () => {
+    setIsOpenModalIntro(false);
+  };
+
   const handleCloseModalTheme = () => {
     setIsOpenModalTheme(false);
   };
@@ -120,6 +144,7 @@ const Actions = () => {
     Logout();
     setIsAuthenticated(false);
   };
+
   return (
     <div className="ml-auto  gap-x-2 flex">
       <Dropdown
@@ -156,6 +181,9 @@ const Actions = () => {
           <a
             href="#"
             className={`${dropDownItemClass} ${styles.dropdown.subTextColor} `}
+            onClick={() => {
+              setIsOpenModalIntro(true);
+            }}
           >
             <AiOutlineInfoCircle className={`${dropDownIconClass}`} />
             Giới thiệu
@@ -164,6 +192,9 @@ const Actions = () => {
         <DropdownItem>
           <a
             href="#"
+            onClick={() => {
+              handleOpenModal404();
+            }}
             className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
           >
             <BsTelephone className={`${dropDownIconClass}`} />
@@ -174,6 +205,9 @@ const Actions = () => {
         <DropdownItem>
           <a
             href="#"
+            onClick={() => {
+              handleOpenModal404();
+            }}
             className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
           >
             <RiAdvertisementLine className={`${dropDownIconClass}`} />
@@ -182,24 +216,26 @@ const Actions = () => {
           </a>
         </DropdownItem>
         <DropdownItem>
-          <a
-            href="#"
+          <Link
+            to={`/dieu-khoan-su-dung`}
+            target="_blank"
             className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
           >
             <CgFileDocument className={`${dropDownIconClass}`} />
             Thoả thuận sử dụng
             <BsArrowUpRight className="ml-auto" />
-          </a>
+          </Link>
         </DropdownItem>
         <DropdownItem>
-          <a
-            href="#"
+          <Link
+            to={`/chinh-sach-bao-mat`}
+            target="_blank"
             className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
           >
             <TbShieldCheck className={`${dropDownIconClass}`} />
             Chính sách bảo mật
             <BsArrowUpRight className="ml-auto" />
-          </a>
+          </Link>
         </DropdownItem>
       </Dropdown>
 
@@ -210,21 +246,24 @@ const Actions = () => {
           isShow={isShowDropdownProfile}
         >
           <DropdownButton>
-            <a
+            <div
               ref={buttonActiveDropdownProfile}
               onClick={() => {
                 handleShowDropdownProfile(!isShowDropdownProfile);
               }}
-              href="#"
-              className="h-10 w-10 flex flex-col items-center justify-center relative"
+              className="h-10 w-10 flex flex-col items-center justify-center relative cursor-pointer"
             >
               <img
-                src={getFile(userProfile.avatar)}
-                className="rounded-full  p-0.5 border border-[#fccc2e] border-2 "
+                src={getFile(userProfile?.avatar)}
+                className={`rounded-full  p-0.5 ${
+                  userProfile?.is_vip && "border border-[#fccc2e] border-2"
+                }  `}
                 alt=""
               />
-              <div className="vip_label  absolute bottom-0"></div>
-            </a>
+              {userProfile?.is_vip && (
+                <div className="vip_label  absolute bottom-0"></div>
+              )}
+            </div>
           </DropdownButton>
           <DropdownItem>
             <p
@@ -237,11 +276,11 @@ const Actions = () => {
           </DropdownItem>
 
           <DropdownItem>
-            <a href="#" className={`${dropDownItemClass} mt-3`}>
+            <Link to="/mua-vip" className={`${dropDownItemClass} mt-3`}>
               <RiVipLine className={`${dropDownIconClass}`} />
               Mua code VIP
               <BsArrowUpRight className="ml-auto" />
-            </a>
+            </Link>
           </DropdownItem>
           <DropdownItem>
             <a href="#" className={`${dropDownItemClass}`}>
@@ -279,10 +318,47 @@ const Actions = () => {
         />
       )}
 
-      <BlankModal isShow={isOpenModalTheme} handleClose={handleCloseModalTheme}>
+      <BlankModal
+        isShow={isOpenModalTheme}
+        handleClose={handleCloseModalTheme}
+        className="w-[1000px]"
+      >
         {data.map((item, index) => (
           <h2 key={index + item.id}>{renderChildrenTheme(item)}</h2>
         ))}
+      </BlankModal>
+      <BlankModal
+        isShow={isOpenModalIntro}
+        handleClose={handleCloseModalIntro}
+        className={`bg-[#34224F] w-[340px]`}
+        isShowHeader={false}
+      >
+        <div className="flex flex-col items-center  justify-center text-center text-xs w-full">
+          <img src="/icon/logo.svg" className="h-[40px] w-[120px]" />
+          <div className="my-3">
+            Giấy phép mạng xã hội: 157/GP-BTTTT do Bộ Thông tin và Truyền thông
+            cấp ngày 24/4/2019
+          </div>
+          <div className="my-3">
+            Chủ quản: Công Ty Cổ Phần VNG Z06 Đường số 13, phường Tân Thuận
+            Đông, quận 7, thành phố Hồ Chí Minh, Việt Nam
+          </div>
+          <Button
+            text="Đóng"
+            isActive={true}
+            activeClass={`${activeButtonClass} w-[250px] uppercase font-bold py-2 rounded-full`}
+            onClick={handleCloseModalIntro}
+          />
+        </div>
+      </BlankModal>
+      <BlankModal isShow={isOpenModal404} handleClose={handleCloseModal404}>
+        <div
+          className={`flex flex-col text-center items-center ${styles.dropdown.subTextColor}`}
+        >
+          <TbError404Off className="h-40 w-40" />
+          Chức năng đang được phát triển
+          <div></div>
+        </div>
       </BlankModal>
     </div>
   );

@@ -1,7 +1,13 @@
 import React from "react";
 import useTheme from "../../../../hooks/useTheme";
 
-function Button({ text, isActive, className, activeClass, onClick }: any) {
+function Button({
+  text,
+  isActive = false,
+  className,
+  activeClass,
+  onClick,
+}: any) {
   const { styles }: any = useTheme();
   return (
     <>

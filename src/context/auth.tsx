@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: any) => {
   );
 
   const [userProfile, setUserProfile] = useState(
-    JSON.parse(cookie.get("user") || `{"name":"default"}`) || {}
+    JSON.parse(cookie.get("user") || `{"avatar":"default.jpg"}`) || {}
   );
 
   return (

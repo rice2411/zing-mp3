@@ -7,6 +7,8 @@ import Skeleton from "../../../shared/small_components/Loading/Skeleton";
 import useAuth from "../../../hooks/useAuth";
 import AlbumFace from "../../Shared/AlbumFace";
 import AlbumService from "../../../service/album";
+import useAudio from "../../../hooks/useAudio";
+import LibraryService from "../../../service/library";
 
 const Recently = () => {
   const numberOfItem = 7;
@@ -19,7 +21,7 @@ const Recently = () => {
     setIsLoading(true);
 
     try {
-      const response: any = await AlbumService.recentAlbum();
+      const response: any = await LibraryService.recentAlbum();
       if (response?.data?.data) {
         setRecentAlbum(response.data.data);
       }

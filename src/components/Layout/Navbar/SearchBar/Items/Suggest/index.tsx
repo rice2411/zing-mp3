@@ -1,35 +1,19 @@
 import React from "react";
 import SuggestItem from "./item";
 
-const SuggestList = ({ isSearching, searchWord }: any) => {
+const SuggestList = ({
+  isSearching,
+  searchWord,
+  data,
+  setIsFocusSearch,
+  setContentSearch,
+}: any) => {
   const suggestList = [
-    {
-      name: "chưa quên Lorem, ipsum dolor sit amet consectetur adipisicing elit. Adipisci voluptatibus eum facilis in eveniet rem modi fugit, aliquam similique quos veritatis officiis eos, laboriosam, ad officia sequi ut! Eum, hic.",
-    },
-    { name: "mono" },
-    { name: "shut down" },
-    { name: "karaoke" },
-    { name: "ngủ ngon" },
-    { name: "XONE Radio" },
-  ];
-
-  const searchList = [
-    {
-      name: "chưa quên",
-      isSearched: true,
-    },
-    {
-      name: "chưa quên người yêu cũ",
-    },
-    {
-      name: "chưa bao giờ em quên",
-    },
-    {
-      name: "chưa bao giờ",
-    },
-    {
-      name: "chưa từng thương ai đến vậy",
-    },
+    { name: "Bức Tường", _id: "62ba690129c1260f0cb734c2" },
+    { name: "Cơn Mưa Tháng 5", _id: "62ba690129c1260f0cb734c2" },
+    { name: "Vì Đời", _id: "62ba690129c1260f0cb734c2" },
+    { name: "The Cassette", _id: "62ba690129c1260f0cb734c2" },
+    { name: "XONE Radio", _id: "62ba690129c1260f0cb734c2" },
   ];
 
   const renderSearchList = () => {
@@ -40,9 +24,11 @@ const SuggestList = ({ isSearching, searchWord }: any) => {
             return (
               <SuggestItem
                 key={index}
-                name={suggestItem.name}
+                item={suggestItem}
                 isSearching={isSearching}
                 searchWord={searchWord}
+                setIsFocusSearch={setIsFocusSearch}
+                setContentSearch={setContentSearch}
               />
             );
           })}
@@ -51,21 +37,25 @@ const SuggestList = ({ isSearching, searchWord }: any) => {
     } else {
       return (
         <ul>
-          {searchList.map((searchItem, index) => {
+          {data?.map((searchItem: any, index: any) => {
             return (
               <SuggestItem
                 key={index}
-                name={searchItem.name}
+                item={searchItem}
                 isSearching={isSearching}
-                isSearched={searchItem.isSearched}
+                isSearched={true}
                 searchWord={searchWord}
+                setIsFocusSearch={setIsFocusSearch}
+                setContentSearch={setContentSearch}
               />
             );
           })}
           <SuggestItem
-            name={`Tìm kiếm "${searchWord}"`}
+            item={{ name: `Tìm kiếm "${searchWord}"`, _id: "" }}
             isSearching={isSearching}
             searchWord={searchWord}
+            setIsFocusSearch={setIsFocusSearch}
+            setContentSearch={setContentSearch}
           />
         </ul>
       );
