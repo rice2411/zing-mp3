@@ -6,10 +6,12 @@ import CTAButton from "./ctxButton";
 import Library from "./Library";
 import useTheme from "../../../../hooks/useTheme";
 import useAudio from "../../../../hooks/useAudio";
+import useAuth from "../../../../hooks/useAuth";
 
 export default function BodySideBar({ isToggle }: any) {
   const { styles }: any = useTheme();
   const { audio }: any = useAudio();
+  const { userProfile }: any = useAuth();
   return (
     <>
       <Items data={data.noScroll} className="pb-3  " isToggle={isToggle} />
@@ -24,9 +26,12 @@ export default function BodySideBar({ isToggle }: any) {
         className={`${audio ? "h-[300px]" : ""}  overflow-x-hidden `}
       >
         <Items data={data.scroll} className="pt-3" isToggle={isToggle} />
-        <div className="pl-3 pb-3 xl:pb-0 lg:pb-0">
-          <CTAButton />
-        </div>
+        {!userProfile?.is_vip && (
+          <div className="pl-3 pb-3 xl:pb-0 lg:pb-0">
+            <CTAButton />
+          </div>
+        )}
+
         <Library isToggle={isToggle} />
       </Scrollbar>
     </>

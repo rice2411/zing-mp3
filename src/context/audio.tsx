@@ -7,6 +7,7 @@ import AlbumService from "../service/album";
 import SongService from "../service/song";
 import useAuth from "../hooks/useAuth";
 import LibraryService from "../service/library";
+import { duration } from "moment";
 
 const AudioContext = createContext({});
 
@@ -14,6 +15,10 @@ export const AudioProvider = ({ children }: any) => {
   const { userProfile }: any = useAuth();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLooping, setIsLooping] = useState(false);
+  const [trackProgress, setTrackProgress] = useState(0);
+  const [timeRunning, setTimeRunning] = useState(0);
   const [timeEnd, setTimeEnd] = useState(0);
   const [trackIndex, setTrackIndex] = useState(
     typeof cookie.get("trackIndex") !== "undefined"
@@ -26,6 +31,7 @@ export const AudioProvider = ({ children }: any) => {
   const [image, setImage] = useState("");
   const [audio, setAudio] = useState("");
   const [playlist, setPlaylist] = useState([]);
+  const [songId, setSongId] = useState("");
   const [albumId, setAlbumId] = useState(
     typeof cookie.get("albumId") !== "undefined"
       ? JSON.parse(cookie.get("albumId"))
@@ -49,6 +55,13 @@ export const AudioProvider = ({ children }: any) => {
       console.log(err);
     }
   };
+  const handleLikeArtist = async (artistId: string) => {
+    try {
+      await LibraryService.likeArtist(artistId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleLikeAlbum = async (albumId: string) => {
     try {
       await LibraryService.likeAlbum(albumId);
@@ -62,18 +75,23 @@ export const AudioProvider = ({ children }: any) => {
     trackIndex: number = 0,
     albumId: string = null
   ) => {
-    const { name, image, artist } = info;
-
-    cookie.set("albumId", JSON.stringify(albumId), { expires: 365 });
-    cookie.set("trackIndex", JSON.stringify(trackIndex), { expires: 365 });
-
-    setTrackIndex(trackIndex);
-    audioRef.current = audio;
-    handlePlay(audio.duration);
-    setAudio(audio);
-    setName(name);
-    setArtist(artist);
-    setImage(image);
+    try {
+      const { name, image, artist, _id } = info;
+      cookie.set("albumId", JSON.stringify(albumId), { expires: 365 });
+      cookie.set("trackIndex", JSON.stringify(trackIndex), { expires: 365 });
+      setTrackIndex(trackIndex);
+      audioRef.current = audio;
+      handlePlay(audio.duration);
+      setAudio(audio);
+      setName(name);
+      setArtist(artist);
+      setImage(image);
+      setSongId(_id);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSaveNewSong = async (data: any, albumId: string = null) => {
@@ -88,22 +106,35 @@ export const AudioProvider = ({ children }: any) => {
       const newAudio = new Audio(getFile(data.audio));
       newAudio.onloadedmetadata = function () {
         const index = playlist.findIndex((e: any) => e._id == data._id);
-
         handleSetPlaylist(newAudio, data, index, albumId);
       };
     } catch (err) {
       console.log(err);
     }
   };
-  const handlePlayNextSong = async () => {
+  const handlePlayNavigateSong = async (newIndex: number) => {
+    if (isLoading) return;
+    if (isLooping) {
+      const loopAudio = new Audio(getFile(audio));
+      loopAudio.onloadedmetadata = async function () {
+        audioRef.current = loopAudio;
+        setTimeRunning(Math.round(0));
+        setTrackProgress(0);
+        handlePlay(loopAudio.duration);
+      };
+
+      return;
+    }
+    setIsLoading(true);
     await setIsPlaying(false);
-    var nextIndex = trackIndex + 1;
+    var nextIndex = trackIndex + newIndex;
+    if (nextIndex < 0) return;
     while (playlist[nextIndex].is_vip && !userProfile.is_vip) {
       nextIndex++;
     }
-    const { audio } = playlist[nextIndex];
+    const newAudioRaw = playlist[nextIndex].audio;
 
-    const newAudio = new Audio(getFile(audio));
+    const newAudio = new Audio(getFile(newAudioRaw));
 
     newAudio.onloadedmetadata = async function () {
       handleSetPlaylist(newAudio, playlist[nextIndex], nextIndex, albumId);
@@ -111,17 +142,23 @@ export const AudioProvider = ({ children }: any) => {
       await SongService.increaseViews(playlist[nextIndex]._id);
     };
   };
-  const handlePlayAlbum = async (albumId: string) => {
+  const handlePlayAlbum = async (newAlbumId: string) => {
     try {
+      if (isLoading) return;
+      setIsLoading(true);
+      if (albumId == newAlbumId) {
+        setIsPlaying((preState) => !preState);
+        return;
+      }
       setIsPlaying(false);
-      setAlbumId(albumId);
-      const response: any = await AlbumService.detailAlbum(albumId);
-      await LibraryService.addAlbumHistory(albumId);
+      setAlbumId(newAlbumId);
+      const response: any = await AlbumService.detailAlbum(newAlbumId);
+      await LibraryService.addAlbumHistory(newAlbumId);
       const dataRaw = response?.data?.data;
       const playlist = dataRaw.songs;
       const newAudio = new Audio(getFile(playlist[0].audio));
       newAudio.onloadedmetadata = async function () {
-        handleSetPlaylist(newAudio, playlist[0], 0, albumId);
+        handleSetPlaylist(newAudio, playlist[0], 0, newAlbumId);
         await SongService.increaseViews(playlist[0]._id);
       };
 
@@ -131,15 +168,23 @@ export const AudioProvider = ({ children }: any) => {
     }
   };
   const handlePlayOneSong = async (data: any, albumId: string = null) => {
+    if (isLoading) return;
+    setIsLoading(true);
     if (data.is_vip && !userProfile.is_vip) {
       setModalVip(true);
       return;
     }
     if (typeof cookie.get("albumId") === "undefined" || albumId == null) {
+      if (isPlaying) {
+        setIsPlaying((preState) => !preState);
+        setIsLoading(false);
+        return;
+      }
       handleSaveNewSong(data, data.originAlbumId);
       await SongService.increaseViews(data._id);
       return;
     }
+
     if (albumId != null) {
       if (data._id !== playlist[trackIndex]._id) {
         setIsPlaying(false);
@@ -177,30 +222,40 @@ export const AudioProvider = ({ children }: any) => {
   return (
     <AudioContext.Provider
       value={{
-        isPlaying,
-        audio,
-        playlist,
-        trackIndex,
-        timeEnd,
-        artist,
         name,
+        audio,
         image,
-        audioRef,
+        artist,
         volume,
+        songId,
         albumId,
+        timeEnd,
+        audioRef,
         modalVip,
-        handleLikeAlbum,
-        handleLikeSong,
-        setModalVip,
+        playlist,
+        isPlaying,
+        trackIndex,
+        isLoading,
+        isLooping,
+        trackProgress,
+        timeRunning,
         setVolume,
+        setTimeEnd,
         setPlaylist,
-        handlePlayOneSong,
-        handlePlay,
+        setModalVip,
+        setIsLooping,
+        setIsLoading,
         setIsPlaying,
         setTrackIndex,
-        setTimeEnd,
-        handlePlayNextSong,
+        setTimeRunning,
+        setTrackProgress,
+        handlePlay,
+        handleLikeSong,
+        handleLikeAlbum,
         handlePlayAlbum,
+        handleLikeArtist,
+        handlePlayOneSong,
+        handlePlayNavigateSong,
       }}
     >
       {children}

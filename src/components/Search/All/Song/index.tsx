@@ -16,8 +16,6 @@ const Songs = ({ data, songsRef, timeData = null }: any) => {
                   song={item}
                   index={idx}
                   timeData={timeData[idx]}
-                  authorName={""}
-                  listSongs={null}
                   className={"w-[600px]"}
                   isShowIndex={false}
                 />

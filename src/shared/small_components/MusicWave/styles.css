@@ -1,0 +1,37 @@
+
+
+.music-wave span{  
+    width: 5px; 
+    bottom:10px;
+
+    position:absolute;  
+    background:white;  
+    -webkit-animation: bodong 0.5s infinite  ease;  
+  }  
+  
+  .music-wave span:first-child{  
+    left:7px;  
+    -webkit-animation-delay:.3s;  
+  }  
+  
+  .music-wave span:nth-child(2){  
+    left:14px;  
+    -webkit-animation-delay:.4s;  
+  
+  }  
+  .music-wave span:nth-child(3){  
+    left:21px;  
+    -webkit-animation-delay:.6s;  
+  }  
+  .music-wave span:nth-child(4){  
+    left:28px;  
+    -webkit-animation-delay:.8s;  
+  }  
+
+  @keyframes bodong{  
+    0%{height:5px; background:bule;}  
+    30%{height:15px; background:bule;}  
+    60%{height:20px; background:bule;}  
+    80%{height:15px; background:bule;}  
+    100%{height:5px; background:bule;}  
+  }

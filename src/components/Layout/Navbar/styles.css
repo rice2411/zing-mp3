@@ -1,0 +1,6 @@
+.blur_1{
+    background-image: linear-gradient(180deg,hsla(0,0%,100%,0) 37%,#170f23);
+}.blur_2{
+    background-image: linear-gradient(180deg,#170f23,#170f23)   ; opacity: .9;
+}
+

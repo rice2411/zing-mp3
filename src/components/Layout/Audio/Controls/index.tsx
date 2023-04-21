@@ -1,9 +1,12 @@
 import React from "react";
 import { AiOutlinePauseCircle } from "react-icons/ai";
-import { ImNext2, ImPrevious2, ImLoop } from "react-icons/im";
+import { ImNext2, ImPrevious2 } from "react-icons/im";
+import { RxLoop } from "react-icons/rx";
 import { FaRandom } from "react-icons/fa";
 import { BsPlayCircle } from "react-icons/bs";
 import useTheme from "../../../../hooks/useTheme";
+import useAudio from "../../../../hooks/useAudio";
+import { Spinner } from "flowbite-react";
 export default function Controls({
   isPlaying,
   onPlayPauseClick,
@@ -11,6 +14,7 @@ export default function Controls({
   onNextClick,
 }: any) {
   const { styles }: any = useTheme();
+  const { isLoading, isLooping, setIsLooping }: any = useAudio();
   return (
     <>
       <div
@@ -35,10 +39,16 @@ export default function Controls({
             className={` ${styles.audio.controls.colorHover} h-10 w-10 cursor-pointer`}
           />
         ) : (
-          <BsPlayCircle
-            onClick={() => onPlayPauseClick()}
-            className={` ${styles.audio.controls.colorHover} h-10 w-10 cursor-pointer`}
-          />
+          <>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <BsPlayCircle
+                onClick={() => onPlayPauseClick()}
+                className={` ${styles.audio.controls.colorHover} h-10 w-10 cursor-pointer`}
+              />
+            )}
+          </>
         )}
         <div
           className={`${styles.audio.controls.hoverStyle} flex justify-center items-center h-8 w-8`}
@@ -51,8 +61,13 @@ export default function Controls({
         <div
           className={`${styles.audio.controls.hoverStyle} flex justify-center items-center h-8 w-8`}
         >
-          <ImLoop
-            className={`cursor-pointer h-5 w-5 ${styles.audio.controls.hoverStyle}`}
+          <RxLoop
+            className={`cursor-pointer h-5 w-5 ${
+              styles.audio.controls.hoverStyle
+            } ${isLooping ? "text-[#c273ed]" : ""}`}
+            onClick={() => {
+              setIsLooping((prevState: any) => !prevState);
+            }}
           />
         </div>
       </div>

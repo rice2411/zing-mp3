@@ -7,6 +7,7 @@ import { getFile } from "../../../constant/file";
 import useAudio from "../../../hooks/useAudio";
 import useTheme from "../../../hooks/useTheme";
 import useAuth from "../../../hooks/useAuth";
+import MusicWave from "../../../shared/small_components/MusicWave";
 
 const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
   const {
@@ -87,7 +88,7 @@ const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
           } `}
           ref={(node) => adNodeItem(index, node)}
         >
-          <div className="text-white flex  items-center justify-between w-full px-5">
+          <div className="text-white flex  items-center justify-between w-full px-3">
             <div
               onClick={() => {
                 handleLikeAlbum(item._id);
@@ -96,14 +97,14 @@ const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
               className=" p-1 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center "
             >
               {isLiked ? (
-                <AiFillHeart className="text-[#9B4DE0]  text-lg" />
+                <AiFillHeart className="text-[#9B4DE0]  text-[20px]" />
               ) : (
-                <AiOutlineHeart />
+                <AiOutlineHeart className="text-[20px]" />
               )}
             </div>
             {isPlaying && albumId == item._id ? (
               <>
-                <BsPauseCircle
+                <MusicWave
                   className="text-6xl cursor-pointer "
                   onClick={() => {
                     setIsPlaying((preState: any) => !preState);
@@ -113,26 +114,26 @@ const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
             ) : (
               <>
                 <BsPlayCircle
-                  className="text-6xl cursor-pointer "
+                  className="text-[45px] cursor-pointer "
                   onClick={() => {
                     handlePlayAlbum(item._id);
                   }}
                 />
               </>
             )}{" "}
-            <div className="ml-2 p-1 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center ">
+            <div className="text-[20px] ml-2 p-1 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center ">
               <FiMoreHorizontal />
             </div>
           </div>
         </div>
       </div>
       <h3
-        className={`${styles.body.textColor} ${styles.body.hover.textColor} font-bold text-sm mt-3 max-w-[130px] truncate`}
+        className={`${styles.body.textColor} ${styles.body.hover.textColor} font-bold text-sm mt-3 !truncate`}
       >
         {item.name}
       </h3>
 
-      <h6 className="text-gray-500 font-normal text-xs leading-3 mt-1.5  leading-tight">
+      <h6 className="text-gray-500 font-normal text-xs  mt-1.5  leading-tight min-h-[50px]">
         {item.authors?.map((author: any, idx: any) => (
           <span key={idx}>
             {idx != item.authors.length - 1 ? author.name + ", " : author.name}

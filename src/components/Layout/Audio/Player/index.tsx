@@ -22,13 +22,15 @@ const Player = () => {
     artist,
     name,
     image,
-    handlePlay,
-    handlePlayNextSong,
+    setIsLooping,
+    handlePlayNavigateSong,
+    trackProgress,
+    setTimeRunning,
+    setTrackProgress,
+    timeRunning,
   }: any = useAudio();
 
   const [isDirty, setIsDirty] = useState(false);
-  const [trackProgress, setTrackProgress] = useState(0);
-  const [timeRunning, setTimeRunning] = useState(0);
 
   const { styles }: any = useTheme();
   //alo
@@ -42,7 +44,6 @@ const Player = () => {
   // Destructure for conciseness
   // @ts-ignore: Object is possibly 'null'.
   const { duration } = audioRef.current || 0;
-
   const currentPercentage = duration
     ? `${(trackProgress / duration) * 100}%`
     : "0%";
@@ -59,7 +60,7 @@ const Player = () => {
       if (audioRef.current.ended) {
         setIsPlaying(false);
         audioRef.current.pause();
-        handlePlayNextSong();
+        handlePlayNavigateSong(1);
       } else {
         setTimeRunning(Math.round(audioRef.current.currentTime));
 
@@ -171,9 +172,11 @@ const Player = () => {
         >
           <AudioControls
             isPlaying={isPlaying}
-            onPrevClick={toPrevTrack}
+            onPrevClick={() => {
+              handlePlayNavigateSong(-1);
+            }}
             onNextClick={() => {
-              handlePlayNextSong();
+              handlePlayNavigateSong(1);
             }}
             onPlayPauseClick={() => {
               setIsPlaying((preState: any) => !preState);

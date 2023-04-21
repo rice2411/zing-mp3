@@ -20,6 +20,10 @@ import AlbumPageSearch from "../pages/search/album";
 import VipPage from "../pages/vip";
 import Payment from "../components/Payment";
 import LibraryPage from "../pages/library";
+import SongPageLibrary from "../pages/library/song";
+import AlbumPageLibrary from "../pages/library/album";
+import ArtistPage from "../pages/artist";
+import ZingChartPage from "../pages/zingchart";
 
 const Layout = () => {
   return (
@@ -46,10 +50,22 @@ export default createBrowserRouter([
       {
         element: <LibraryPage />,
         path: "/mymusic",
+        children: [
+          { element: <SongPageLibrary />, path: "" },
+          { element: <AlbumPageLibrary />, path: "playlist" },
+        ],
       },
       {
         element: <AlbumPage />,
         path: "/album",
+      },
+      {
+        element: <ZingChartPage />,
+        path: "/zing-chart",
+      },
+      {
+        element: <ArtistPage />,
+        path: "/nghe-si",
       },
       {
         element: <SearchPage />,

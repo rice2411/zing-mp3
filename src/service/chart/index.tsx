@@ -6,9 +6,9 @@ const router = {
 };
 
 class ChartService {
-  static get() {
+  static get(param: object) {
     let uri = router.get;
-    return fetch.get(uri);
+    return fetch.get(uri, param);
   }
 }
 

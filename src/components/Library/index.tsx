@@ -6,12 +6,9 @@ import { data as Tabs } from "./tab";
 import { Link, useLocation } from "react-router-dom";
 import useTheme from "../../hooks/useTheme";
 import { getFile } from "../../constant/file";
-import Song from "../Shared/Song";
-import Divide from "../../shared/small_components/Divide";
-import { TbArrowsSort } from "react-icons/tb";
-import { totalTimeString } from "../Album/helper";
+import Spinner from "../../shared/small_components/Loading/Spinner";
 
-const Library = () => {
+const Library = ({ ...props }: any) => {
   const { styles }: any = useTheme();
   const [data, setData]: any = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -54,41 +51,56 @@ const Library = () => {
       setIsLoading(false);
     }
   };
+  const checkRoute = (route: any) => {
+    if (location.pathname == Tabs.route && route == -1) {
+      return true;
+    } else {
+      return location.pathname.includes(route);
+    }
+  };
   useEffect(() => {
     fetchData();
   }, []);
   return (
     <>
       {isLoading ? (
-        <></>
+        <>
+          <Spinner />
+        </>
       ) : (
         <div>
           <div>
             <h1 className="text-white text-3xl font-bold">Thư viện</h1>
             <div className="mt-5">
               {data?.likedArtists?.map((artist: any, index: any) => (
-                <ArtistFace
-                  key={index}
-                  index={index}
-                  item={artist}
-                  isShowDesc={true}
-                  className={`h-52 w-52`}
-                />
+                <div key={index}>
+                  <ArtistFace
+                    key={index}
+                    index={index}
+                    item={artist}
+                    isShowDesc={true}
+                    className={`h-52 w-52`}
+                  />
+                </div>
               ))}
             </div>
           </div>
           <div className="mt-10">
             <h1 className="text-white text-xl uppercase font-bold">Playlist</h1>
             <div className="mt-5 flex items-center flex-wrap  gap-y-5 gap-x-12">
-              {data?.likedAlbums?.map((album: any, index: any) => (
-                <AlbumFace
-                  key={index}
-                  index={index}
-                  item={album}
-                  isShowDesc={false}
-                  className={`h-52 w-52`}
-                />
-              ))}
+              {data?.likedAlbums
+                ?.filter((item: any) => item.type == "playlist")
+                .map((album: any, index: any) => (
+                  <div key={index}>
+                    <AlbumFace
+                      key={index}
+                      index={index}
+                      item={album}
+                      isShowDesc={false}
+                      className={`h-52 w-52`}
+                    />
+                  </div>
+                ))}
             </div>
           </div>
           <div
@@ -98,9 +110,9 @@ const Library = () => {
               {Tabs.children.map((tab: any, idx: any) => (
                 <li className="mr-2" key={idx}>
                   <Link
-                    to={Tabs.route + tab.route}
+                    to={Tabs.route + (tab.route == -1 ? "" : tab.route)}
                     className={`${
-                      location.pathname.includes(tab.route) && activeTabClass
+                      checkRoute(tab.route) && activeTabClass
                     } uppercase inline-block p-4 border-b-2 border-transparent rounded-t-lg  text-[#dadada] hover:text-white`}
                   >
                     {tab.title}
@@ -109,33 +121,7 @@ const Library = () => {
               ))}
             </ul>
           </div>
-          <div className="mt-4">
-            <div
-              className={`flex justify-between mb-3  px-2 font-bold uppercase text-xs ${styles.album.subTextColor}`}
-            >
-              <div className="flex items-center">
-                <TbArrowsSort className="mr-5" />
-                <span>Bài hát</span>
-              </div>
-              <p>ALBUM</p>
-              <p>Thời gian</p>
-            </div>
-            <div>
-              <Divide />
-
-              {data?.likedSongs?.map((song: any, index: number) => (
-                <div key={index}>
-                  <Song
-                    song={song}
-                    index={index}
-                    timeData={timeData[index]}
-                    authorName={""}
-                    listSongs={data?.songs}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          {props.children}
         </div>
       )}
     </>

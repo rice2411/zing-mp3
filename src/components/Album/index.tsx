@@ -17,6 +17,8 @@ import { convertToDate, cutString, totalTimeString } from "./helper";
 import ArtistService from "../../service/artist";
 import AlbumFace from "../Shared/AlbumFace";
 import ArtistFace from "../Shared/ArtistFace";
+import MusicWave from "../../shared/small_components/MusicWave";
+import Spinner from "../../shared/small_components/Loading/Spinner";
 
 const Album = () => {
   const location = useLocation();
@@ -79,10 +81,10 @@ const Album = () => {
         );
 
         setTimeData(times);
-        fetchDataAppearIn(dataRaw?.authors?._id);
+        await fetchDataAppearIn(dataRaw?.authors?._id);
         const typeId = dataRaw.typeIds[0];
 
-        fetchDataNeighbour(typeId);
+        await fetchDataNeighbour(typeId);
       }
     } catch (err) {
       console.log(err);
@@ -129,11 +131,11 @@ const Album = () => {
   return (
     <>
       {isLoading ? (
-        ""
+        <Spinner />
       ) : (
         <>
           <div className="flex px-4 py-3 ">
-            <div className="min-w-[300px] sticky top-[0] left-0  h-[calc(100vh - 200px)] z-50 self-start">
+            <div className="min-w-[300px] sticky top-[0] left-0  h-[calc(100vh - 200px)]  self-start">
               <div
                 className={`  overflow-hidden relative h-[300px] w-[300px] `}
                 onMouseEnter={() => handleMouseEnter(data._id)}
@@ -142,12 +144,12 @@ const Album = () => {
                 <img
                   ref={imageRef}
                   src={getFile(data.image)}
-                  className={`h-[300px] w-[300px] rounded-md cursor-pointer duration-700 absolute cursor-pointer`}
+                  className={`h-[300px] w-[300px] rounded-md  duration-700 absolute cursor-pointer`}
                   alt=""
                 />
 
                 <div
-                  className={`cursor-pointer bg-gray-900 bg-opacity-70 h-full w-full absolute z-50   justify-center items-center ${
+                  className={`cursor-pointer hover:bg-gray-900 hover:bg-opacity-70 h-full w-full absolute z-50   justify-center items-center ${
                     isPlaying && albumId == data._id ? "flex" : "hidden"
                   } `}
                   ref={itemRef}
@@ -155,8 +157,8 @@ const Album = () => {
                   <div className="text-white flex  items-center justify-center w-full px-5">
                     {isPlaying && albumId == data._id ? (
                       <>
-                        <BsPauseCircle
-                          className="text-5xl "
+                        <MusicWave
+                          className="text-6xl cursor-pointer "
                           onClick={() => {
                             setIsPlaying((preState: any) => !preState);
                           }}
@@ -292,11 +294,7 @@ const Album = () => {
           {data?.songs?.length && (
             <div className={`mt-5 ${styles.album.textColor} text-xl font-bold`}>
               <h1>{data?.authors?.name ?? ""} Xuất Hiện Trong</h1>
-              <div
-                className={`mt-3 flex ${
-                  appearIn?.album?.length < 4 ? "gap-x-14" : "justify-between"
-                } `}
-              >
+              <div className={`mt-3 flex gap-x-12  flex-wrap  `}>
                 <ArtistFace
                   key={0}
                   index={0}
@@ -304,7 +302,7 @@ const Album = () => {
                   isShowDesc={true}
                   className={`h-52 w-52`}
                 />
-                {appearIn?.album?.map((item: any, index: any) => (
+                {appearIn?.album?.slice(0, 4).map((item: any, index: any) => (
                   <AlbumFace
                     key={index}
                     index={index}
@@ -320,18 +318,15 @@ const Album = () => {
             <div className={`mt-5 ${styles.album.textColor} text-xl font-bold`}>
               <h1>Có thể bạn quan tâm</h1>
               <div className="mt-3 flex justify-between">
-                {neighbour
-                  ?.reverse()
-                  .slice(0, 5)
-                  .map((item: any, index: any) => (
-                    <AlbumFace
-                      key={index}
-                      index={index}
-                      item={item}
-                      isShowDesc={true}
-                      className={`h-52 w-52`}
-                    />
-                  ))}
+                {neighbour.slice(0, 5).map((item: any, index: any) => (
+                  <AlbumFace
+                    key={index}
+                    index={index}
+                    item={item}
+                    isShowDesc={true}
+                    className={`h-52 w-52`}
+                  />
+                ))}
               </div>
             </div>
           )}

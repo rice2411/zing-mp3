@@ -16,7 +16,7 @@ import NewReleaseItem from "../../Shared/NewReleaseItem";
 import ItemChart from "./item";
 import "./styles.scss";
 import WorldChart from "./WorldChart";
-const RiceChart = () => {
+const RiceChart = ({ isFullChart = false }: any) => {
   const colorArr = ["#4A90E2", "#27BD9C", "#E35050"];
   const templateTooltip = (
     data: any,
@@ -62,7 +62,7 @@ const RiceChart = () => {
 
   const fetchData = async () => {
     try {
-      const resposne: any = await ChartService.get();
+      const resposne: any = await ChartService.get({ option: 3 });
       const dataRaw = resposne?.data?.data.data;
       if (dataRaw) {
         setData(dataRaw);
@@ -164,40 +164,57 @@ const RiceChart = () => {
     <>
       {" "}
       <div className="  h-[430px] mt-10 rounded overflow-hidden mb-5">
-        <div className="img  w-auto  h-full relative rounded ">
-          <div className=" w-auto my-blur h-full rounded">
-            <div className="px-5 py-4">
-              <div className="flex  items-center mb-3 ">
-                <h1 className="text-white text-2xl font-bold mb-2">
-                  #ricechart
-                </h1>
-              </div>
-              <div className="flex mr-auto ">
-                <div className="flex flex-col items-center">
-                  {data?.slice(0, 3).map((item: any, index: any) => (
-                    <ItemChart
-                      key={index}
-                      item={item?.info}
-                      index={index}
-                      handleHightLightLine={handleHightLightLine}
-                      rank={
-                        index == 0
-                          ? rank1
-                          : index == 1
-                          ? rank2
-                          : index == 2
-                          ? rank3
-                          : null
-                      }
-                    />
-                  ))}
-
-                  <Button
-                    text="Xem thêm"
-                    className="text-sm rounded-full border border-1 border-white !text-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
-                  />
+        <div
+          className={`${
+            !isFullChart ? "img  w-auto  h-full relative rounded" : ""
+          } `}
+        >
+          <div
+            className={`${
+              !isFullChart ? "w-auto my-blur h-full rounded" : ""
+            } `}
+          >
+            <div className={`${!isFullChart ? "px-5 py-4" : ""}`}>
+              {!isFullChart && (
+                <div className="flex  items-center mb-3 ">
+                  <h1 className="text-white text-2xl font-bold mb-2">
+                    #ricechart
+                  </h1>
                 </div>
-                <LineChart width={790} height={300} data={dataLine}>
+              )}
+              <div className="flex mr-auto ">
+                {!isFullChart && (
+                  <div className="flex flex-col items-center">
+                    {data?.slice(0, 3).map((item: any, index: any) => (
+                      <ItemChart
+                        key={index}
+                        item={item?.info}
+                        index={index}
+                        handleHightLightLine={handleHightLightLine}
+                        rank={
+                          index == 0
+                            ? rank1
+                            : index == 1
+                            ? rank2
+                            : index == 2
+                            ? rank3
+                            : null
+                        }
+                      />
+                    ))}
+                    {}
+                    <Button
+                      text="Xem thêm"
+                      className="text-sm rounded-full border border-1 border-white !text-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
+                    />
+                  </div>
+                )}
+
+                <LineChart
+                  width={!isFullChart ? 790 : 1200}
+                  height={300}
+                  data={dataLine}
+                >
                   <Line
                     type="monotone"
                     dataKey="st"
@@ -264,7 +281,7 @@ const RiceChart = () => {
           </div>
         </div>
       </div>
-      <WorldChart />
+      {!isFullChart && <WorldChart />}
     </>
   );
 };

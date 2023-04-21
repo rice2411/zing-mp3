@@ -21,7 +21,7 @@ export default function Layout({ route, ...props }: any) {
             audio ? "h-[calc(100vh_-_90px)]" : ""
           }  pl-[calc(100vw - 100%)]`}
         >
-          <div className="mx-10 px-3">
+          <div className="">
             <Navbar />
           </div>
           <Scrollbar isHover={true} className="">

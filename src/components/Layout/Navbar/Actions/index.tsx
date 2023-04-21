@@ -256,7 +256,7 @@ const Actions = () => {
               <img
                 src={getFile(userProfile?.avatar)}
                 className={`rounded-full  p-0.5 ${
-                  userProfile?.is_vip && "border border-[#fccc2e] border-2"
+                  userProfile?.is_vip && " border-[#fccc2e] border-2"
                 }  `}
                 alt=""
               />

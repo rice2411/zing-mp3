@@ -69,7 +69,6 @@ const Songs = () => {
                     song={item}
                     index={idx}
                     timeData={timeData[idx]}
-                    authorName={""}
                     listSongs={null}
                     className={"flex"}
                     isShowIndex={false}

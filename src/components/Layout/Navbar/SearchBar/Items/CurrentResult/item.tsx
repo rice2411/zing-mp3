@@ -12,7 +12,7 @@ const CurrentSearchItem = ({ item }: any) => {
         <div className="relative w-[52px] h-[52px] shrink-0 mr-2.5 cursor-pointer">
           <img
             className={`w-full h-full ${
-              item?.followers ? "rounded-full" : "rounded"
+              item?.avatar ? "rounded-full" : "rounded"
             } ${item?.audio && "group-hover:opacity-50"}`}
             src={getFile(item?.image || item?.avatar)}
             alt=""
@@ -41,7 +41,7 @@ const CurrentSearchItem = ({ item }: any) => {
           >
             {item?.publicationYear &&
               `Album • ${item?.authors[0]?.name ?? "Nhiều ca sĩ"}`}
-            {item?.followers && `Nghệ sĩ • ${item?.name}`}
+            {item?.avatar && `Nghệ sĩ • ${item?.name}`}
 
             {item?.audio && `${item?.artist?.name}`}
           </span>

@@ -6,9 +6,9 @@ const router = {
   addAlbumHistory: `${env.apiUrl}/api/v1/library/add-album-history/{albumId}`,
   likeSong: `${env.apiUrl}/api/v1/library/like-song/{songId}`,
   likeAlbum: `${env.apiUrl}/api/v1/library/like-album/{albumId}`,
+  likeArtist: `${env.apiUrl}/api/v1/library/like-artist/{artistId}`,
   get: `${env.apiUrl}/api/v1/library/get`,
 };
-
 class LibraryService {
   static get() {
     let uri = router.get;
@@ -16,6 +16,10 @@ class LibraryService {
   }
   static recentAlbum() {
     let uri = router.recentAlbum;
+    return fetch.get(uri);
+  }
+  static likeArtist(artistId: string) {
+    let uri = fmt(router.likeArtist, { artistId });
     return fetch.get(uri);
   }
   static likeAlbum(albumId: string) {

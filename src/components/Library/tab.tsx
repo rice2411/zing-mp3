@@ -2,13 +2,13 @@ export const data = {
   route: "/mymusic",
   children: [
     {
-      id: 2,
+      id: 0,
       title: "Bài hát",
-      route: "/",
+      route: -1,
       tab: "song",
     },
     {
-      id: 3,
+      id: 1,
       title: "Album",
       route: "/playlist",
       tab: "playlist",

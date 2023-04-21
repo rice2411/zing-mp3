@@ -6,19 +6,27 @@ import useAudio from "../../../hooks/useAudio";
 import useTheme from "../../../hooks/useTheme";
 import useAuth from "../../../hooks/useAuth";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import MusicWave from "../../../shared/small_components/MusicWave";
+import Cookies from "js-cookie";
 
 const Song = ({
   song,
   index,
   timeData,
-  authorName,
   className = "",
   isShowIndex = true,
 }: any) => {
   const location = useLocation();
   const { styles }: any = useTheme();
   const { userProfile }: any = useAuth();
-  const { handlePlayOneSong, handleLikeSong }: any = useAudio();
+  const {
+    handlePlayOneSong,
+    handleLikeSong,
+    isPlaying,
+    setIsPlaying,
+    songId,
+    setIsLoading,
+  }: any = useAudio();
 
   const [isHover, setIsHover] = useState(false);
   const [isLiked, setIsLiked] = useState(
@@ -28,11 +36,11 @@ const Song = ({
   const likeRef = useRef(null);
   const handleMouseEnter = () => {
     setIsHover(true);
-    likeRef.current.classList.remove("hidden");
+    likeRef?.current?.classList.remove("hidden");
   };
   const handleMouseLeave = () => {
     setIsHover(false);
-    likeRef.current.classList.add("hidden");
+    likeRef?.current?.classList.add("hidden");
   };
 
   return (
@@ -42,42 +50,66 @@ const Song = ({
       onMouseLeave={() => handleMouseLeave()}
     >
       <div
-        className={`px-2 flex items-center py-3 hover:bg-[hsla(0,0%,100%,0.1)]  rounded  border-b-[1px] border-[${styles.dropdown.borderColor}] ${className}`}
+        className={` flex justify-between items-center py-3 hover:bg-[hsla(0,0%,100%,0.1)] ${
+          !isShowIndex ? "px-2" : ""
+        } ${
+          songId == song._id && "bg-[hsla(0,0%,100%,0.1)]"
+        }  rounded  border-b-[1px] border-[${
+          styles.dropdown.borderColor
+        }] ${className}`}
       >
-        {isShowIndex && (
-          <p
-            className={`${styles.album.subTextColor} text-center font-bold mr-5 pl-2 min-w-[25px]`}
-          >
-            {index + 1}
-          </p>
-        )}
-        <div className="flex">
+        <div className="flex items-center min-w-[300px] max-w-max">
+          {isShowIndex && (
+            <p
+              className={`${styles.album.subTextColor} text-center font-bold mr-3  min-w-[25px]`}
+            >
+              {index + 1}
+            </p>
+          )}
           <div
             className="relative hover:cursor-pointer flex items-center justify-center"
             onClick={() => {
               const { albumId } = location?.state;
-              handlePlayOneSong(song, albumId);
+              const albumIdStorage = JSON.parse(Cookies.get("albumId"));
+              handlePlayOneSong(song, albumId || albumIdStorage);
             }}
           >
             <div className="w-[40px] h-[40px] overflow-hidden rounded-md ">
               <img
                 src={getFile(song.image)}
-                className={`w-full h-full ${isHover ? "opacity-50" : ""}`}
+                className={`w-full h-full ${
+                  isHover || (isPlaying && songId == song._id)
+                    ? "opacity-50"
+                    : ""
+                }`}
               />
             </div>
             <div
-              className={`absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white flex  items-center justify-between px-5 ${
-                isHover ? "opacity-75 block" : "hidden"
+              className={`absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white flex  items-center justify-between ${
+                isHover || (isPlaying && songId == song._id)
+                  ? "opacity-75 block"
+                  : "hidden"
               }`}
             >
-              <BsPlayFill className="text-2xl " />
+              {isPlaying && songId == song._id ? (
+                <MusicWave
+                  className="text-sm cursor-pointer "
+                  onClick={() => {
+                    setIsPlaying((preState: any) => !preState);
+                    setIsLoading(false);
+                  }}
+                  isSong={true}
+                />
+              ) : (
+                <BsPlayFill className="text-2xl " />
+              )}
             </div>
           </div>
           <div className="ml-2">
-            <p
+            <div
               className={`${
                 styles.album.textColor
-              } font-bold text-sm flex items-center  ${
+              } font-bold text-sm flex items-center truncate  ${
                 song?.is_vip && !userProfile?.is_vip ? "opacity-60" : ""
               }`}
             >
@@ -87,18 +119,27 @@ const Song = ({
                   <div className="vip_label"></div>
                 </span>
               </div>
-            </p>
+            </div>
             <p className={`${styles.album.subTextColor} text-xs mt-0.5`}>
               {song?.artist?.name}
             </p>
           </div>
         </div>
+        {song?.album && (
+          <div className="w-max flex min-w-[250px] ml-1">
+            <p
+              className={`${styles.album.subTextColor} text-xs  hover:underline cursor-pointer hover:text-[#c273ed]`}
+            >
+              {song?.album?.name || ""}
+            </p>
+          </div>
+        )}
 
         <div
-          className={`flex items-center ml-auto pr-2 text-xs ${styles.album.subTextColor}`}
+          className={`flex items-center  pr-2 text-xs justify-between min-w-[80px] ${styles.album.subTextColor}`}
         >
           <div
-            className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center "
+            className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full flex items-center justify-center"
             onClick={() => {
               handleLikeSong(song._id);
               setIsLiked((preState: any) => !preState);
