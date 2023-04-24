@@ -33,7 +33,7 @@ const Dropdown = ({ className, isShow, dropdownRef, ...props }: any) => {
         className={`${isShow ? "" : "hidden"} ${
           styles.dropdown.backgroundColor
         } ${
-          styles.dropdown.text
+          styles.dropdown.textColor
         } z-10   rounded-lg shadow w-44    ${className}`}
       >
         <ul className="py-2 text-sm  ">

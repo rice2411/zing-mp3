@@ -62,17 +62,16 @@ export default function SiderBar() {
             />
           </div>
           {audio != "" ? (
-            <div className="">
+            <div className="relative">
               <Audio />
               <div
-                className={`hid-box  ${
-                  isShowLyrics ? "top-0 z-[9999]" : "hidden"
+                className={`hid-box w-screen h-screen  ${
+                  isShowLyrics ? "top-0 z-[1]" : "z-[1]"
                 }`}
               >
                 <h1>CSS3 slide up</h1>
                 <p>
                   This is a quick demo of slide-up effect using CSS animation
-                  when hover the box. No JS required!
                 </p>
               </div>
             </div>
