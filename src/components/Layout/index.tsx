@@ -8,6 +8,7 @@ import Scrollbar from "../../shared/small_components/Scrollbar";
 import useAudio from "../../hooks/useAudio";
 import ModalVip from "../Shared/ModalVip";
 import { useLocation } from "react-router-dom";
+import "./styles.css";
 
 export default function Layout({ route, ...props }: any) {
   const location = useLocation();
@@ -17,6 +18,14 @@ export default function Layout({ route, ...props }: any) {
   return (
     <div className={`${styles.body.backgroundColor}`}>
       <div className="flex h-screen  relative  ">
+        <div
+          className={`hid-box w-screen h-screen  ${
+            isShowLyrics ? "top-0 z-[999]" : "z-[1] "
+          }`}
+        >
+          <h1>CSS3 slide up</h1>
+          <p>This is a quick demo of slide-up effect using CSS animation</p>
+        </div>
         <SiderBar />
         <div
           className={`flex flex-col w-screen  ${
