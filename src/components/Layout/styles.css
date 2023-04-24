@@ -1,0 +1,16 @@
+
+
+  .hid-box {
+   display: none;;
+    /* top: 100%;
+    position: absolute;
+    transition: all .3s ease-out;
+    background: #428bca;
+    height: 100%;
+    width: 100%;
+    z-index: 9999; */
+  }
+  
+  .box:hover > .hid-box{
+    top: 0;
+  }
