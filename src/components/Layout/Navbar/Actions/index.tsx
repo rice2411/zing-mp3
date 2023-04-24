@@ -52,23 +52,23 @@ const Actions = () => {
   const dropDownIconClass = `h-[20px] w-[20px] mr-2`;
 
   const closeOpenMenus = (e: any) => {
-    if (buttonActiveDropdownProfile.current.contains(e.target)) {
+    if (buttonActiveDropdownProfile?.current?.contains(e.target)) {
       return;
     }
-    if (buttonACtiveDropdownSetting.current.contains(e.target)) {
+    if (buttonACtiveDropdownSetting?.current?.contains(e.target)) {
       return;
     }
     if (
-      dropdownSettingRef.current &&
+      dropdownSettingRef?.current &&
       isShowDropdownSetting &&
-      !dropdownSettingRef.current.contains(e.target)
+      !dropdownSettingRef?.current.contains(e.target)
     ) {
       setIsShowDropdownSetting(false);
     }
     if (
-      dropdownProfileRef.current &&
+      dropdownProfileRef?.current &&
       isShowDropdownProfile &&
-      !dropdownProfileRef.current.contains(e.target)
+      !dropdownProfileRef?.current?.contains(e.target)
     ) {
       setIsShowDropdownProfile(false);
     }

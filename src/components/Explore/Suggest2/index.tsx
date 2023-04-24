@@ -14,7 +14,7 @@ const Suggest2 = () => {
         type: "rock",
       });
       const response2: any = await AlbumService.suggestType({
-        type: "Hip-Hop",
+        type: "Hip Hop",
       });
       if (response1?.data?.data && response2?.data?.data) {
         const reuslt = [
@@ -29,7 +29,7 @@ const Suggest2 = () => {
             _id: "6332e09af29948a93bc6727f",
             image:
               "https://photo-zmp3.zmdcdn.me/cover/7/f/b/6/7fb65013fe546d50974508700db99b22.jpg",
-            type: "Hip-Hop",
+            type: "Hip Hop",
             children: [...response2?.data?.data.slice(0, 5)],
           },
         ];
