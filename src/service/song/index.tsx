@@ -16,9 +16,9 @@ class SongService {
     let uri = router.getListSong;
     return fetch.get(uri, params);
   }
-  static getNewRelease() {
+  static getNewRelease(params?: object) {
     let uri = router.getNewRelease;
-    return fetch.get(uri);
+    return fetch.get(uri, params);
   }
 }
 

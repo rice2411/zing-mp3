@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import useTheme from "../../../hooks/useTheme";
 import AlbumService from "../../../service/album";
 import Item from "../../Shared/AlbumFace";
-import { data } from "./data";
+import { Link } from "react-router-dom";
 
 const Suggest2 = () => {
   const { styles }: any = useTheme();
@@ -13,22 +13,24 @@ const Suggest2 = () => {
       const response1: any = await AlbumService.suggestType({
         type: "rock",
       });
-      const response2: any = await AlbumService.suggestType({ type: "rap" });
+      const response2: any = await AlbumService.suggestType({
+        type: "Hip-Hop",
+      });
       if (response1?.data?.data && response2?.data?.data) {
         const reuslt = [
           {
-            id: 1,
+            _id: "6332e1b9f29948a93bc67285",
             image:
               "https://photo-zmp3.zmdcdn.me/cover/a/a/d/7/aad7cb86bbd8e0fa459c8fe974988577.jpg",
             type: "Rock",
-            children: [...response1?.data?.data],
+            children: [...response1?.data?.data.slice(0, 5)],
           },
           {
-            id: 1,
+            _id: "6332e09af29948a93bc6727f",
             image:
               "https://photo-zmp3.zmdcdn.me/cover/7/f/b/6/7fb65013fe546d50974508700db99b22.jpg",
-            type: "Rap Việt",
-            children: [...response2?.data?.data],
+            type: "Hip-Hop",
+            children: [...response2?.data?.data.slice(0, 5)],
           },
         ];
         setData(reuslt);
@@ -46,11 +48,13 @@ const Suggest2 = () => {
         <div key={index}>
           <div className="flex justify-between mt-10">
             <div className="flex ">
-              <img
-                className="h-[50px] w-[50px] rounded mr-2"
-                src={item.image}
-                alt=" "
-              />
+              <Link to={"/hub/detail"} state={{ hubId: item._id }}>
+                <img
+                  className="h-[50px] w-[50px] rounded mr-2"
+                  src={item.image}
+                  alt=" "
+                />
+              </Link>
               <div>
                 <p className="uppercase text-gray-500">Bạn đã nghe nhiều</p>
                 <span

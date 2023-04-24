@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import LibraryService from "../../service/library";
 import ArtistFace from "../Shared/ArtistFace";
 import AlbumFace from "../Shared/AlbumFace";
@@ -9,12 +9,14 @@ import { getFile } from "../../constant/file";
 import Spinner from "../../shared/small_components/Loading/Spinner";
 
 const Library = ({ ...props }: any) => {
+  const location = useLocation();
   const { styles }: any = useTheme();
+  const { id } = location.state;
   const [data, setData]: any = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [timeData, setTimeData] = useState([]);
 
-  const location = useLocation();
+  const songsRef = useRef(null);
 
   const activeTabClass = `!text-white !border-b-2 !border-[#9b4de0]`;
 
@@ -58,9 +60,17 @@ const Library = ({ ...props }: any) => {
       return location.pathname.includes(route);
     }
   };
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [id]);
+  useEffect(() => {
+    const element = document.getElementById(id);
+    if (element && !isLoading) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [isLoading]);
+
   return (
     <>
       {isLoading ? (
@@ -69,7 +79,7 @@ const Library = ({ ...props }: any) => {
         </>
       ) : (
         <div>
-          <div>
+          <div id="recent" className="min-h-[345px]">
             <h1 className="text-white text-3xl font-bold">Thư viện</h1>
             <div className="mt-5">
               {data?.likedArtists?.map((artist: any, index: any) => (
@@ -85,7 +95,7 @@ const Library = ({ ...props }: any) => {
               ))}
             </div>
           </div>
-          <div className="mt-10">
+          <div className="mt-10 min-h-[344px]" id="playlists">
             <h1 className="text-white text-xl uppercase font-bold">Playlist</h1>
             <div className="mt-5 flex items-center flex-wrap  gap-y-5 gap-x-12">
               {data?.likedAlbums
@@ -104,7 +114,8 @@ const Library = ({ ...props }: any) => {
             </div>
           </div>
           <div
-            className={`text-sm font-medium text-center mt-10 border-b-[1px] border-[${styles.dropdown.borderColor}]`}
+            ref={songsRef}
+            className={` mtext-sm font-medium text-center mt-10 border-b-[1px] border-[${styles.dropdown.borderColor}]`}
           >
             <ul className="flex flex-wrap -mb-px">
               {Tabs.children.map((tab: any, idx: any) => (
@@ -121,7 +132,9 @@ const Library = ({ ...props }: any) => {
               ))}
             </ul>
           </div>
-          {props.children}
+          <div id="songs" className="min-h-[1000px]">
+            {props.children}
+          </div>
         </div>
       )}
     </>

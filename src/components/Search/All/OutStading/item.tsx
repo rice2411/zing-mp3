@@ -41,9 +41,19 @@ const OutStadingItem = ({ item }: any) => {
               : handlePlayOneSong(item);
           }}
         >
-          <div className="w-[84px] h-[84px] overflow-hidden rounded-md ">
+          <div
+            className={`w-[84px] h-[84px] overflow-hidden ${
+              item?.avatar ? "rounded-full" : "rounded-md"
+            }  `}
+          >
             <img
-              src={getFile(item?.avatar || item?.image)}
+              src={
+                item?.type && item?.avatar == "default.jpg"
+                  ? getFile(item.avatar)
+                  : !item?.type
+                  ? getFile(item?.avatar || item?.image)
+                  : item.avatar
+              }
               className={` ${
                 item?.avatar ? "rounded-full duration-700" : "rounded"
               }  ${
@@ -58,15 +68,15 @@ const OutStadingItem = ({ item }: any) => {
           <div
             className={`absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white flex  items-center justify-between px-5 ${
               (isHover && !item?.avatar) ||
-              songId == item._id ||
-              (isPlaying && albumId == item._id)
+              songId == item?._id ||
+              (isPlaying && albumId == item?._id)
                 ? "opacity-75 block"
                 : "hidden"
             }`}
           >
             {isPlaying ||
             (isPlaying && songId == item?._id) ||
-            (isPlaying && albumId == item._id) ? (
+            (isPlaying && albumId == item?._id) ? (
               <MusicWave
                 className="text-sm cursor-pointer "
                 onClick={() => {
@@ -83,7 +93,9 @@ const OutStadingItem = ({ item }: any) => {
 
         <div className="ml-3">
           <p className="text-xs text-[hsla(0,0%,100%,0.5)]">
-            {item?.avatar
+            {item?.type
+              ? "Thể Loại"
+              : item?.avatar
               ? "Nghệ sĩ"
               : item?.publicationYear
               ? "Album"
@@ -91,7 +103,9 @@ const OutStadingItem = ({ item }: any) => {
           </p>
           <p className="font-bold text-white">{item?.name}</p>
           <p className="text-xs text-[hsla(0,0%,100%,0.5)]">
-            {item?.avatar
+            {item?.type
+              ? ""
+              : item?.avatar
               ? `${item?.followers?.length} quan tâm`
               : item?.publicationYear
               ? item?.authors[0]?.name

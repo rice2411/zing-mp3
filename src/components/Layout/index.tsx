@@ -7,8 +7,10 @@ import Navbar from "./Navbar";
 import Scrollbar from "../../shared/small_components/Scrollbar";
 import useAudio from "../../hooks/useAudio";
 import ModalVip from "../Shared/ModalVip";
+import { useLocation } from "react-router-dom";
 
 export default function Layout({ route, ...props }: any) {
+  const location = useLocation();
   const { audio, modalVip, setModalVip }: any = useAudio();
   const { styles }: any = useTheme();
 
@@ -25,7 +27,13 @@ export default function Layout({ route, ...props }: any) {
             <Navbar />
           </div>
           <Scrollbar isHover={true} className="">
-            <div className="mx-10">{props.children}</div>
+            <div
+              className={`${
+                location.pathname.includes("hub/detail") ? "" : "mx-10"
+              }`}
+            >
+              {props.children}
+            </div>
           </Scrollbar>
         </div>
       </div>

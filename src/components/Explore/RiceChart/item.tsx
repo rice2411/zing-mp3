@@ -37,7 +37,7 @@ const ItemChart = ({ item, index, handleHightLightLine, rank }: any) => {
         {index + 1}
       </span>
       <div className="group items-center  overflow-hidden">
-        <div className="p-2 flex items-center grid grid-cols-5 place-content-center">
+        <div className="p-2 flex items-center  grid-cols-5 place-content-center">
           <div
             className="relative hover:cursor-pointer flex items-center justify-center"
             onClick={() => {

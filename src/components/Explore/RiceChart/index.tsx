@@ -163,7 +163,11 @@ const RiceChart = ({ isFullChart = false }: any) => {
   return (
     <>
       {" "}
-      <div className="  h-[430px] mt-10 rounded overflow-hidden mb-5">
+      <div
+        className={` ${
+          isFullChart ? "h-[300px]" : "h-[430px]"
+        }  mt-10 rounded overflow-hidden mb-5`}
+      >
         <div
           className={`${
             !isFullChart ? "img  w-auto  h-full relative rounded" : ""

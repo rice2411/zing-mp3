@@ -14,7 +14,11 @@ const CurrentSearchItem = ({ item }: any) => {
             className={`w-full h-full ${
               item?.avatar ? "rounded-full" : "rounded"
             } ${item?.audio && "group-hover:opacity-50"}`}
-            src={getFile(item?.image || item?.avatar)}
+            src={
+              item?.type
+                ? item.avatar || item.image
+                : getFile(item?.image || item?.avatar)
+            }
             alt=""
           />
           {item?.audio && (
@@ -39,9 +43,12 @@ const CurrentSearchItem = ({ item }: any) => {
           <span
             className={`text-xs line-clamp-1 ${styles.navbar.search.currentResult.item.textColor}`}
           >
-            {item?.publicationYear &&
-              `Album • ${item?.authors[0]?.name ?? "Nhiều ca sĩ"}`}
-            {item?.avatar && `Nghệ sĩ • ${item?.name}`}
+            {item?.type
+              ? "Thể Loại"
+              : item?.publicationYear
+              ? `Album • ${item?.authors[0]?.name ?? "Nhiều ca sĩ"}`
+              : ""}
+            {!item?.type && item?.avatar ? `Nghệ sĩ • ${item?.name}` : ""}
 
             {item?.audio && `${item?.artist?.name}`}
           </span>

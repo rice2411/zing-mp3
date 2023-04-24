@@ -1,21 +1,22 @@
 import React, { useState, useRef } from "react";
 import { BsPlayFill } from "react-icons/bs";
 import { useLocation } from "react-router-dom";
-import { getFile } from "../../../constant/file";
-import useAudio from "../../../hooks/useAudio";
-import useTheme from "../../../hooks/useTheme";
-import useAuth from "../../../hooks/useAuth";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import MusicWave from "../../../shared/small_components/MusicWave";
-import Cookies from "js-cookie";
 
-const Song = ({
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+
+import Cookies from "js-cookie";
+import useTheme from "../../hooks/useTheme";
+import useAuth from "../../hooks/useAuth";
+import useAudio from "../../hooks/useAudio";
+import { getFile } from "../../constant/file";
+import MusicWave from "../../shared/small_components/MusicWave";
+
+const ItemChart = ({
   song,
   index,
   timeData,
   className = "",
-  isShowIndex = true,
-  isHiddenBorder = false,
+  isShortChart = false,
 }: any) => {
   const location = useLocation();
   const { styles }: any = useTheme();
@@ -51,26 +52,26 @@ const Song = ({
       onMouseLeave={() => handleMouseLeave()}
     >
       <div
-        className={` flex justify-between items-center py-3 hover:bg-[hsla(0,0%,100%,0.1)] ${
-          !isShowIndex ? "px-2" : ""
-        } ${songId == song._id && "bg-[hsla(0,0%,100%,0.1)]"}  rounded ${
-          isHiddenBorder
-            ? ""
-            : `border-b-[1px] border-[${styles.dropdown.borderColor}]`
-        } ${className}`}
+        className={` flex justify-between items-center py-3 hover:bg-[hsla(0,0%,100%,0.1)] } ${
+          songId == song._id && "bg-[hsla(0,0%,100%,0.1)]"
+        }  rounded  border-b-[1px] border-[${
+          styles.dropdown.borderColor
+        }] ${className}`}
       >
-        <div className="flex items-center min-w-[300px] max-w-max">
-          {isShowIndex && (
-            <p
-              className={`${styles.album.subTextColor} text-center font-bold mr-3  min-w-[25px]`}
-            >
-              {index + 1}
-            </p>
-          )}
+        <div className="flex items-center  ">
+          <div
+            className={`${
+              isShortChart ? "min-w-[50px]" : "min-w-[100px]"
+            } text-center number number_${
+              index + 1 > 3 ? "else" : index + 1
+            } text-4xl font-black px-3`}
+          >
+            {index + 1}
+          </div>
           <div
             className="relative hover:cursor-pointer flex items-center justify-center"
             onClick={() => {
-              const { albumId } = location?.state;
+              const albumId = location?.state?.albumId || null;
               const albumIdStorage = JSON.parse(Cookies.get("albumId"));
               handlePlayOneSong(song, albumId || albumIdStorage);
             }}
@@ -79,7 +80,7 @@ const Song = ({
               <img
                 src={getFile(song.image)}
                 className={`w-full h-full ${
-                  isHover || (isPlaying && songId == song?._id)
+                  isHover || (isPlaying && songId == song._id)
                     ? "opacity-50"
                     : ""
                 }`}
@@ -87,7 +88,7 @@ const Song = ({
             </div>
             <div
               className={`absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white flex  items-center justify-between ${
-                isHover || (isPlaying && songId == song?._id)
+                isHover || (isPlaying && songId == song._id)
                   ? "opacity-75 block"
                   : "hidden"
               }`}
@@ -161,4 +162,4 @@ const Song = ({
   );
 };
 
-export default Song;
+export default ItemChart;

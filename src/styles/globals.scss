@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @import "scrollbar.scss";
+html{
+    font-family: 'Inter'; 
+    scroll-behavior: smooth!important;
+  }
+  
 body{
     font-family: 'Inter', sans-serif;
 

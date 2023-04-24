@@ -47,13 +47,15 @@ export default function Items({ data, className, isToggle }: any) {
           className={`xl:block lg:block  flex ${
             isToggle ? "justify-start" : "justify-center"
           } ${styles.sideBar.hover.text} px-3 ${
-            location.pathname === item.route ? activeItemClass() : ""
+            location.pathname === item.route && !item.isUpdate
+              ? activeItemClass()
+              : ""
           } `}
           onMouseEnter={() => hanldeMouseEnter(index)}
           onMouseLeave={() => hanldeMouseLeave(index)}
           style={{
             borderColor:
-              location.pathname === item.route
+              location.pathname === item.route && !item.isUpdate
                 ? styles.sideBar.active.borderColor
                 : "",
           }}

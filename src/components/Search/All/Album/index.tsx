@@ -7,11 +7,12 @@ import AlbumFace from "../../../Shared/AlbumFace";
 const Albums = ({ data, albumsRef }: any) => {
   return (
     <>
-      <div className="mt-5" ref={albumsRef}>
-        <h1 className="mb-5 font-bold text-xl text-white">Playlist/Albums</h1>
-        {data ? (
+      {" "}
+      {data ? (
+        <div className="mt-5" ref={albumsRef}>
+          <h1 className="mb-5 font-bold text-xl text-white">Playlist/Albums</h1>
           <div className={`flex items-center justify-between`}>
-            {data.slice(0, 5).map((item: any, idx: any) => (
+            {data?.slice(0, 5).map((item: any, idx: any) => (
               <div key={idx}>
                 <AlbumFace
                   key={idx}
@@ -23,10 +24,10 @@ const Albums = ({ data, albumsRef }: any) => {
               </div>
             ))}
           </div>
-        ) : (
-          <></>
-        )}
-      </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

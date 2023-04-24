@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import useTheme from "../../../../../hooks/useTheme";
 import { iconStyles, widthDefaultValue } from "../../styles";
 import { data } from "./data";
+import { Link } from "react-router-dom";
 
 export default function Library({ isToggle }: any) {
   const { styles }: any = useTheme();
@@ -42,29 +43,31 @@ export default function Library({ isToggle }: any) {
         } xl:w-auto lg:w-auto`}
       >
         {data.map((item, index) => (
-          <li
-            key={item.id}
-            className={`flex items-center ${
-              isToggle ? "justify-start" : "justify-center"
-            } xl:justify-start lg:justify-start ${
-              styles.sideBar.hover.text
-            } cursor-pointer px-2 py-3  ${styles.sideBar.textColor} `}
-          >
-            <img src={item.icon} className={`${iconStyles}`} />
-            <span
-              className={`ml-2 text-xs xl:block lg:block  ${
-                isToggle ? "block" : "hidden"
-              }`}
+          <Link to={"/mymusic"} state={{ id: item.id }} key={index}>
+            <li
+              key={item.id}
+              className={`flex items-center ${
+                isToggle ? "justify-start" : "justify-center"
+              } xl:justify-start lg:justify-start ${
+                styles.sideBar.hover.text
+              } cursor-pointer px-2 py-3  ${styles.sideBar.textColor} `}
             >
-              {item.title}
-            </span>
-            <div
-              className="ml-auto  xl:hidden lg:hidden hidden"
-              ref={(node) => adNode(index, node)}
-            >
-              {item.canPlay ? item.canPlay : ""}
-            </div>
-          </li>
+              <img src={item.icon} className={`${iconStyles}`} />
+              <span
+                className={`ml-2 text-xs xl:block lg:block  ${
+                  isToggle ? "block" : "hidden"
+                }`}
+              >
+                {item.title}
+              </span>
+              <div
+                className="ml-auto  xl:hidden lg:hidden hidden"
+                ref={(node) => adNode(index, node)}
+              >
+                {item.canPlay ? item.canPlay : ""}
+              </div>
+            </li>
+          </Link>
         ))}
       </ul>
     </div>

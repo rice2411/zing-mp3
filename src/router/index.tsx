@@ -24,6 +24,10 @@ import SongPageLibrary from "../pages/library/song";
 import AlbumPageLibrary from "../pages/library/album";
 import ArtistPage from "../pages/artist";
 import ZingChartPage from "../pages/zingchart";
+import HubPage from "../pages/hub";
+import HubDetailPage from "../pages/hub/detail";
+import Top100Page from "../pages/top100";
+import NewSongPage from "../pages/newSong";
 
 const Layout = () => {
   return (
@@ -54,6 +58,20 @@ export default createBrowserRouter([
           { element: <SongPageLibrary />, path: "" },
           { element: <AlbumPageLibrary />, path: "playlist" },
         ],
+      },
+      {
+        element: <HubPage />,
+        path: "/hub",
+        children: [],
+      },
+      { element: <HubDetailPage />, path: "/hub/detail" },
+      {
+        element: <Top100Page />,
+        path: "/top100",
+      },
+      {
+        element: <NewSongPage />,
+        path: "/moi-phat-hanh",
       },
       {
         element: <AlbumPage />,
@@ -88,7 +106,11 @@ export default createBrowserRouter([
     path: "/chinh-sach-bao-mat",
   },
   {
-    element: <VipPage />,
+    element: (
+      <AuthProvider>
+        <VipPage />
+      </AuthProvider>
+    ),
     path: "/mua-vip",
   },
   {
