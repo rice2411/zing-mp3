@@ -11,7 +11,7 @@ import Spinner from "../../shared/small_components/Loading/Spinner";
 const Library = ({ ...props }: any) => {
   const location = useLocation();
   const { styles }: any = useTheme();
-  const { id } = location.state;
+  const { id } = location?.state ?? "";
   const [data, setData]: any = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [timeData, setTimeData] = useState([]);

@@ -10,9 +10,10 @@ import useTheme from "../../../hooks/useTheme";
 import Player from "../Audio/Player";
 import useAudio from "../../../hooks/useAudio";
 import Audio from "../Audio";
+import "./styles.css";
 
 export default function SiderBar() {
-  const { audio }: any = useAudio();
+  const { audio, isShowLyrics }: any = useAudio();
   const { width }: any = useWindowSize();
   const { styles }: any = useTheme();
   const [withDefault, setWithDefault] = useState(widthDefaultValue);
@@ -60,7 +61,24 @@ export default function SiderBar() {
               isToggle={isToggle}
             />
           </div>
-          {audio != "" ? <Audio /> : <></>}
+          {audio != "" ? (
+            <div className="">
+              <Audio />
+              <div
+                className={`hid-box  ${
+                  isShowLyrics ? "top-0 z-[9999]" : "hidden"
+                }`}
+              >
+                <h1>CSS3 slide up</h1>
+                <p>
+                  This is a quick demo of slide-up effect using CSS animation
+                  when hover the box. No JS required!
+                </p>
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </aside>
     </>
