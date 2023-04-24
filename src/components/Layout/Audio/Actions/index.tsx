@@ -6,9 +6,11 @@ import Volume from "./Volume";
 import useTheme from "../../../../hooks/useTheme";
 import PlayList from "./Playlist";
 import ButtonIcon from "../../../../shared/small_components/Button/Icon";
+import useAudio from "../../../../hooks/useAudio";
 
 const Actions = () => {
   const { styles }: any = useTheme();
+  const { setIsShowLyrics }: any = useAudio();
   return (
     <>
       <div
@@ -20,6 +22,9 @@ const Actions = () => {
           <MdOutlineOndemandVideo />
         </ButtonIcon>
         <ButtonIcon
+          onClick={() => {
+            setIsShowLyrics((prevState: any) => !prevState);
+          }}
           className={`${styles.audio.controls.hoverStyle} cursor-pointer  p-3`}
         >
           <GiMicrophone />

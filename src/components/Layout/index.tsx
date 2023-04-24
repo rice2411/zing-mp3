@@ -11,32 +11,37 @@ import { useLocation } from "react-router-dom";
 
 export default function Layout({ route, ...props }: any) {
   const location = useLocation();
-  const { audio, modalVip, setModalVip }: any = useAudio();
+  const { audio, modalVip, setModalVip, isShowLyrics }: any = useAudio();
   const { styles }: any = useTheme();
 
   return (
     <div className={`${styles.body.backgroundColor}`}>
-      <div className="flex h-screen">
-        <SiderBar />
-        <div
-          className={`flex flex-col w-screen  ${
-            audio ? "h-[calc(100vh_-_90px)]" : ""
-          }  pl-[calc(100vw - 100%)]`}
-        >
-          <div className="">
-            <Navbar />
-          </div>
-          <Scrollbar isHover={true} className="">
-            <div
-              className={`${
-                location.pathname.includes("hub/detail") ? "" : "mx-10"
-              }`}
-            >
-              {props.children}
+      {isShowLyrics ? (
+        <div className="bg-red-500 w-full h-full"></div>
+      ) : (
+        <div className="flex h-screen">
+          <SiderBar />
+          <div
+            className={`flex flex-col w-screen  ${
+              audio ? "h-[calc(100vh_-_90px)]" : ""
+            }  pl-[calc(100vw - 100%)]`}
+          >
+            <div className="">
+              <Navbar />
             </div>
-          </Scrollbar>
+            <Scrollbar isHover={true} className="">
+              <div
+                className={`${
+                  location.pathname.includes("hub/detail") ? "" : "mx-10"
+                }`}
+              >
+                {props.children}
+              </div>
+            </Scrollbar>
+          </div>
         </div>
-      </div>
+      )}
+
       <Modal />
       <ModalVip
         isShow={modalVip}

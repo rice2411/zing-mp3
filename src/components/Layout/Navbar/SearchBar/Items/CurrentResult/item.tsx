@@ -15,9 +15,11 @@ const CurrentSearchItem = ({ item }: any) => {
               item?.avatar ? "rounded-full" : "rounded"
             } ${item?.audio && "group-hover:opacity-50"}`}
             src={
-              item?.type
-                ? item.avatar || item.image
-                : getFile(item?.image || item?.avatar)
+              item?.type && item?.avatar == "default.jpg"
+                ? getFile(item.avatar)
+                : !item?.type
+                ? getFile(item?.avatar || item?.image)
+                : item.avatar
             }
             alt=""
           />

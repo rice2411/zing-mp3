@@ -15,6 +15,7 @@ export const AudioProvider = ({ children }: any) => {
   const { userProfile }: any = useAuth();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isShowLyrics, setIsShowLyrics] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
@@ -239,6 +240,8 @@ export const AudioProvider = ({ children }: any) => {
         isLooping,
         trackProgress,
         timeRunning,
+        isShowLyrics,
+        setIsShowLyrics,
         setVolume,
         setTimeEnd,
         setPlaylist,

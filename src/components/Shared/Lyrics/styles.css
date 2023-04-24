@@ -1,0 +1,26 @@
+
+.word {
+position: relative;
+white-space: nowrap;
+color: lightblue;
+text-shadow: 0 0 3px rgba(0,0,0,1); 
+}p {
+    font-weight: bold;
+    font-size: 2em;
+  }
+  
+.word::after {
+content: attr(data-text);
+position: absolute;
+left: 0;
+color: red;
+overflow: hidden;
+width: 40%;
+animation: run-text 1s infinite linear;
+text-shadow: 0 0 3px rgba(255,255,255,1); 
+}
+  
+@keyframes run-text {
+from { width: 0 }
+to { width: 100% }
+}
