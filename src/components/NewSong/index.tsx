@@ -4,15 +4,16 @@ import { getFile } from "../../constant/file";
 import ItemChart from "../ZingChart/item";
 import SongService from "../../service/song";
 import Spinner from "../../shared/small_components/Loading/Spinner";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const NewSong = () => {
   const [data, setData]: any = useState([]);
   const [timeData, setTimeData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const fetchData = async () => {
+  const fetchData = async (limit: number = 10) => {
     setIsLoading(true);
     try {
-      const resposne: any = await SongService.getNewRelease({ option: 100 });
+      const resposne: any = await SongService.getNewRelease({ option: limit });
       const dataRaw = resposne?.data?.data;
       if (dataRaw) {
         setData(dataRaw);
@@ -42,7 +43,7 @@ const NewSong = () => {
     }
   };
   useEffect(() => {
-    fetchData();
+    fetchData(10);
   }, []);
   return (
     <>
@@ -52,11 +53,20 @@ const NewSong = () => {
         <>
           <h1 className="text-5xl font-bold text-white"> BXH Nhạc Mới</h1>{" "}
           <div className="flex flex-col w-auto mt-5">
-            {data?.map((item: any, idx: any) => (
-              <div key={idx}>
-                <ItemChart song={item} index={idx} timeData={timeData[idx]} />
-              </div>
-            ))}
+            <InfiniteScroll
+              dataLength={data.length}
+              next={() => {
+                fetchData(data.length + 10);
+              }}
+              hasMore={true}
+              loader={<h4>Loading...</h4>}
+            >
+              {data?.map((item: any, idx: any) => (
+                <div key={idx}>
+                  <ItemChart song={item} index={idx} timeData={timeData[idx]} />
+                </div>
+              ))}
+            </InfiniteScroll>
           </div>
         </>
       )}

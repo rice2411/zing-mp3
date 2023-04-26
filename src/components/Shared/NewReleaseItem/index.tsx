@@ -9,6 +9,7 @@ import Moment from "react-moment";
 import "moment/locale/vi";
 import useAudio from "../../../hooks/useAudio";
 import useAuth from "../../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 const NewReleaseItem = ({ item, index, className }: any) => {
   const [isHover, setIsHover] = useState(false);
@@ -28,7 +29,7 @@ const NewReleaseItem = ({ item, index, className }: any) => {
       onMouseLeave={() => handleMouseLeave()}
       className="group items-center w-full hover:bg-[hsla(0,0%,100%,0.1)] rounded-md overflow-hidden"
     >
-      <div className="p-2 flex items-center grid grid-cols-5 place-content-center">
+      <div className="p-2  items-center grid grid-cols-5 place-content-center">
         <div
           className="relative hover:cursor-pointer flex items-center justify-center"
           onClick={() => {
@@ -67,7 +68,9 @@ const NewReleaseItem = ({ item, index, className }: any) => {
             </div>
           </div>
           <div>
-            <a
+            <Link
+              to={"/nghe-si"}
+              state={{ artistId: item.artist._id }}
               className={`${styles.body.subTextColor} ${
                 styles.body.hover.textColor
               } ${
@@ -75,7 +78,7 @@ const NewReleaseItem = ({ item, index, className }: any) => {
               } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
             >
               {item.artist.name}
-            </a>
+            </Link>
           </div>
           <h3
             className={`${styles.body.subTextColor} text-xs font-normal mt-1 truncate cursor-default`}

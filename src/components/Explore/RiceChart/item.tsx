@@ -7,6 +7,7 @@ import useTheme from "../../../hooks/useTheme";
 import Button from "../../../shared/small_components/Button/Basic";
 import NewReleaseItem from "../../Shared/NewReleaseItem";
 import useAudio from "../../../hooks/useAudio";
+import { Link } from "react-router-dom";
 
 const ItemChart = ({ item, index, handleHightLightLine, rank }: any) => {
   const { styles }: any = useTheme();
@@ -84,14 +85,16 @@ const ItemChart = ({ item, index, handleHightLightLine, rank }: any) => {
               </div>
             </div>
             <div>
-              <a
+              <Link
+                to={"/nghe-si"}
+                state={{ artistId: item.artist._id }}
                 key={index}
                 className={`text-[#86828C] ${styles.body.hover.textColor} ${
                   item?.is_vip ? "opacity-60" : ""
                 } text-xs font-normal mt-1 truncate cursor-pointer hover:decoration-1 hover:underline `}
               >
                 {item?.artist?.name}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

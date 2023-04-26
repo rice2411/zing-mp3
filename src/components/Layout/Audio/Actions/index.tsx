@@ -10,7 +10,7 @@ import useAudio from "../../../../hooks/useAudio";
 
 const Actions = () => {
   const { styles }: any = useTheme();
-  const { setIsShowLyrics }: any = useAudio();
+  const { setIsShowLyrics, isHaveLyrics }: any = useAudio();
   return (
     <>
       <div
@@ -22,10 +22,13 @@ const Actions = () => {
           <MdOutlineOndemandVideo />
         </ButtonIcon>
         <ButtonIcon
+          isDisaled={!isHaveLyrics}
           onClick={() => {
             setIsShowLyrics((prevState: any) => !prevState);
           }}
-          className={`${styles.audio.controls.hoverStyle} cursor-pointer  p-3`}
+          className={`${styles.audio.controls.hoverStyle} cursor-pointer  p-3 ${
+            isHaveLyrics ? "" : "cursor-not-allowed"
+          }`}
         >
           <GiMicrophone />
         </ButtonIcon>

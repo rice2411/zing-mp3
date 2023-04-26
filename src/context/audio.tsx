@@ -16,6 +16,7 @@ export const AudioProvider = ({ children }: any) => {
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isShowLyrics, setIsShowLyrics] = useState(false);
+  const [isHaveLyrics, setIsHaveLyrics] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
@@ -32,7 +33,11 @@ export const AudioProvider = ({ children }: any) => {
   const [image, setImage] = useState("");
   const [audio, setAudio] = useState("");
   const [playlist, setPlaylist] = useState([]);
-  const [songId, setSongId] = useState("");
+  const [songId, setSongId] = useState(
+    typeof cookie.get("songId") !== "undefined"
+      ? JSON.parse(cookie.get("songId"))
+      : null
+  );
   const [albumId, setAlbumId] = useState(
     typeof cookie.get("albumId") !== "undefined"
       ? JSON.parse(cookie.get("albumId"))
@@ -78,6 +83,7 @@ export const AudioProvider = ({ children }: any) => {
   ) => {
     try {
       const { name, image, artist, _id } = info;
+      cookie.set("songId", JSON.stringify(_id), { expires: 365 });
       cookie.set("albumId", JSON.stringify(albumId), { expires: 365 });
       cookie.set("trackIndex", JSON.stringify(trackIndex), { expires: 365 });
       setTrackIndex(trackIndex);
@@ -196,6 +202,19 @@ export const AudioProvider = ({ children }: any) => {
       }
     }
   };
+  const handleCheckIsHaveLyrics = async () => {
+    try {
+      const response: any = await SongService.getLyrics(songId);
+      const dataRaw = response?.data?.data;
+      if (dataRaw.lyrics) {
+        setIsHaveLyrics(true);
+      } else {
+        setIsHaveLyrics(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const fetchData = async () => {
     try {
       const response: any = await AlbumService.detailAlbum(albumId);
@@ -220,6 +239,9 @@ export const AudioProvider = ({ children }: any) => {
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    handleCheckIsHaveLyrics();
+  }, [isPlaying]);
   return (
     <AudioContext.Provider
       value={{
@@ -241,6 +263,7 @@ export const AudioProvider = ({ children }: any) => {
         trackProgress,
         timeRunning,
         isShowLyrics,
+        isHaveLyrics,
         setIsShowLyrics,
         setVolume,
         setTimeEnd,

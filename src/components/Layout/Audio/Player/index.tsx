@@ -63,7 +63,6 @@ const Player = () => {
         handlePlayNavigateSong(1);
       } else {
         setTimeRunning(Math.round(audioRef.current.currentTime));
-
         setTrackProgress(audioRef.current.currentTime);
       }
       // @ts-ignore: Object is possibly 'null'.
@@ -160,7 +159,7 @@ const Player = () => {
     <>
       <style id="thumbPlayerStyle" type="text/css"></style>
       <div
-        className={`${styles.audio.backgroundColor} mt-auto h-[90px] z-50  w-screen audio  flex justify-between items-center `}
+        className={`${styles.audio.backgroundColor} mt-auto h-[90px] z-[9999999]  w-screen audio  flex justify-between items-center `}
       >
         <Info
           title={name ?? ""}
