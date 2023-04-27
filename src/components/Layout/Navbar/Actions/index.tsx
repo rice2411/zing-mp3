@@ -23,11 +23,13 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { getFile } from "../../../../constant/file";
 import Divide from "../../../../shared/small_components/Divide";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Actions = () => {
   const { styles, theme, color, handleChangeTheme }: any = useTheme();
   const { setIsAuthenticated, userProfile }: any = useAuth();
+
+  const navigate = useNavigate();
 
   const classButton = `text-xs py-1 px-6 border border-[hsla(0,0%,100%,0.1)] ${styles.dropdown.textColor}  rounded-full !text-white`;
   const activeButtonClass = [`${styles.button.backgroundColor}`];
@@ -259,9 +261,13 @@ const Actions = () => {
               className="h-10 w-10 flex flex-col items-center justify-center relative cursor-pointer"
             >
               <img
-                src={getFile(userProfile?.avatar)}
-                className={`rounded-full  p-0.5 ${
-                  userProfile?.is_vip && " border-[#fccc2e] border-2"
+                src={
+                  userProfile?.type_account == "default"
+                    ? getFile(userProfile?.avatar)
+                    : userProfile?.avatar
+                }
+                className={`w-10 h-10 rounded-full  ${
+                  userProfile?.is_vip && " border-[#fccc2e] border-2  p-0.5"
                 }  `}
                 alt=""
               />
@@ -304,7 +310,10 @@ const Actions = () => {
           </DropdownItem>
           <DropdownItem>
             <a
-              onClick={handleLogout}
+              onClick={() => {
+                handleLogout();
+                navigate("/");
+              }}
               href="#"
               className={`${dropDownItemClass} mt-3`}
             >

@@ -1,0 +1,20 @@
+
+.slide-left {
+
+  width: 0px;
+  background: goldenrod;
+  transition-property: width;
+  transition-duration: 1s;
+}
+.hid-box {
+  top: 100%;
+  position: absolute;
+  transition: all .5s ease-out;
+  background: #34224f;
+
+}
+
+
+
+
+

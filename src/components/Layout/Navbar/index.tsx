@@ -1,12 +1,14 @@
 import React from "react";
 import useTheme from "../../../hooks/useTheme";
-import LoginModal from "../../Login";
+
 import Actions from "./Actions";
 import Navigation from "./Navigation";
 import SearchBar from "./SearchBar";
 import { getFile } from "../../../constant/file";
 import { useLocation } from "react-router-dom";
 import "./styles.css";
+import LoginModal from "../../Login";
+import RegisterModal from "../../Register";
 
 const Navbar = () => {
   const { styles }: any = useTheme();
@@ -57,6 +59,7 @@ const Navbar = () => {
         <SearchBar />
         <Actions />
         <LoginModal />
+        <RegisterModal />
       </div>
     </div>
   );

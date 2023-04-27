@@ -53,7 +53,7 @@ function BlankModal({
         } z-[999] flex justify-center items-center bg-gray-900 bg-opacity-50  overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0  w-full md:inset-0 h-modal md:h-full`}
       >
         <div
-          className={` flex justify-center items-center relative p-4 w-full max-w-2xl h-full md:h-auto `}
+          className={`mb-5 flex justify-center items-center relative p-4 w-full max-w-2xl h-full md:h-auto `}
         >
           {/* Modal content */}
           <div

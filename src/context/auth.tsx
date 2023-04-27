@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }: any) => {
   const { handleModalBlank }: any = useModal();
 
   const [isOpenModalLogin, setIsOpenModalLogin] = useState(false);
-
+  const [isOpenModalRegister, setIsOpenModalRegister] = useState(false);
   const navigate = useNavigate();
 
   const handleOpenModalLogin = () => {
@@ -22,6 +22,18 @@ export const AuthProvider = ({ children }: any) => {
       onSubmit: () => {},
     });
     setIsOpenModalLogin(true);
+  };
+  const handleOpenModaRegister = () => {
+    handleModalBlank({
+      text: {
+        title: "Đăng ký",
+      },
+      onSubmit: () => {},
+    });
+    setIsOpenModalRegister(true);
+  };
+  const handleCloseModalRegister = () => {
+    setIsOpenModalRegister(false);
   };
   const handleCloseModalLogin = () => {
     setIsOpenModalLogin(false);
@@ -41,6 +53,9 @@ export const AuthProvider = ({ children }: any) => {
         isAuthenticated,
         userProfile,
         isOpenModalLogin,
+        isOpenModalRegister,
+        handleOpenModaRegister,
+        handleCloseModalRegister,
         setIsAuthenticated,
         handleOpenModalLogin,
         handleCloseModalLogin,

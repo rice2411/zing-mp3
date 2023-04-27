@@ -163,7 +163,7 @@ const Player = () => {
       >
         <Info
           title={name ?? ""}
-          artist={artist.name ?? ""}
+          artist={artist?.name ?? ""}
           image={getFile(image)}
         />
         <div

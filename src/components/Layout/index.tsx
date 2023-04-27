@@ -9,6 +9,7 @@ import useAudio from "../../hooks/useAudio";
 import ModalVip from "../Shared/ModalVip";
 import { useLocation } from "react-router-dom";
 import Lyrics from "../Shared/Lyrics";
+import Playlist from "../Playlist";
 
 export default function Layout({ route, ...props }: any) {
   const location = useLocation();
@@ -39,6 +40,7 @@ export default function Layout({ route, ...props }: any) {
           </Scrollbar>
         </div>
       </div>
+      <Playlist />
       <Modal />
       <ModalVip
         isShow={modalVip}

@@ -17,6 +17,7 @@ export const AudioProvider = ({ children }: any) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isShowLyrics, setIsShowLyrics] = useState(false);
   const [isHaveLyrics, setIsHaveLyrics] = useState(false);
+  const [isShowPlaylist, setIsShowPlaylist] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
@@ -106,6 +107,7 @@ export const AudioProvider = ({ children }: any) => {
       setAlbumId(albumId);
 
       const response: any = await AlbumService.detailAlbum(albumId);
+      await LibraryService.addToPlaylist({ albumId: albumId, isNew: true });
       const dataRaw = response?.data?.data;
       const playlist = dataRaw.songs;
       setPlaylist(playlist);
@@ -161,6 +163,7 @@ export const AudioProvider = ({ children }: any) => {
       setAlbumId(newAlbumId);
       const response: any = await AlbumService.detailAlbum(newAlbumId);
       await LibraryService.addAlbumHistory(newAlbumId);
+      await LibraryService.addToPlaylist({ albumId: newAlbumId, isNew: true });
       const dataRaw = response?.data?.data;
       const playlist = dataRaw.songs;
       const newAudio = new Audio(getFile(playlist[0].audio));
@@ -217,11 +220,11 @@ export const AudioProvider = ({ children }: any) => {
   };
   const fetchData = async () => {
     try {
-      const response: any = await AlbumService.detailAlbum(albumId);
+      const response: any = await LibraryService.getPlaylist();
       const dataRaw = response?.data?.data;
       if (dataRaw) {
-        const { name, image, artist, audio } = dataRaw.songs[trackIndex];
-        setPlaylist(dataRaw?.songs);
+        const { name, image, artist, audio } = dataRaw[trackIndex];
+        setPlaylist(dataRaw);
         setAudio(audio);
         setName(name);
         setArtist(artist);
@@ -264,6 +267,8 @@ export const AudioProvider = ({ children }: any) => {
         timeRunning,
         isShowLyrics,
         isHaveLyrics,
+        isShowPlaylist,
+        setIsShowPlaylist,
         setIsShowLyrics,
         setVolume,
         setTimeEnd,

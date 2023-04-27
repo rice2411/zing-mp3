@@ -28,6 +28,8 @@ import HubPage from "../pages/hub";
 import HubDetailPage from "../pages/hub/detail";
 import Top100Page from "../pages/top100";
 import NewSongPage from "../pages/newSong";
+import OAuth2Page from "../pages/oauth2";
+import ForgotPasswordPage from "../pages/forgotpassword/index,";
 
 const Layout = () => {
   return (
@@ -64,6 +66,11 @@ export default createBrowserRouter([
         path: "/hub",
         children: [],
       },
+
+      {
+        element: <OAuth2Page />,
+        path: "/oauth2",
+      },
       { element: <HubDetailPage />, path: "/hub/detail" },
       {
         element: <Top100Page />,
@@ -96,6 +103,10 @@ export default createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    element: <ForgotPasswordPage />,
+    path: "/forgotpassword",
   },
   {
     element: <Privacy />,

@@ -7,7 +7,7 @@ import useTheme from "../../../hooks/useTheme";
 import useAuth from "../../../hooks/useAuth";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import MusicWave from "../../../shared/small_components/MusicWave";
-import Cookies from "js-cookie";
+import cookies from "js-cookie";
 
 const Song = ({
   song,
@@ -16,6 +16,8 @@ const Song = ({
   className = "",
   isShowIndex = true,
   isHiddenBorder = false,
+  isShowTime = true,
+  customTextArtist = "",
 }: any) => {
   const location = useLocation();
   const { styles }: any = useTheme();
@@ -31,7 +33,7 @@ const Song = ({
 
   const [isHover, setIsHover] = useState(false);
   const [isLiked, setIsLiked] = useState(
-    song.followers.includes(userProfile._id) || false
+    song?.followers?.includes(userProfile._id) || false
   );
 
   const likeRef = useRef(null);
@@ -53,7 +55,7 @@ const Song = ({
       <div
         className={` flex justify-between items-center py-3 hover:bg-[hsla(0,0%,100%,0.1)] ${
           !isShowIndex ? "px-2" : ""
-        } ${songId == song._id && "bg-[hsla(0,0%,100%,0.1)]"}  rounded ${
+        } ${songId == song?._id && "bg-[hsla(0,0%,100%,0.1)]"}  rounded ${
           isHiddenBorder
             ? ""
             : `border-b-[1px] border-[${styles.dropdown.borderColor}]`
@@ -71,13 +73,16 @@ const Song = ({
             className="relative hover:cursor-pointer flex items-center justify-center"
             onClick={() => {
               const { albumId } = location?.state;
-              const albumIdStorage = JSON.parse(Cookies.get("albumId"));
+              const albumIdStorage =
+                typeof cookies.get("albumId") !== "undefined"
+                  ? JSON.parse(cookies.get("albumId"))
+                  : null;
               handlePlayOneSong(song, albumId || albumIdStorage);
             }}
           >
             <div className="w-[40px] h-[40px] overflow-hidden rounded-md ">
               <img
-                src={getFile(song.image)}
+                src={getFile(song?.image)}
                 className={`w-full h-full ${
                   isHover || (isPlaying && songId == song?._id)
                     ? "opacity-50"
@@ -110,18 +115,20 @@ const Song = ({
             <div
               className={`${
                 styles.album.textColor
-              } font-bold text-sm flex items-center truncate  ${
+              } font-bold text-sm flex items-center !truncate  ${
                 song?.is_vip && !userProfile?.is_vip ? "opacity-60" : ""
               }`}
             >
-              {song.name}
+              {song?.name}
               <div className={`ml-2 ${song?.is_vip ? "" : "hidden"} `}>
                 <span className="overflow-hidden ">
                   <div className="vip_label"></div>
                 </span>
               </div>
             </div>
-            <p className={`${styles.album.subTextColor} text-xs mt-0.5`}>
+            <p
+              className={`${styles.album.subTextColor} ${customTextArtist} text-xs mt-0.5`}
+            >
               {song?.artist?.name}
             </p>
           </div>
@@ -154,7 +161,7 @@ const Song = ({
               </div>
             )}
           </div>
-          {timeData}
+          {isShowTime && timeData}
         </div>
       </div>
     </div>

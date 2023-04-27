@@ -11,7 +11,7 @@ import Player from "../Audio/Player";
 import useAudio from "../../../hooks/useAudio";
 
 export default function SiderBar() {
-  const { audio }: any = useAudio();
+  const { songId }: any = useAudio();
   const { width }: any = useWindowSize();
   const { styles }: any = useTheme();
   const [withDefault, setWithDefault] = useState(widthDefaultValue);
@@ -59,7 +59,7 @@ export default function SiderBar() {
               isToggle={isToggle}
             />
           </div>
-          {audio != "" ? <Player /> : <></>}
+          {songId ? <Player /> : <></>}
         </div>
       </aside>
     </>

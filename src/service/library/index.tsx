@@ -8,8 +8,18 @@ const router = {
   likeAlbum: `${env.apiUrl}/api/v1/library/like-album/{albumId}`,
   likeArtist: `${env.apiUrl}/api/v1/library/like-artist/{artistId}`,
   get: `${env.apiUrl}/api/v1/library/get`,
+  addToPlaylist: `${env.apiUrl}/api/v1/library/add-to-playlist`,
+  getPlaylist: `${env.apiUrl}/api/v1/library/get-playlist`,
 };
 class LibraryService {
+  static getPlaylist() {
+    let uri = router.getPlaylist;
+    return fetch.get(uri);
+  }
+  static addToPlaylist(param: object) {
+    let uri = router.addToPlaylist;
+    return fetch.get(uri, param);
+  }
   static get() {
     let uri = router.get;
     return fetch.get(uri);

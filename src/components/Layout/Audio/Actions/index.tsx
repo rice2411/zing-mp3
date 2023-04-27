@@ -10,7 +10,7 @@ import useAudio from "../../../../hooks/useAudio";
 
 const Actions = () => {
   const { styles }: any = useTheme();
-  const { setIsShowLyrics, isHaveLyrics }: any = useAudio();
+  const { setIsShowLyrics, isHaveLyrics, setIsShowPlaylist }: any = useAudio();
   return (
     <>
       <div

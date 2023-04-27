@@ -13,7 +13,7 @@ const Info = ({ image, title, artist }: any) => {
   const { playlist, trackIndex, handleLikeSong }: any = useAudio();
 
   const [isLiked, setIsLiked] = useState(
-    playlist[trackIndex].followers.includes(userProfile._id) || false
+    playlist[trackIndex]?.followers?.includes(userProfile?._id) || false
   );
 
   return (
