@@ -8,6 +8,7 @@ import useAuth from "../../../hooks/useAuth";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import MusicWave from "../../../shared/small_components/MusicWave";
 import cookies from "js-cookie";
+import { FiMoreHorizontal } from "react-icons/fi";
 
 const Song = ({
   song,
@@ -72,7 +73,9 @@ const Song = ({
           <div
             className="relative hover:cursor-pointer flex items-center justify-center"
             onClick={() => {
-              const { albumId } = location?.state;
+              const { albumId } = location?.state
+                ? location?.state
+                : { albumId: null };
               const albumIdStorage =
                 typeof cookies.get("albumId") !== "undefined"
                   ? JSON.parse(cookies.get("albumId"))
@@ -161,7 +164,19 @@ const Song = ({
               </div>
             )}
           </div>
-          {isShowTime && timeData}
+          {isShowTime && (
+            <>
+              {isHover ? (
+                <div className="item-center flex justify-end ">
+                  <div className="col-span-1 w-[40px] h-[40px] transition cursor-pointer rounded-full overflow-hidden relative text-white hover:bg-[hsla(0,0%,100%,0.1)] ">
+                    <FiMoreHorizontal className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" />
+                  </div>
+                </div>
+              ) : (
+                timeData
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

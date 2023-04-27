@@ -81,7 +81,7 @@ const Library = ({ ...props }: any) => {
         <div>
           <div id="recent" className="min-h-[345px]">
             <h1 className="text-white text-3xl font-bold">Thư viện</h1>
-            <div className="mt-5">
+            <div className="mt-5 flex gap-x-12">
               {data?.likedArtists?.map((artist: any, index: any) => (
                 <div key={index}>
                   <ArtistFace

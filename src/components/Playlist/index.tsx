@@ -6,7 +6,7 @@ import Song from "../Shared/Song";
 import Scrollbar from "../../shared/small_components/Scrollbar";
 
 const Playlist = () => {
-  const { isShowPlaylist, setIsShowPlaylist, songId }: any = useAudio();
+  const { isShowPlaylist, trackIndex, songId }: any = useAudio();
   const [tab, SetTab] = useState("playlist");
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData]: any = useState([]);
@@ -36,12 +36,12 @@ const Playlist = () => {
         background: "#120822",
       }}
       className={`slide-left   top-0 right-0 z-50 h-screen overflow-hidden ${
-        isShowPlaylist ? "w-[300px]" : ""
+        isShowPlaylist ? "w-max" : ""
       }`}
     >
       <div className="p-2 ">
         {" "}
-        <ul className="overflow-hidden text-xs text-center flex items-center rounded-full text-[#dadada]  bg-[#2A2139] mb-2">
+        <ul className="min-w-[284px] overflow-hidden text-xs text-center flex items-center rounded-full text-[#dadada]  bg-[#2A2139] mb-2">
           <li
             className="w-full  p-1 cursor-pointer"
             onClick={() => SetTab("playlist")}
@@ -69,20 +69,33 @@ const Playlist = () => {
             </div>
           </li>
         </ul>{" "}
-        <Song
-          song={data.find((item: any) => item._id == songId)}
-          index={111}
-          timeData={0}
-          listSongs={null}
-          className={"bg-[#9B4DE0] hover:bg-[#9B4DE0] "}
-          customTextArtist={"text-[hsla(0,0%,100%,.6)]"}
-          isShowIndex={false}
-          isShowTime={false}
-        />
-        <p className="text-sm text-white font-bold py-2">Tiếp theo</p>
         <Scrollbar className="h-[500px] overflow-x-hidden" isHover={true}>
+          {data?.slice(0, trackIndex - 1).map((item: any, idx: any) => (
+            <div key={idx}>
+              <Song
+                song={item}
+                index={idx}
+                timeData={0}
+                listSongs={null}
+                className={"opacity-50"}
+                isShowIndex={false}
+                isShowTime={false}
+              />
+            </div>
+          ))}
+          <Song
+            song={data[trackIndex]}
+            index={111}
+            timeData={0}
+            listSongs={null}
+            className={"bg-[#9B4DE0] hover:bg-[#9B4DE0] "}
+            customTextArtist={"text-[hsla(0,0%,100%,.6)]"}
+            isShowIndex={false}
+            isShowTime={false}
+          />
+          <p className="text-sm text-white font-bold py-2">Tiếp theo</p>
           {data
-            ?.filter((item: any) => item._id != songId)
+            .slice(trackIndex + 1, data.length)
             .map((item: any, idx: any) => (
               <div key={idx}>
                 <Song

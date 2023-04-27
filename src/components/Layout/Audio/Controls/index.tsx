@@ -14,7 +14,8 @@ export default function Controls({
   onNextClick,
 }: any) {
   const { styles }: any = useTheme();
-  const { isLoading, isLooping, setIsLooping }: any = useAudio();
+  const { isLoading, isLooping, setIsLooping, trackIndex, playlist }: any =
+    useAudio();
   return (
     <>
       <div
@@ -29,8 +30,14 @@ export default function Controls({
           className={`${styles.audio.controls.hoverStyle} flex justify-center items-center h-8 w-8`}
         >
           <ImPrevious2
-            onClick={onPrevClick}
-            className={`h-6 w-6 cursor-pointer  ${styles.audio.controls.hoverStyle}`}
+            onClick={() => {
+              if (trackIndex !== 0) {
+                onPrevClick();
+              }
+            }}
+            className={`h-6 w-6 ${
+              trackIndex == 0 ? "cursor-not-allowed" : "cursor-pointer"
+            }  ${styles.audio.controls.hoverStyle}`}
           />
         </div>
         {isPlaying ? (
@@ -54,8 +61,16 @@ export default function Controls({
           className={`${styles.audio.controls.hoverStyle} flex justify-center items-center h-8 w-8`}
         >
           <ImNext2
-            onClick={onNextClick}
-            className={`h-6 w-6 cursor-pointer ${styles.audio.controls.hoverStyle}`}
+            onClick={() => {
+              if (trackIndex < playlist.length - 1) {
+                onNextClick();
+              }
+            }}
+            className={`h-6 w-6 cursor-pointer ${
+              trackIndex == playlist.length - 1
+                ? "cursor-not-allowed"
+                : "cursor-pointer"
+            } ${styles.audio.controls.hoverStyle}`}
           />
         </div>{" "}
         <div

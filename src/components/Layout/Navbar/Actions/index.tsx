@@ -41,54 +41,8 @@ const Actions = () => {
   const [isOpenModalIntro, setIsOpenModalIntro] = useState(false);
   const [isOpenModal404, setIsOpenModal404] = useState(false);
 
-  const [isShowDropdownProfile, setIsShowDropdownProfile] = useState(false);
-  const [isShowDropdownSetting, setIsShowDropdownSetting] = useState(false);
-
-  const dropdownProfileRef = useRef(null);
-  const dropdownSettingRef = useRef(null);
-
-  const buttonActiveDropdownProfile = useRef(null);
-  const buttonACtiveDropdownSetting = useRef(null);
-
   const dropDownItemClass = `${styles.dropdown.hover.backgroundColor} rounded block px-4 py-2  flex text-xs  items-center`;
   const dropDownIconClass = `h-[20px] w-[20px] mr-2`;
-
-  const closeOpenMenus = (e: any) => {
-    if (buttonActiveDropdownProfile?.current?.contains(e.target)) {
-      return;
-    }
-    if (buttonACtiveDropdownSetting?.current?.contains(e.target)) {
-      return;
-    }
-    if (
-      dropdownSettingRef?.current &&
-      isShowDropdownSetting &&
-      !dropdownSettingRef?.current.contains(e.target)
-    ) {
-      setIsShowDropdownSetting(false);
-    }
-    if (
-      dropdownProfileRef?.current &&
-      isShowDropdownProfile &&
-      !dropdownProfileRef?.current?.contains(e.target)
-    ) {
-      setIsShowDropdownProfile(false);
-    }
-  };
-  document.addEventListener("mousedown", closeOpenMenus);
-
-  const handleShowDropdownProfile = (isShow: boolean) => {
-    setIsShowDropdownProfile(isShow);
-    if (isShow) {
-      setIsShowDropdownSetting(false);
-    }
-  };
-  const handleShowDropdownSetting = (isShow: boolean) => {
-    setIsShowDropdownSetting(isShow);
-    if (isShow) {
-      setIsShowDropdownProfile(false);
-    }
-  };
 
   const handleKeepingTheme = () => {
     handleChangeTheme(theme, color);
@@ -149,179 +103,192 @@ const Actions = () => {
 
   return (
     <div className="ml-auto  gap-x-2 flex">
-      <ButtonIcon
-        refButton={buttonACtiveDropdownSetting}
-        onClick={() => {
-          handleShowDropdownSetting(!isShowDropdownSetting);
+      <Dropdown
+        button={(onClick: any) => {
+          return (
+            <ButtonIcon
+              onClick={onClick}
+              className={`${styles.navbar.item.backgroundColor} ${styles.navbar.item.hover.backgroundColor}  rounded-full h-10 w-10`}
+            >
+              <FiSettings />
+            </ButtonIcon>
+          );
         }}
-        className={`${styles.navbar.item.backgroundColor} ${styles.navbar.item.hover.backgroundColor}  rounded-full h-10 w-10`}
-      >
-        <FiSettings />
-      </ButtonIcon>
-      <div className="relative mt-10">
-        <div
-          ref={dropdownSettingRef}
-          className={`${isShowDropdownSetting ? "" : "hidden"} ${
-            styles.dropdown.backgroundColor
-          } ${
-            styles.dropdown.textColor
-          } z-10   rounded-lg shadow   absolute right-0 mt-3 w-[228px] py-0.5 px-2`}
-        >
-          <ul className="py-2 text-sm  ">
-            <DropdownItem>
-              <a
-                href="#"
-                className={`${dropDownItemClass} `}
-                onClick={handleOpenModalTheme}
-              >
-                <FaBrush className={`${dropDownIconClass}`} />
-                Giao diện
-                <MdOutlineKeyboardArrowRight className="ml-auto" />
-              </a>
-            </DropdownItem>
-            <DropdownItem>
-              <Divide />
-            </DropdownItem>
-            <DropdownItem>
-              <a
-                href="#"
-                className={`${dropDownItemClass} ${styles.dropdown.subTextColor} `}
-                onClick={() => {
-                  setIsOpenModalIntro(true);
-                }}
-              >
-                <AiOutlineInfoCircle className={`${dropDownIconClass}`} />
-                Giới thiệu
-              </a>
-            </DropdownItem>
-            <DropdownItem>
-              <a
-                href="#"
-                onClick={() => {
-                  handleOpenModal404();
-                }}
-                className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
-              >
-                <BsTelephone className={`${dropDownIconClass}`} />
-                Liên hệ
-                <BsArrowUpRight className="ml-auto" />
-              </a>
-            </DropdownItem>
-            <DropdownItem>
-              <a
-                href="#"
-                onClick={() => {
-                  handleOpenModal404();
-                }}
-                className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
-              >
-                <RiAdvertisementLine className={`${dropDownIconClass}`} />
-                Quảng cáo
-                <BsArrowUpRight className="ml-auto" />
-              </a>
-            </DropdownItem>
-            <DropdownItem>
-              <Link
-                to={`/dieu-khoan-su-dung`}
-                target="_blank"
-                className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
-              >
-                <CgFileDocument className={`${dropDownIconClass}`} />
-                Thoả thuận sử dụng
-                <BsArrowUpRight className="ml-auto" />
-              </Link>
-            </DropdownItem>
-            <DropdownItem>
-              <Link
-                to={`/chinh-sach-bao-mat`}
-                target="_blank"
-                className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
-              >
-                <TbShieldCheck className={`${dropDownIconClass}`} />
-                Chính sách bảo mật
-                <BsArrowUpRight className="ml-auto" />
-              </Link>
-            </DropdownItem>
-          </ul>
-        </div>
-      </div>
+        content={
+          <div className="relative">
+            <div
+              className={` ${styles.dropdown.backgroundColor} ${styles.dropdown.textColor} z-10   rounded-lg shadow   absolute right-0 mt-3 w-[228px] py-0.5 px-2`}
+            >
+              <ul className="py-2 text-sm  ">
+                <DropdownItem>
+                  <a
+                    href="#"
+                    className={`${dropDownItemClass} `}
+                    onClick={handleOpenModalTheme}
+                  >
+                    <FaBrush className={`${dropDownIconClass}`} />
+                    Giao diện
+                    <MdOutlineKeyboardArrowRight className="ml-auto" />
+                  </a>
+                </DropdownItem>
+                <DropdownItem>
+                  <Divide />
+                </DropdownItem>
+                <DropdownItem>
+                  <a
+                    href="#"
+                    className={`${dropDownItemClass} ${styles.dropdown.subTextColor} `}
+                    onClick={() => {
+                      setIsOpenModalIntro(true);
+                    }}
+                  >
+                    <AiOutlineInfoCircle className={`${dropDownIconClass}`} />
+                    Giới thiệu
+                  </a>
+                </DropdownItem>
+                <DropdownItem>
+                  <a
+                    href="#"
+                    onClick={() => {
+                      handleOpenModal404();
+                    }}
+                    className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
+                  >
+                    <BsTelephone className={`${dropDownIconClass}`} />
+                    Liên hệ
+                    <BsArrowUpRight className="ml-auto" />
+                  </a>
+                </DropdownItem>
+                <DropdownItem>
+                  <a
+                    href="#"
+                    onClick={() => {
+                      handleOpenModal404();
+                    }}
+                    className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
+                  >
+                    <RiAdvertisementLine className={`${dropDownIconClass}`} />
+                    Quảng cáo
+                    <BsArrowUpRight className="ml-auto" />
+                  </a>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link
+                    to={`/dieu-khoan-su-dung`}
+                    target="_blank"
+                    className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
+                  >
+                    <CgFileDocument className={`${dropDownIconClass}`} />
+                    Thoả thuận sử dụng
+                    <BsArrowUpRight className="ml-auto" />
+                  </Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link
+                    to={`/chinh-sach-bao-mat`}
+                    target="_blank"
+                    className={`${dropDownItemClass} ${styles.dropdown.subTextColor}`}
+                  >
+                    <TbShieldCheck className={`${dropDownIconClass}`} />
+                    Chính sách bảo mật
+                    <BsArrowUpRight className="ml-auto" />
+                  </Link>
+                </DropdownItem>
+              </ul>
+            </div>
+          </div>
+        }
+      />
 
       {isAuthenticated ? (
-        <Dropdown
-          dropdownRef={dropdownProfileRef}
-          className="absolute right-0 mt-3 w-[228px] py-0.5 px-2"
-          isShow={isShowDropdownProfile}
-        >
-          <DropdownButton>
-            <div
-              ref={buttonActiveDropdownProfile}
-              onClick={() => {
-                handleShowDropdownProfile(!isShowDropdownProfile);
-              }}
-              className="h-10 w-10 flex flex-col items-center justify-center relative cursor-pointer"
-            >
-              <img
-                src={
-                  userProfile?.type_account == "default"
-                    ? getFile(userProfile?.avatar)
-                    : userProfile?.avatar
-                }
-                className={`w-10 h-10 rounded-full  ${
-                  userProfile?.is_vip && " border-[#fccc2e] border-2  p-0.5"
-                }  `}
-                alt=""
-              />
-              {userProfile?.is_vip && (
-                <div className="vip_label  absolute bottom-0"></div>
-              )}
-            </div>
-          </DropdownButton>
-          <DropdownItem>
-            <p
-              className={`${styles.dropdown.subTextColor} pb-2 text-xs text-center border-b-[1px] border-[${styles.dropdown.borderColor}]`}
-            >
-              Gói VIP sẽ hết hạn <br />
-              vào ngày
-              <span className={`${styles.dropdown.textColor}`}> 20/3/2023</span>
-            </p>
-          </DropdownItem>
+        <>
+          <Dropdown
+            button={(onClick: any) => {
+              return (
+                <div
+                  onClick={onClick}
+                  className="h-10 w-10 flex flex-col items-center justify-center relative cursor-pointer"
+                >
+                  <img
+                    src={
+                      userProfile?.type_account == "default"
+                        ? getFile(userProfile?.avatar)
+                        : userProfile?.avatar
+                    }
+                    className={`w-10 h-10 rounded-full  ${
+                      userProfile?.is_vip && " border-[#fccc2e] border-2  p-0.5"
+                    }  `}
+                    alt=""
+                  />
+                  {userProfile?.is_vip && (
+                    <div className="vip_label  absolute bottom-0"></div>
+                  )}
+                </div>
+              );
+            }}
+            content={
+              <div className="relative">
+                <div
+                  className={` ${styles.dropdown.backgroundColor} ${styles.dropdown.textColor} z-10   rounded-lg shadow   absolute right-0 mt-3 w-[228px] py-0.5 px-2`}
+                >
+                  <ul className="py-2 text-sm  ">
+                    <DropdownItem>
+                      <p
+                        className={`${styles.dropdown.subTextColor} pb-2 text-xs text-center border-b-[1px] border-[${styles.dropdown.borderColor}]`}
+                      >
+                        Gói VIP sẽ hết hạn <br />
+                        vào ngày
+                        <span className={`${styles.dropdown.textColor}`}>
+                          {" "}
+                          20/3/2023
+                        </span>
+                      </p>
+                    </DropdownItem>
 
-          <DropdownItem>
-            <Link to="/mua-vip" className={`${dropDownItemClass} mt-3`}>
-              <RiVipLine className={`${dropDownIconClass}`} />
-              Mua code VIP
-              <BsArrowUpRight className="ml-auto" />
-            </Link>
-          </DropdownItem>
-          <DropdownItem>
-            <a href="#" className={`${dropDownItemClass}`}>
-              <HiOutlineBan className={`${dropDownIconClass}`} />
-              Danh sách chặn
-            </a>
-          </DropdownItem>
-          <DropdownItem>
-            <a href="#" className={`${dropDownItemClass} mb-3 `}>
-              <BsUpload className={`${dropDownIconClass} `} />
-              Tải lên
-            </a>
-          </DropdownItem>
-          <DropdownItem>
-            <Divide />
-          </DropdownItem>
-          <DropdownItem>
-            <a
-              onClick={() => {
-                handleLogout();
-                navigate("/");
-              }}
-              href="#"
-              className={`${dropDownItemClass} mt-3`}
-            >
-              <FiLogOut className={`${dropDownIconClass} `} />
-              Đăng xuất
-            </a>
-          </DropdownItem>
-        </Dropdown>
+                    <DropdownItem>
+                      <Link
+                        to="/mua-vip"
+                        className={`${dropDownItemClass} mt-3`}
+                      >
+                        <RiVipLine className={`${dropDownIconClass}`} />
+                        Mua code VIP
+                        <BsArrowUpRight className="ml-auto" />
+                      </Link>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <a href="#" className={`${dropDownItemClass}`}>
+                        <HiOutlineBan className={`${dropDownIconClass}`} />
+                        Danh sách chặn
+                      </a>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <a href="#" className={`${dropDownItemClass} mb-3 `}>
+                        <BsUpload className={`${dropDownIconClass} `} />
+                        Tải lên
+                      </a>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <Divide />
+                    </DropdownItem>
+                    <DropdownItem>
+                      <a
+                        onClick={() => {
+                          handleLogout();
+                          navigate("/");
+                        }}
+                        href="#"
+                        className={`${dropDownItemClass} mt-3`}
+                      >
+                        <FiLogOut className={`${dropDownIconClass} `} />
+                        Đăng xuất
+                      </a>
+                    </DropdownItem>
+                  </ul>
+                </div>
+              </div>
+            }
+          />
+        </>
       ) : (
         <Button
           text="ĐĂNG NHẬP"
