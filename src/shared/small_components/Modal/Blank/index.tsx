@@ -12,6 +12,7 @@ function BlankModal({
   handleClose,
   className,
   isShowHeader = true,
+
   classHeader,
   ...props
 }: any) {
@@ -57,7 +58,7 @@ function BlankModal({
         >
           {/* Modal content */}
           <div
-            className={`${styles.modal.backgroundColor} ${styles.modal.textColor}  ${className}  relative rounded-lg shadow`}
+            className={`bg-[#34224F] ${styles.modal.textColor}  ${className}  relative rounded-lg shadow`}
           >
             {/* Modal header */}
             {isShowHeader ? (

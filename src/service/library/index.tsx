@@ -10,8 +10,13 @@ const router = {
   get: `${env.apiUrl}/api/v1/library/get`,
   addToPlaylist: `${env.apiUrl}/api/v1/library/add-to-playlist`,
   getPlaylist: `${env.apiUrl}/api/v1/library/get-playlist`,
+  createPLaylist: `${env.apiUrl}/api/v1/library/create-playlist`,
 };
 class LibraryService {
+  static createPLaylist(param: object) {
+    let uri = router.createPLaylist;
+    return fetch.post(uri, param);
+  }
   static getPlaylist() {
     let uri = router.getPlaylist;
     return fetch.get(uri);

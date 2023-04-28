@@ -42,7 +42,7 @@ const Playlist = () => {
             background: "#120822",
           }}
           className={`slide-left   top-0 right-0 z-50 h-screen overflow-hidden ${
-            isShowPlaylist ? "w-max" : ""
+            isShowPlaylist ? "w-[400px]" : ""
           }`}
         >
           <div className="p-2 ">
@@ -79,7 +79,7 @@ const Playlist = () => {
                 </div>
               </li>
             </ul>{" "}
-            <Scrollbar className="h-[500px] overflow-x-hidden" isHover={true}>
+            <Scrollbar className="h-[580px] overflow-x-hidden" isHover={true}>
               {data?.slice(0, trackIndex - 1).map((item: any, idx: any) => (
                 <div key={idx}>
                   <Song
@@ -98,8 +98,8 @@ const Playlist = () => {
                 index={111}
                 timeData={0}
                 listSongs={null}
-                className={"bg-[#9B4DE0] hover:bg-[#9B4DE0] "}
-                customTextArtist={"text-[hsla(0,0%,100%,.6)]"}
+                className={"!bg-[#9B4DE0] !hover:bg-[#9B4DE0] "}
+                customTextArtist={"!text-[hsla(0,0%,100%,.6)]"}
                 isShowIndex={false}
                 isShowTime={false}
               />

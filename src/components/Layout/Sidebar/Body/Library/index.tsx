@@ -8,7 +8,7 @@ import useAuth from "../../../../../hooks/useAuth";
 export default function Library({ isToggle }: any) {
   const { styles }: any = useTheme();
   const canPlayRefs = useRef([]);
-  const { handleOpenModalLogin }: any = useAuth();
+  const { handleOpenModalLogin, userProfile }: any = useAuth();
   const navigate = useNavigate();
   const adNode = (idx: number, node: any) => {
     if (node) {
@@ -17,8 +17,14 @@ export default function Library({ isToggle }: any) {
     }
   };
   const handleClick = (route: string, isLogged: boolean, _id: string) => {
-    if (!isLogged) navigate(route, { state: { id: _id } });
-    else handleOpenModalLogin();
+    if (userProfile._id) {
+      navigate(route);
+    } else {
+      if (!isLogged) navigate(route);
+      else {
+        handleOpenModalLogin();
+      }
+    }
   };
   return (
     <div>

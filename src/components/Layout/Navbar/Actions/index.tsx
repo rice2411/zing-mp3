@@ -68,14 +68,17 @@ const Actions = () => {
   };
 
   const handleCloseModal404 = () => {
+    handleModalBlank({});
     setIsOpenModal404(false);
   };
 
   const handleCloseModalIntro = () => {
+    handleModalBlank({});
     setIsOpenModalIntro(false);
   };
 
   const handleCloseModalTheme = () => {
+    handleModalBlank({});
     setIsOpenModalTheme(false);
   };
 

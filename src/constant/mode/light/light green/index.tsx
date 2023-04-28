@@ -3,6 +3,13 @@ import { STYLES } from "./class";
 export const LIGHTGREEN = {
   queryName: "light green",
   components: {
+    album: {
+      textColor: STYLES.text.third,
+      subTextColor: STYLES.text.second,
+      button: {
+        backgroundColor: STYLES.backgroundColor.eighth,
+      },
+    },
     dropdown: {
       backgroundColor: STYLES.backgroundColor.first,
       textColor: STYLES.text.third,

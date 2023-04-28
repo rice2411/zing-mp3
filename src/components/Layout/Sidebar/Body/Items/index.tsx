@@ -7,7 +7,7 @@ import useAuth from "../../../../../hooks/useAuth";
 export default function Items({ data, className, isToggle }: any) {
   const location = useLocation();
   const canPlayRefs = useRef([]);
-  const { handleOpenModalLogin }: any = useAuth();
+  const { handleOpenModalLogin, userProfile }: any = useAuth();
   const navigate = useNavigate();
   const { styles }: any = useTheme();
   const adNode = (idx: number, node: any) => {
@@ -17,8 +17,14 @@ export default function Items({ data, className, isToggle }: any) {
     }
   };
   const handleClick = (route: string, isLogged: boolean) => {
-    if (!isLogged) navigate(route);
-    else handleOpenModalLogin();
+    if (userProfile._id) {
+      navigate(route);
+    } else {
+      if (!isLogged) navigate(route);
+      else {
+        handleOpenModalLogin();
+      }
+    }
   };
   const hanldeMouseEnter = (index: number) => {
     // @ts-ignore: Object is possibly 'null'.
