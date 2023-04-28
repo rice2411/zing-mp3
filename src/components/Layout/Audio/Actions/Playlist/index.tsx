@@ -3,9 +3,13 @@ import { RiPlayListLine } from "react-icons/ri";
 import useTheme from "../../../../../hooks/useTheme";
 import ButtonIcon from "../../../../../shared/small_components/Button/Icon";
 import useAudio from "../../../../../hooks/useAudio";
+import useAuth from "../../../../../hooks/useAuth";
+import useModal from "../../../../../hooks/useModal";
 const PlayList = () => {
   const { styles }: any = useTheme();
+  const { userProfile }: any = useAuth();
   const { setIsShowPlaylist, isShowPlaylist, audio }: any = useAudio();
+  const { handleOpenModalLogin }: any = useAuth();
   const handleMouseEnter = (e: any) => {
     const element = e.target;
     element.style.backgroundColor = styles.audio.playlist.hoverColor;
@@ -24,6 +28,9 @@ const PlayList = () => {
       <div className="p-2 flex items-center justify-center">
         <ButtonIcon
           onClick={() => {
+            if (!userProfile._id) {
+              handleOpenModalLogin();
+            }
             setIsShowPlaylist((prevState: any) => !prevState);
           }}
           className={` ${

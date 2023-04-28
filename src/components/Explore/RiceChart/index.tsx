@@ -16,6 +16,7 @@ import NewReleaseItem from "../../Shared/NewReleaseItem";
 import ItemChart from "./item";
 import "./styles.scss";
 import WorldChart from "./WorldChart";
+import { Link } from "react-router-dom";
 const RiceChart = ({ isFullChart = false }: any) => {
   const colorArr = ["#4A90E2", "#27BD9C", "#E35050"];
   const templateTooltip = (
@@ -25,18 +26,10 @@ const RiceChart = ({ isFullChart = false }: any) => {
   ) => {
     const styles = {
       backgroundColor: color,
-      transform: "",
-      top: "0",
-      left: "0",
-      right: "0",
-      pointerEvents: "none",
-      visibility: "visible",
-      position: "absolute",
-      transition: " -webkit-transform 400ms ease 0s;",
     } as React.CSSProperties;
     return (
       <div
-        className="border-0 rounded min-w-[250px] w-full"
+        className="border-0 rounded min-w-[250px] w-full cutstom_chart"
         style={isCustomStyles ? styles : { backgroundColor: color }}
       >
         <div className="p-2 flex text-white items-center">
@@ -207,10 +200,12 @@ const RiceChart = ({ isFullChart = false }: any) => {
                       />
                     ))}
                     {}
-                    <Button
-                      text="Xem thêm"
-                      className="text-sm rounded-full border border-1 border-white !text-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
-                    />
+                    <Link to="/zing-chart">
+                      <Button
+                        text="Xem thêm"
+                        className="text-sm rounded-full border border-1 border-white !text-white px-5 py-1.5 w-max hover:bg-[hsla(0,0%,100%,.1)]"
+                      />
+                    </Link>
                   </div>
                 )}
 

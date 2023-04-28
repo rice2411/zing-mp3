@@ -2,31 +2,23 @@ import React, { useRef } from "react";
 import useTheme from "../../../../../hooks/useTheme";
 import { iconStyles, widthDefaultValue } from "../../styles";
 import { data } from "./data";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../../../../hooks/useAuth";
 
 export default function Library({ isToggle }: any) {
   const { styles }: any = useTheme();
   const canPlayRefs = useRef([]);
+  const { handleOpenModalLogin }: any = useAuth();
+  const navigate = useNavigate();
   const adNode = (idx: number, node: any) => {
     if (node) {
       // @ts-ignore: Object is possibly 'null'.
       canPlayRefs.current[idx] = node;
     }
   };
-  const hanldeMouseEnter = (index: number) => {
-    // @ts-ignore: Object is possibly 'null'.
-    canPlayRefs.current[index].classList.remove("xl:hidden ");
-    // @ts-ignore: Object is possibly 'null'.
-    canPlayRefs.current[index].classList.remove("lg:hidden ");
-
-    // @ts-ignore: Object is possibly 'null'.
-  };
-  const hanldeMouseLeave = (index: number) => {
-    // @ts-ignore: Object is possibly 'null'.
-    canPlayRefs.current[index].classList.add("xl:hidden");
-    // @ts-ignore: Object is possibly 'null'.
-
-    canPlayRefs.current[index].classList.add("lg:hidden");
+  const handleClick = (route: string, isLogged: boolean, _id: string) => {
+    if (!isLogged) navigate(route, { state: { id: _id } });
+    else handleOpenModalLogin();
   };
   return (
     <div>
@@ -43,7 +35,12 @@ export default function Library({ isToggle }: any) {
         } xl:w-auto lg:w-auto`}
       >
         {data.map((item, index) => (
-          <Link to={"/mymusic"} state={{ id: item.id }} key={index}>
+          <div
+            onClick={() => {
+              handleClick("/mymusic", item.isLogged, item.id);
+            }}
+            key={index}
+          >
             <li
               key={item.id}
               className={`flex items-center ${
@@ -67,7 +64,7 @@ export default function Library({ isToggle }: any) {
                 {item.canPlay ? item.canPlay : ""}
               </div>
             </li>
-          </Link>
+          </div>
         ))}
       </ul>
     </div>

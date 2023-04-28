@@ -30,6 +30,7 @@ import Top100Page from "../pages/top100";
 import NewSongPage from "../pages/newSong";
 import OAuth2Page from "../pages/oauth2";
 import ForgotPasswordPage from "../pages/forgotpassword/index,";
+import Modal from "../shared/small_components/Modal";
 
 const Layout = () => {
   return (
@@ -105,7 +106,12 @@ export default createBrowserRouter([
     ],
   },
   {
-    element: <ForgotPasswordPage />,
+    element: (
+      <ModalProvider>
+        <Modal />
+        <ForgotPasswordPage />
+      </ModalProvider>
+    ),
     path: "/forgotpassword",
   },
   {

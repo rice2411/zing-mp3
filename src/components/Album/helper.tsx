@@ -9,7 +9,7 @@ export const convertToDate = (date: string) => {
 };
 
 // assuming your time strings will always be (H*:)(m{0,2}:)s{0,2} and never negative
-export const totalTimeString = (timeStrings: any) => {
+export const totalTimeString = (timeStrings: Array<Number>) => {
   var totals = timeStrings.reduce(
     function (a: any, timeString: any) {
       var parts = timeString.split(":");

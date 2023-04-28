@@ -144,7 +144,7 @@ const ItemChart = ({
             className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full flex items-center justify-center"
             onClick={() => {
               handleLikeSong(song._id);
-              setIsLiked((preState: any) => !preState);
+              if (userProfile._id) setIsLiked((preState: any) => !preState);
             }}
           >
             {isLiked ? (

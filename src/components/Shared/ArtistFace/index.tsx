@@ -72,10 +72,12 @@ const ArtistFace = ({ item, index, className }: any) => {
       <div
         onClick={() => {
           handleLikeArtist(item._id);
-          setIsLiked((prevState: any) => !prevState);
-          !isLiked
-            ? setFollowers((prevState: any) => prevState + 1)
-            : setFollowers((prevState: any) => prevState - 1);
+          if (userProfile._id) {
+            setIsLiked((prevState: any) => !prevState);
+            !isLiked
+              ? setFollowers((prevState: any) => prevState + 1)
+              : setFollowers((prevState: any) => prevState - 1);
+          }
         }}
         className={`${
           isLiked ? "" : "bg-[#9B4DE0] "

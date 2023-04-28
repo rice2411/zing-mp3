@@ -95,7 +95,7 @@ const Song = ({
             </div>
             <div
               className={`absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-white flex  items-center justify-between ${
-                isHover || (isPlaying && songId == song?._id)
+                isHover || (isPlaying && songId == song?._id) || false
                   ? "opacity-75 block"
                   : "hidden"
               }`}
@@ -152,8 +152,10 @@ const Song = ({
           <div
             className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full flex items-center justify-center"
             onClick={() => {
-              handleLikeSong(song._id);
-              setIsLiked((preState: any) => !preState);
+              if (userProfile._id) {
+                handleLikeSong(song._id);
+                setIsLiked((preState: any) => !preState);
+              }
             }}
           >
             {isLiked ? (

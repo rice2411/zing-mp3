@@ -12,7 +12,7 @@ import { duration } from "moment";
 const AudioContext = createContext({});
 
 export const AudioProvider = ({ children }: any) => {
-  const { userProfile }: any = useAuth();
+  const { userProfile, handleOpenModalLogin }: any = useAuth();
   const [volume, setVolume] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isShowLyrics, setIsShowLyrics] = useState(false);
@@ -46,7 +46,9 @@ export const AudioProvider = ({ children }: any) => {
   );
 
   const audioRef = useRef(
-    typeof Audio !== "undefined" ? new Audio(getFile(audio)) : undefined
+    typeof Audio !== "undefined" && typeof audio !== "object"
+      ? new Audio(getFile(audio))
+      : undefined
   );
 
   const handlePlay = (_duration: any, isPlay: boolean = false) => {
@@ -56,6 +58,10 @@ export const AudioProvider = ({ children }: any) => {
     setTimeEnd(duration);
   };
   const handleLikeSong = async (songId: string) => {
+    if (!userProfile._id) {
+      handleOpenModalLogin();
+      return;
+    }
     try {
       await LibraryService.likeSong(songId);
     } catch (err) {
@@ -63,6 +69,10 @@ export const AudioProvider = ({ children }: any) => {
     }
   };
   const handleLikeArtist = async (artistId: string) => {
+    if (!userProfile._id) {
+      handleOpenModalLogin();
+      return;
+    }
     try {
       await LibraryService.likeArtist(artistId);
     } catch (err) {
@@ -70,6 +80,10 @@ export const AudioProvider = ({ children }: any) => {
     }
   };
   const handleLikeAlbum = async (albumId: string) => {
+    if (!userProfile._id) {
+      handleOpenModalLogin();
+      return;
+    }
     try {
       await LibraryService.likeAlbum(albumId);
     } catch (err) {
@@ -107,7 +121,11 @@ export const AudioProvider = ({ children }: any) => {
       setAlbumId(albumId);
 
       const response: any = await AlbumService.detailAlbum(albumId);
-      await LibraryService.addToPlaylist({ albumId: albumId, isNew: true });
+
+      if (userProfile._id) {
+        await LibraryService.addToPlaylist({ albumId: albumId, isNew: true });
+      }
+
       const dataRaw = response?.data?.data;
       const playlist = dataRaw.songs;
       setPlaylist(playlist);
@@ -162,8 +180,15 @@ export const AudioProvider = ({ children }: any) => {
       setIsPlaying(false);
       setAlbumId(newAlbumId);
       const response: any = await AlbumService.detailAlbum(newAlbumId);
-      await LibraryService.addAlbumHistory(newAlbumId);
-      await LibraryService.addToPlaylist({ albumId: newAlbumId, isNew: true });
+
+      if (userProfile._id) {
+        await LibraryService.addAlbumHistory(newAlbumId);
+        await LibraryService.addToPlaylist({
+          albumId: newAlbumId,
+          isNew: true,
+        });
+      }
+
       const dataRaw = response?.data?.data;
       const playlist = dataRaw.songs;
       const newAudio = new Audio(getFile(playlist[0].audio));
@@ -207,6 +232,7 @@ export const AudioProvider = ({ children }: any) => {
   };
   const handleCheckIsHaveLyrics = async () => {
     try {
+      if (!songId) return;
       const response: any = await SongService.getLyrics(songId);
       const dataRaw = response?.data?.data;
       if (dataRaw.lyrics) {
@@ -220,6 +246,7 @@ export const AudioProvider = ({ children }: any) => {
   };
   const fetchData = async () => {
     try {
+      if (!userProfile._id) return;
       const response: any = await LibraryService.getPlaylist();
       const dataRaw = response?.data?.data;
       if (dataRaw) {

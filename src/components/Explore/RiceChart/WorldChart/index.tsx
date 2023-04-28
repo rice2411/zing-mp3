@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const WorldChart = () => {
   const imageRef = useRef([]);
@@ -24,7 +25,8 @@ const WorldChart = () => {
     <>
       <div className="flex justify-between">
         {data.map((item, index) => (
-          <div
+          <Link
+            to={"/zing-chart"}
             key={index}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={() => handleMouseLeave(index)}
@@ -35,7 +37,7 @@ const WorldChart = () => {
               src={item}
               className=" duration-700  "
             />
-          </div>
+          </Link>
         ))}
       </div>
     </>

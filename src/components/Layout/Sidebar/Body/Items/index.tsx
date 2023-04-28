@@ -1,17 +1,24 @@
 import React, { useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useTheme from "../../../../../hooks/useTheme";
 import { widthDefaultValue } from "../../styles";
+import useAuth from "../../../../../hooks/useAuth";
 
 export default function Items({ data, className, isToggle }: any) {
   const location = useLocation();
   const canPlayRefs = useRef([]);
+  const { handleOpenModalLogin }: any = useAuth();
+  const navigate = useNavigate();
   const { styles }: any = useTheme();
   const adNode = (idx: number, node: any) => {
     if (node) {
       // @ts-ignore: Object is possibly 'null'.
       canPlayRefs.current[idx] = node;
     }
+  };
+  const handleClick = (route: string, isLogged: boolean) => {
+    if (!isLogged) navigate(route);
+    else handleOpenModalLogin();
   };
   const hanldeMouseEnter = (index: number) => {
     // @ts-ignore: Object is possibly 'null'.
@@ -60,9 +67,11 @@ export default function Items({ data, className, isToggle }: any) {
                 : "",
           }}
         >
-          <Link
-            to={item.route}
-            className="flex items-center p-2 text-base  rounded-lg transition duration-7"
+          <div
+            onClick={() => {
+              handleClick(item.route, item.isLogged);
+            }}
+            className="flex items-center p-2 text-base  rounded-lg transition duration-7 cursor-pointer"
           >
             {item.icon}
             <span
@@ -78,7 +87,7 @@ export default function Items({ data, className, isToggle }: any) {
             >
               {item.canPlay ? item.canPlay : ""}
             </div>
-          </Link>
+          </div>
         </li>
       ))}
     </ul>

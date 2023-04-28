@@ -25,7 +25,7 @@ const Navbar = () => {
                 style={{
                   backgroundImage: `url(${
                     location.pathname.includes("/zing-chart")
-                      ? localStorage.getItem("avatar")
+                      ? "https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.9.25/static/media/bg-chart.fd766403.jpg"
                       : getFile(JSON.parse(localStorage.getItem("avatar")))
                   })`,
                   backgroundSize: "cover",

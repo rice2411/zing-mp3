@@ -27,6 +27,7 @@ const Lyrics = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = async () => {
+    if (!songId) return;
     setIsLoading(true);
 
     try {

@@ -9,10 +9,12 @@ import Moment from "react-moment";
 import "moment/locale/vi";
 import useAudio from "../../../hooks/useAudio";
 import useAuth from "../../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const NewReleaseItem = ({ item, index, className }: any) => {
   const [isHover, setIsHover] = useState(false);
+  const location = useLocation();
   const { handlePlayOneSong }: any = useAudio();
   const { userProfile }: any = useAuth();
   const handleMouseEnter = () => {
@@ -33,7 +35,14 @@ const NewReleaseItem = ({ item, index, className }: any) => {
         <div
           className="relative hover:cursor-pointer flex items-center justify-center"
           onClick={() => {
-            handlePlayOneSong(item);
+            const { albumId } = location?.state
+              ? location?.state
+              : { albumId: null };
+            const albumIdStorage =
+              typeof Cookies.get("albumId") !== "undefined"
+                ? JSON.parse(Cookies.get("albumId"))
+                : null;
+            handlePlayOneSong(item, albumId || albumIdStorage);
           }}
         >
           <div className="w-[60px] h-[60px] overflow-hidden rounded-md ">

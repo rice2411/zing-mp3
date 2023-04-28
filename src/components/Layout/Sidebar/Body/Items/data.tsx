@@ -14,6 +14,7 @@ export const data = {
       route: "/mymusic",
       canPlay: <AiOutlinePlayCircle />,
       isUpdate: false,
+      isLogged: true,
     },
     {
       id: 2,
@@ -21,6 +22,7 @@ export const data = {
       title: "Khám phá",
       route: "/",
       isUpdate: false,
+      isLogged: false,
     },
     {
       id: 3,
@@ -29,6 +31,7 @@ export const data = {
       route: "/zing-chart",
       canPlay: <AiOutlinePlayCircle />,
       isUpdate: false,
+      isLogged: false,
     },
     {
       id: 4,
@@ -37,6 +40,7 @@ export const data = {
       route: "/",
       canPlay: <AiOutlinePlayCircle />,
       isUpdate: true,
+      isLogged: false,
     },
     {
       id: 5,
@@ -44,6 +48,7 @@ export const data = {
       title: "Theo dõi",
       route: "/",
       isUpdate: true,
+      isLogged: false,
     },
   ],
   scroll: [

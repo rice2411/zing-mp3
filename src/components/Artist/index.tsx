@@ -106,10 +106,12 @@ const Artist = () => {
                   <div
                     onClick={() => {
                       handleLikeArtist(data?.artist?._id);
-                      setIsLiked((prevState: any) => !prevState);
-                      !isLiked
-                        ? setFollowers((prevState: any) => prevState + 1)
-                        : setFollowers((prevState: any) => prevState - 1);
+                      if (userProfile._id) {
+                        setIsLiked((prevState: any) => !prevState);
+                        !isLiked
+                          ? setFollowers((prevState: any) => prevState + 1)
+                          : setFollowers((prevState: any) => prevState - 1);
+                      }
                     }}
                     className={`cursor-pointer flex px-5 py-1 items-center justify-center rounded-full border-[1px] border-[${styles.dropdown.borderColor}] `}
                   >

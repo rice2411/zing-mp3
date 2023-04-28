@@ -92,7 +92,7 @@ const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
             <div
               onClick={() => {
                 handleLikeAlbum(item._id);
-                setIsLiked((prevState: any) => !prevState);
+                if (userProfile._id) setIsLiked((prevState: any) => !prevState);
               }}
               className=" p-1 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center "
             >

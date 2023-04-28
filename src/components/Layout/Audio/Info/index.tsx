@@ -34,7 +34,7 @@ const Info = ({ image, title, artist }: any) => {
           className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center "
           onClick={() => {
             handleLikeSong(playlist[trackIndex]._id);
-            setIsLiked((preState: any) => !preState);
+            if (userProfile._id) setIsLiked((preState: any) => !preState);
           }}
         >
           {isLiked ? (

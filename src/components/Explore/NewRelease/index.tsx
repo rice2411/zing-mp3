@@ -5,6 +5,7 @@ import useTheme from "../../../hooks/useTheme";
 import SongService from "../../../service/song";
 import Button from "../../../shared/small_components/Button/Basic";
 import NewReleaseItem from "../../Shared/NewReleaseItem";
+import { Link } from "react-router-dom";
 
 const NewRelease = () => {
   const { styles }: any = useTheme();
@@ -46,7 +47,7 @@ const NewRelease = () => {
               activeClass={activeButtonClass}
             />
           </span>
-          <span className="mr-4">
+          {/* <span className="mr-4">
             <Button
               text="VIỆT NAM"
               className={classButton}
@@ -59,15 +60,15 @@ const NewRelease = () => {
               className={classButton}
               activeClass={activeButtonClass}
             />
-          </span>
+          </span> */}
         </div>
-        <a
-          href="#"
+        <Link
+          to={"/moi-phat-hanh"}
           className={`${styles.body.subTextColor} ${styles.body.hover.textColor} text-sm uppercase flex items-center justify-center`}
         >
           Tất cả
           <RiArrowRightSLine />
-        </a>
+        </Link>
       </div>
       <div className="flex justify-between mt-3">
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-4 w-full">

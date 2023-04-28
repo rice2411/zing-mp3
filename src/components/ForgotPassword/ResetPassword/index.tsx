@@ -20,12 +20,14 @@ function ResetPassword({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
+  const { handleModalSuccess }: any = useModal();
+
   useEffect(() => {
     setErrMsg("");
   }, []);
 
   const reSignIn = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   const handleSubmit = async (values: any) => {
@@ -37,10 +39,17 @@ function ResetPassword({
     try {
       const response: any = await AuthService.resetPassword(params);
       if (response?.data?.data) {
-        // handleOpenAlertSucess(
-        //   "Cập nhật thành công! Vui lòng đăng nhập lại.",
-        //   reSignIn
-        // );
+        handleModalSuccess({
+          isShow: true,
+          text: {
+            title: "Thành công",
+            description: "Cập nhật thành công vui lòng đăng nhập lại",
+          },
+          url: null,
+
+          buttonText: null,
+          onAction: reSignIn,
+        });
       }
     } catch (err) {
       setErrMsg(err.response.data.message);

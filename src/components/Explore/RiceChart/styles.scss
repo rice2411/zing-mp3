@@ -58,3 +58,13 @@ line{
     }
    
 }
+.cutstom_chart{
+    transform: "";
+    top: 0;
+    left: 0;
+    right:0;
+    pointer-events: none;
+    visibility: "visible";
+    position: "absolute";
+    transition: " -webkit-transform 400ms ease 0s;";
+}
