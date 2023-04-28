@@ -11,7 +11,6 @@ import {
 import { getFile } from "../../../constant/file";
 import ChartService from "../../../service/chart";
 import Button from "../../../shared/small_components/Button/Basic";
-import NewReleaseItem from "../../Shared/NewReleaseItem";
 
 import ItemChart from "./item";
 import "./styles.scss";

@@ -5,7 +5,6 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import { getFile } from "../../../constant/file";
 import useTheme from "../../../hooks/useTheme";
 import Button from "../../../shared/small_components/Button/Basic";
-import NewReleaseItem from "../../Shared/NewReleaseItem";
 import useAudio from "../../../hooks/useAudio";
 import { Link } from "react-router-dom";
 

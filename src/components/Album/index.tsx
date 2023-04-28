@@ -244,7 +244,7 @@ const Album = () => {
                       </span>
                     </>
                   )}
-                  <div className="mt-4">
+                  <div className="mt-4 overflow-hidden ">
                     <div
                       className={`flex justify-between mb-3  px-2 font-bold uppercase text-xs ${styles.album.subTextColor}`}
                     >

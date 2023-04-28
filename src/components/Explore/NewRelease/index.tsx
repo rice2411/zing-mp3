@@ -4,8 +4,8 @@ import useAudio from "../../../hooks/useAudio";
 import useTheme from "../../../hooks/useTheme";
 import SongService from "../../../service/song";
 import Button from "../../../shared/small_components/Button/Basic";
-import NewReleaseItem from "../../Shared/NewReleaseItem";
 import { Link } from "react-router-dom";
+import Song from "../../Shared/Song";
 
 const NewRelease = () => {
   const { styles }: any = useTheme();
@@ -73,11 +73,16 @@ const NewRelease = () => {
       <div className="flex justify-between mt-3">
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-4 w-full">
           {data?.map((item, index) => (
-            <NewReleaseItem
-              key={index}
+            <Song
+              song={item}
               index={index}
-              item={item}
-              className=""
+              timeData={0}
+              listSongs={null}
+              className={"flex"}
+              isShowIndex={false}
+              isShowTime={false}
+              isHiddenBorder={true}
+              isNewReleaseItem={true}
             />
           ))}
         </div>
