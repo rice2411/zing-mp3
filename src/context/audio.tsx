@@ -8,6 +8,7 @@ import SongService from "../service/song";
 import useAuth from "../hooks/useAuth";
 import LibraryService from "../service/library";
 import { duration } from "moment";
+import { toast } from "react-toastify";
 
 const AudioContext = createContext({});
 
@@ -94,7 +95,8 @@ export const AudioProvider = ({ children }: any) => {
     audio: any,
     info: any,
     trackIndex: number = 0,
-    albumId: string = null
+    albumId: string = null,
+    playlist: Array<Object> = []
   ) => {
     try {
       const { name, image, artist, _id } = info;
@@ -109,6 +111,7 @@ export const AudioProvider = ({ children }: any) => {
       setArtist(artist);
       setImage(image);
       setSongId(_id);
+      setPlaylist(playlist);
     } catch (err) {
       console.log(err);
     } finally {
@@ -123,7 +126,7 @@ export const AudioProvider = ({ children }: any) => {
       const response: any = await AlbumService.detailAlbum(albumId);
 
       if (userProfile._id) {
-        await LibraryService.addToPlaylist({ albumId: albumId, isNew: true });
+        await LibraryService.playNewPlaylist({ albumId: albumId });
       }
 
       const dataRaw = response?.data?.data;
@@ -164,7 +167,13 @@ export const AudioProvider = ({ children }: any) => {
     const newAudio = new Audio(getFile(newAudioRaw));
 
     newAudio.onloadedmetadata = async function () {
-      handleSetPlaylist(newAudio, playlist[nextIndex], nextIndex, albumId);
+      handleSetPlaylist(
+        newAudio,
+        playlist[nextIndex],
+        nextIndex,
+        albumId,
+        playlist
+      );
       // handlePlay(newAudio.duration, true);
       await SongService.increaseViews(playlist[nextIndex]._id);
     };
@@ -183,9 +192,8 @@ export const AudioProvider = ({ children }: any) => {
 
       if (userProfile._id) {
         await LibraryService.addAlbumHistory(newAlbumId);
-        await LibraryService.addToPlaylist({
+        await LibraryService.playNewPlaylist({
           albumId: newAlbumId,
-          isNew: true,
         });
       }
 
@@ -193,7 +201,7 @@ export const AudioProvider = ({ children }: any) => {
       const playlist = dataRaw.songs;
       const newAudio = new Audio(getFile(playlist[0].audio));
       newAudio.onloadedmetadata = async function () {
-        handleSetPlaylist(newAudio, playlist[0], 0, newAlbumId);
+        handleSetPlaylist(newAudio, playlist[0], 0, newAlbumId, playlist);
         await SongService.increaseViews(playlist[0]._id);
       };
 
@@ -239,6 +247,27 @@ export const AudioProvider = ({ children }: any) => {
         setIsHaveLyrics(true);
       } else {
         setIsHaveLyrics(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleAddToPlayingList = async (songId: string) => {
+    try {
+      const response: any = await LibraryService.addToPlayingList(songId);
+      const dataRaw = response?.data?.data;
+      if (dataRaw) {
+        playlist.push(dataRaw);
+        toast("Đã thêm vào danh sách phát", {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     } catch (err) {
       console.log(err);
@@ -295,6 +324,7 @@ export const AudioProvider = ({ children }: any) => {
         isShowLyrics,
         isHaveLyrics,
         isShowPlaylist,
+        handleAddToPlayingList,
         setIsShowPlaylist,
         setIsShowLyrics,
         setVolume,

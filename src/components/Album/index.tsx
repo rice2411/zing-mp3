@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { AiOutlineHeart, AiOutlinePause } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlinePause } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
@@ -19,19 +19,22 @@ import AlbumFace from "../Shared/AlbumFace";
 import ArtistFace from "../Shared/ArtistFace";
 import MusicWave from "../../shared/small_components/MusicWave";
 import Spinner from "../../shared/small_components/Loading/Spinner";
+import useAuth from "../../hooks/useAuth";
 
 const Album = () => {
   const location = useLocation();
   const { albumId } = location.state;
 
   const { styles }: any = useTheme();
+  const { userProfile }: any = useAuth();
+  const { handleLikeAlbum }: any = useAudio();
 
   const [data, setData]: any = useState({});
   const [appearIn, setAppearIn]: any = useState({});
   const [neighbour, setNeighbour] = useState([]);
   const [timeData, setTimeData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isLiked, setIsLiked] = useState(false);
   const itemRef = useRef(null);
   const imageRef = useRef(null);
   const { isPlaying, setIsPlaying, handlePlayAlbum }: any = useAudio();
@@ -213,9 +216,18 @@ const Album = () => {
 
                 <div className="mt-5">
                   <ButtonIcon
+                    onClick={() => {
+                      handleLikeAlbum(data?._id);
+                      if (userProfile._id)
+                        setIsLiked((prevState: any) => !prevState);
+                    }}
                     className={`${styles.navbar.item.backgroundColor} ${styles.navbar.item.hover.backgroundColor} ${styles.album.textColor}  rounded-full h-10 w-10 cursor`}
                   >
-                    <AiOutlineHeart />
+                    {isLiked ? (
+                      <AiFillHeart className="text-[#9B4DE0]  text-[20px]" />
+                    ) : (
+                      <AiOutlineHeart className="text-[20px]" />
+                    )}
                   </ButtonIcon>
                   <ButtonIcon
                     className={`${styles.navbar.item.backgroundColor} ${styles.navbar.item.hover.backgroundColor} ${styles.album.textColor}  rounded-full h-10 w-10`}

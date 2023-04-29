@@ -10,6 +10,8 @@ import ModalVip from "../Shared/ModalVip";
 import { useLocation } from "react-router-dom";
 import Lyrics from "../Shared/Lyrics";
 import Playlist from "../Playlist";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Layout({ route, ...props }: any) {
   const location = useLocation();
@@ -48,6 +50,7 @@ export default function Layout({ route, ...props }: any) {
           setModalVip(false);
         }}
       />
+      <ToastContainer />
     </div>
   );
 }

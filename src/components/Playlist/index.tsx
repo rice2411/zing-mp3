@@ -7,29 +7,16 @@ import Scrollbar from "../../shared/small_components/Scrollbar";
 import useAuth from "../../hooks/useAuth";
 
 const Playlist = () => {
-  const { isShowPlaylist, trackIndex, songId }: any = useAudio();
+  const { isShowPlaylist, trackIndex, playlist }: any = useAudio();
   const { userProfile }: any = useAuth();
   const [tab, SetTab] = useState("playlist");
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData]: any = useState([]);
-  const fetchData = async () => {
-    if (!userProfile._id) return;
-    setIsLoading(true);
-    try {
-      const response: any = await LibraryService.getPlaylist();
-      const dataRaw = response?.data?.data;
-      if (dataRaw) {
-        setData(dataRaw);
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const [data, setData] = useState([]);
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (playlist) {
+      const newData = [...playlist];
+      setData(newData);
+    }
+  }, [playlist]);
   return (
     <>
       {data.length <= 0 ? (
@@ -80,19 +67,23 @@ const Playlist = () => {
               </li>
             </ul>{" "}
             <Scrollbar className="h-[580px] overflow-x-hidden" isHover={true}>
-              {data?.slice(0, trackIndex - 1).map((item: any, idx: any) => (
-                <div key={idx}>
-                  <Song
-                    song={item}
-                    index={idx}
-                    timeData={0}
-                    listSongs={null}
-                    className={"opacity-50"}
-                    isShowIndex={false}
-                    isShowTime={false}
-                  />
-                </div>
-              ))}
+              {data?.map((item: any, idx: any) => {
+                if (idx < trackIndex) {
+                  return (
+                    <div key={idx}>
+                      <Song
+                        song={item}
+                        index={idx}
+                        timeData={0}
+                        listSongs={null}
+                        className={"opacity-50"}
+                        isShowIndex={false}
+                        isShowTime={false}
+                      />
+                    </div>
+                  );
+                }
+              })}
               <Song
                 song={data[trackIndex]}
                 index={111}
@@ -104,21 +95,23 @@ const Playlist = () => {
                 isShowTime={false}
               />
               <p className="text-sm text-white font-bold py-2">Tiếp theo</p>
-              {data
-                .slice(trackIndex + 1, data.length)
-                .map((item: any, idx: any) => (
-                  <div key={idx}>
-                    <Song
-                      song={item}
-                      index={idx}
-                      timeData={0}
-                      listSongs={null}
-                      className={""}
-                      isShowIndex={false}
-                      isShowTime={false}
-                    />
-                  </div>
-                ))}
+              {data?.map((item: any, idx: any) => {
+                if (idx > trackIndex) {
+                  return (
+                    <div key={idx}>
+                      <Song
+                        song={item}
+                        index={idx}
+                        timeData={0}
+                        listSongs={null}
+                        className={"opacity-50"}
+                        isShowIndex={false}
+                        isShowTime={false}
+                      />
+                    </div>
+                  );
+                }
+              })}
             </Scrollbar>
           </div>
         </div>

@@ -17,7 +17,7 @@ import Dropdown, {
   liClass,
 } from "../../../shared/small_components/DropDown";
 import { HiOutlineBan } from "react-icons/hi";
-import { MdPlaylistAdd } from "react-icons/md";
+import { MdOutlineLyrics, MdPlaylistAdd } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { BiShare } from "react-icons/bi";
 import fileDownload from "js-file-download";
@@ -44,6 +44,7 @@ const Song = ({
     setIsPlaying,
     songId,
     setIsLoading,
+    handleAddToPlayingList,
   }: any = useAudio();
 
   const [isHover, setIsHover] = useState(false);
@@ -215,65 +216,79 @@ const Song = ({
                 );
               }}
               isShowTop={index == 0 || index == 1 || index == 2 ? false : true}
-              content={
-                <ul className="min-w-[250px] py-2 text-sm  ">
-                  <li className="flex">
-                    <img
-                      src={getFile(song?.image)}
-                      className={`w-[40px] h-[40px] `}
-                    />
-                    <div className="ml-2">
-                      <p className="text-white font-bold hover:text-[#c273ed]">
-                        {song?.name}
-                      </p>
-                      <div className="flex text-[#a0a0a0] text-xs">
-                        <div className="flex  items-center">
-                          <AiOutlineHeart />{" "}
-                          <span>{song?.followers.length}</span>
-                        </div>
-                        <div className="flex items-center ml-2">
-                          <CiHeadphones /> <span>{song?.totalViews}</span>
+              content={(onclick: any) => {
+                return (
+                  <ul className="min-w-[250px] py-2 text-sm  ">
+                    <li className="flex">
+                      <img
+                        src={getFile(song?.image)}
+                        className={`w-[40px] h-[40px] `}
+                      />
+                      <div className="ml-2">
+                        <p className="text-white font-bold hover:text-[#c273ed]">
+                          {song?.name}
+                        </p>
+                        <div className="flex text-[#a0a0a0] text-xs">
+                          <div className="flex  items-center">
+                            <AiOutlineHeart />{" "}
+                            <span>{song?.followers.length}</span>
+                          </div>
+                          <div className="flex items-center ml-2">
+                            <CiHeadphones /> <span>{song?.totalViews}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </li>
-                  <li className="bg-[#493961] my-2 rounded text-xs flex justify-between">
-                    <div
-                      onClick={() => {
-                        handleDownload();
-                      }}
-                      className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full"
-                    >
-                      <BsDownload /> <span>Tải Xuống</span>
-                    </div>
-                    <div className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full">
-                      <HiOutlineBan /> <span>Chặn</span>
-                    </div>
-                  </li>
-                  <li>
-                    <a href="#" className={`${liClass} `}>
-                      <MdPlaylistAdd className={`${dropDownIconClass}`} />
-                      Thêm vào danh sách phát
-                    </a>
-                  </li>{" "}
-                  <li>
-                    <a href="#" className={`${liClass} `}>
-                      <IoAddCircleOutline className={`${dropDownIconClass}`} />
-                      Thêm vào playlist
-                    </a>
-                  </li>{" "}
-                  <li>
-                    <a
-                      href="https://www.facebook.com/sharer/sharer.php?u=https://zing-mp3-taupe.vercel.app/"
-                      target="_blank"
-                      className={`${liClass} `}
-                    >
-                      <BiShare className={`${dropDownIconClass}`} />
-                      Chia sẻ
-                    </a>
-                  </li>
-                </ul>
-              }
+                    </li>
+                    <li className="bg-[#493961] my-2 rounded text-xs flex justify-between">
+                      <div
+                        onClick={() => {
+                          handleDownload();
+                          onclick();
+                        }}
+                        className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full"
+                      >
+                        <BsDownload /> <span>Tải Xuống</span>
+                      </div>
+                      <div className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full">
+                        <MdOutlineLyrics /> <span>Lời bài hát</span>
+                      </div>
+                      <div className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full">
+                        <HiOutlineBan /> <span>Chặn</span>
+                      </div>
+                    </li>
+                    <li>
+                      <div
+                        onClick={() => {
+                          handleAddToPlayingList(song?._id);
+                          onclick();
+                        }}
+                        className={`${liClass} cursor-pointer`}
+                      >
+                        <MdPlaylistAdd className={`${dropDownIconClass}`} />
+                        Thêm vào danh sách phát
+                      </div>
+                    </li>
+                    <li>
+                      <a href="#" className={`${liClass} `}>
+                        <IoAddCircleOutline
+                          className={`${dropDownIconClass}`}
+                        />
+                        Thêm vào playlist
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://zing-mp3-taupe.vercel.app/"
+                        target="_blank"
+                        className={`${liClass} `}
+                      >
+                        <BiShare className={`${dropDownIconClass}`} />
+                        Chia sẻ
+                      </a>
+                    </li>
+                  </ul>
+                );
+              }}
             />
           ) : (
             <> {isShowTime && timeData}</>

@@ -57,8 +57,8 @@ const HubDetail = () => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <>
-          <div className="relative w-[1296px] h-[353px] overflow-hidden">
+        <div className="overflow-hidden">
+          <div className="relative w-[1296px] h-[353px] ">
             <img src={data?.hub?.image} className="w-full h-full absolute" />
             <div className="text-white font-bold text-7xl absolute z-[999] mx-10 py-[100px]">
               {data?.hub?.name}
@@ -129,7 +129,7 @@ const HubDetail = () => {
               ))}
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );

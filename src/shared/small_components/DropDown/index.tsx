@@ -22,7 +22,9 @@ const Dropdown = ({ className, button, content, isShowTop }: any) => {
               isShowTop && "bottom-full"
             } right-0 mt-3 py-0.5 px-2`}
           >
-            {content}
+            {content(() => {
+              setIsShow((prevState) => !prevState);
+            })}
           </div>
         </div>
       ) : (

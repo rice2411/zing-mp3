@@ -73,17 +73,19 @@ const NewRelease = () => {
       <div className="flex justify-between mt-3">
         <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-x-4 w-full">
           {data?.map((item, index) => (
-            <Song
-              song={item}
-              index={index}
-              timeData={0}
-              listSongs={null}
-              className={"flex"}
-              isShowIndex={false}
-              isShowTime={false}
-              isHiddenBorder={true}
-              isNewReleaseItem={true}
-            />
+            <div key={index}>
+              <Song
+                song={item}
+                index={index}
+                timeData={0}
+                listSongs={null}
+                className={"flex"}
+                isShowIndex={false}
+                isShowTime={false}
+                isHiddenBorder={true}
+                isNewReleaseItem={true}
+              />
+            </div>
           ))}
         </div>
       </div>
