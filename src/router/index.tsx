@@ -31,7 +31,21 @@ import NewSongPage from "../pages/newSong";
 import OAuth2Page from "../pages/oauth2";
 import ForgotPasswordPage from "../pages/forgotpassword/index,";
 import Modal from "../shared/small_components/Modal";
+import Playlistpage from "../pages/library/playlist";
+import AllPageLibrary from "../pages/library/playlist/all";
 
+import OwnPage from "../pages/library/playlist/own";
+import AdminLayoutPage from "../pages/admin/layout";
+import DashboarđPage from "../pages/admin/dashboard";
+const AdminLayout = () => {
+  return (
+    <ModalProvider>
+      <AuthProvider>
+        <AdminLayoutPage></AdminLayoutPage>
+      </AuthProvider>
+    </ModalProvider>
+  );
+};
 const Layout = () => {
   return (
     <ModalProvider>
@@ -59,7 +73,15 @@ export default createBrowserRouter([
         path: "/mymusic",
         children: [
           { element: <SongPageLibrary />, path: "" },
-          { element: <AlbumPageLibrary />, path: "playlist" },
+          { element: <AlbumPageLibrary />, path: "album" },
+        ],
+      },
+      {
+        element: <Playlistpage />,
+        path: "/mymusic/playlist",
+        children: [
+          { element: <AllPageLibrary />, path: "" },
+          { element: <OwnPage />, path: "cua-toi" },
         ],
       },
       {
@@ -133,5 +155,15 @@ export default createBrowserRouter([
   {
     element: <Payment />,
     path: "/thanh-toan",
+  },
+  {
+    element: <AdminLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        element: <DashboarđPage />,
+        path: "/dashboard",
+      },
+    ],
   },
 ]);

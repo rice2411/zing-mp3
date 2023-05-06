@@ -118,7 +118,11 @@ const ItemChart = ({
               {song.name}
               <div className={`ml-2 ${song?.is_vip ? "" : "hidden"} `}>
                 <span className="overflow-hidden ">
-                  <div className="vip_label"></div>
+                  <img
+                    src="/icon/vip-label.svg"
+                    className="w-full h-full"
+                    alt=""
+                  />
                 </span>
               </div>
             </div>

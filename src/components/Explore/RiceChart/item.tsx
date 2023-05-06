@@ -79,7 +79,11 @@ const ItemChart = ({ item, index, handleHightLightLine, rank }: any) => {
                 } `}
               >
                 <span className="overflow-hidden ">
-                  <div className="vip_label"></div>
+                  <img
+                    src="/icon/vip-label.svg"
+                    className="w-full h-full"
+                    alt=""
+                  />
                 </span>
               </div>
             </div>

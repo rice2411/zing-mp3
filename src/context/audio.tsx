@@ -9,6 +9,7 @@ import useAuth from "../hooks/useAuth";
 import LibraryService from "../service/library";
 import { duration } from "moment";
 import { toast } from "react-toastify";
+import { data } from "../components/Library/tab";
 
 const AudioContext = createContext({});
 
@@ -257,7 +258,8 @@ export const AudioProvider = ({ children }: any) => {
       const response: any = await LibraryService.addToPlayingList(songId);
       const dataRaw = response?.data?.data;
       if (dataRaw) {
-        playlist.push(dataRaw);
+        const newPlaylist = [...playlist, ...[dataRaw]];
+        setPlaylist(newPlaylist);
         toast("Đã thêm vào danh sách phát", {
           position: "bottom-left",
           autoClose: 3000,

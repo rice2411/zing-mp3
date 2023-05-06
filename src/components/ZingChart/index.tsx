@@ -48,12 +48,7 @@ const ZingChart = () => {
   useEffect(() => {
     fetchData(limitData);
   }, [limitData]);
-  useEffect(() => {
-    localStorage.setItem(
-      "avatar",
-      "https://zjs.zmdcdn.me/zmp3-desktop/releases/v1.9.25/static/media/bg-chart.fd766403.jpg"
-    );
-  }, []);
+
   return (
     <>
       {isLoading ? (

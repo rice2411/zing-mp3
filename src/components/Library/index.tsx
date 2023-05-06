@@ -7,6 +7,7 @@ import { Link, useLocation } from "react-router-dom";
 import useTheme from "../../hooks/useTheme";
 import { getFile } from "../../constant/file";
 import Spinner from "../../shared/small_components/Loading/Spinner";
+import { RiArrowRightSLine } from "react-icons/ri";
 
 const Library = ({ ...props }: any) => {
   const location = useLocation();
@@ -60,7 +61,6 @@ const Library = ({ ...props }: any) => {
       return location.pathname.includes(route);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, [id]);
@@ -96,10 +96,24 @@ const Library = ({ ...props }: any) => {
             </div>
           </div>
           <div className="mt-10 min-h-[344px]" id="playlists">
-            <h1 className="text-white text-xl uppercase font-bold">Playlist</h1>
+            <div className="flex justify-between items-center">
+              <h1 className="text-white text-xl uppercase font-bold">
+                Playlist
+              </h1>
+              <Link
+                to="/mymusic/playlist"
+                className={`${styles.body.subTextColor} ${styles.body.hover.textColor} text-sm uppercase flex items-center justify-center`}
+              >
+                Tất cả
+                <RiArrowRightSLine />
+              </Link>
+            </div>
             <div className="mt-5 flex items-center flex-wrap  gap-y-5 gap-x-12">
               {data?.likedAlbums
-                ?.filter((item: any) => item.type == "playlist")
+                ?.filter(
+                  (item: any) =>
+                    item.type == "playlist" || item.type == "custom"
+                )
                 .map((album: any, index: any) => (
                   <div key={index}>
                     <AlbumFace
@@ -132,7 +146,7 @@ const Library = ({ ...props }: any) => {
               ))}
             </ul>
           </div>
-          <div id="songs" className="min-h-[1000px]">
+          <div id="songs" className="min-h-[400px]">
             {props.children}
           </div>
         </div>

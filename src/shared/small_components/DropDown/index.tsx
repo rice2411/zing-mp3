@@ -9,23 +9,21 @@ const Dropdown = ({ className, button, content, isShowTop }: any) => {
   const [isShow, setIsShow] = useState(false);
   const { styles }: any = useTheme();
   return (
-    <div>
+    <div className="relative z-[9999999999999] ">
       {button(() => {
         setIsShow((prevState) => !prevState);
       })}
       {isShow ? (
-        <div className="relative z-[999]">
-          <div
-            className={` ${styles.dropdown.backgroundColor} ${
-              styles.dropdown.textColor
-            } z-10   rounded-lg shadow   absolute ${
-              isShowTop && "bottom-full"
-            } right-0 mt-3 py-0.5 px-2`}
-          >
-            {content(() => {
-              setIsShow((prevState) => !prevState);
-            })}
-          </div>
+        <div
+          className={` ${styles.dropdown.backgroundColor} ${
+            styles.dropdown.textColor
+          } z-10   rounded-lg shadow   absolute ${
+            isShowTop && "bottom-full"
+          } right-0 mt-3 py-0.5 px-2 `}
+        >
+          {content(() => {
+            setIsShow((prevState) => !prevState);
+          })}
         </div>
       ) : (
         ""

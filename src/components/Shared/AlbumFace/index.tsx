@@ -2,7 +2,12 @@ import React, { useRef, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { BsPauseCircle, BsPlayCircle } from "react-icons/bs";
 import { FiMoreHorizontal } from "react-icons/fi";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  createSearchParams,
+  useNavigate,
+} from "react-router-dom";
 import { getFile } from "../../../constant/file";
 import useAudio from "../../../hooks/useAudio";
 import useTheme from "../../../hooks/useTheme";
@@ -59,9 +64,22 @@ const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
       imageRef.current[index].classList.remove("scale-110");
     }
   };
-  const handleClick = (e: any, idx: any, albumId: any) => {
+  const handleClick = (
+    e: any,
+    idx: number,
+    albumId: string,
+    type: string,
+    authorId: string
+  ) => {
     if (e.target === itemRef.current[idx]) {
-      navigate("/album", { state: { albumId } });
+      navigate({
+        pathname: "/album",
+        search: createSearchParams({
+          albumIdQuery: albumId,
+          type: type,
+          authorId: authorId,
+        }).toString(),
+      });
     }
   };
 
@@ -81,15 +99,21 @@ const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
 
         <div
           onClick={(e: any) => {
-            handleClick(e, index, item._id);
+            handleClick(
+              e,
+              index,
+              item?._id,
+              item?.type,
+              item?.artistId ? item?.artistId[0] : item?.authors[0]._id
+            );
           }}
           className={` bg-gray-900 bg-opacity-70 h-full w-full absolute  justify-center items-center ${
             isPlaying && albumId == item._id ? "flex" : "hidden"
           } `}
           ref={(node) => adNodeItem(index, node)}
         >
-          <div className="text-white flex  items-center justify-between w-full px-3">
-            <div
+          <div className="text-white flex  items-center justify-center w-full px-3">
+            {/* <div
               onClick={() => {
                 handleLikeAlbum(item._id);
                 if (userProfile._id) setIsLiked((prevState: any) => !prevState);
@@ -101,7 +125,7 @@ const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
               ) : (
                 <AiOutlineHeart className="text-[20px]" />
               )}
-            </div>
+            </div> */}
             {isPlaying && albumId == item._id ? (
               <>
                 <MusicWave
@@ -120,10 +144,10 @@ const AlbumFace = ({ item, index, className, isShowDesc = true }: any) => {
                   }}
                 />
               </>
-            )}{" "}
-            <div className="text-[20px] ml-2 p-1 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center ">
+            )}
+            {/* <div className="text-[20px] ml-2 p-1 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center ">
               <FiMoreHorizontal />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

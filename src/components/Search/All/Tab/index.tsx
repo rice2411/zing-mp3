@@ -15,7 +15,7 @@ export const data = {
     {
       id: 3,
       title: "PLaylist/Album",
-      route: "/playlist",
+      route: "/album",
       tab: "playlist",
     },
     {

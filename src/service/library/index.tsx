@@ -12,8 +12,28 @@ const router = {
   getPlaylist: `${env.apiUrl}/api/v1/library/get-playlist`,
   createPLaylist: `${env.apiUrl}/api/v1/library/create-playlist`,
   addToPlayingList: `${env.apiUrl}/api/v1/library/add-to-playing-list/{songId}`,
+  getOwnPlaylist: `${env.apiUrl}/api/v1/library/get-own-playlist`,
+  addSongToPlayingList: `${env.apiUrl}/api/v1/library/add-song-to-playlist`,
+  removeSongOutOfPlaylist: `${env.apiUrl}/api/v1/library/remove-song-out-of-playlist`,
+  removePlaylist: `${env.apiUrl}/api/v1/library/remove-playlist`,
 };
 class LibraryService {
+  static getOwnPlaylist() {
+    let uri = router.getOwnPlaylist;
+    return fetch.get(uri);
+  }
+  static removePlaylist(param: object) {
+    let uri = router.removePlaylist;
+    return fetch.post(uri, param);
+  }
+  static removeSongOutOfPlaylist(param: object) {
+    let uri = router.removeSongOutOfPlaylist;
+    return fetch.post(uri, param);
+  }
+  static addSongToPlayingList(param: object) {
+    let uri = router.addSongToPlayingList;
+    return fetch.post(uri, param);
+  }
   static addToPlayingList(songId: string) {
     let uri = fmt(router.addToPlayingList, { songId });
     return fetch.post(uri);

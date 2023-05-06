@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { BsDownload, BsPlayFill } from "react-icons/bs";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { getFile } from "../../../constant/file";
 import useAudio from "../../../hooks/useAudio";
 import useTheme from "../../../hooks/useTheme";
@@ -19,9 +19,15 @@ import Dropdown, {
 import { HiOutlineBan } from "react-icons/hi";
 import { MdOutlineLyrics, MdPlaylistAdd } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
-import { BiShare } from "react-icons/bi";
+import { BiShare, BiTrashAlt } from "react-icons/bi";
 import fileDownload from "js-file-download";
 import axios from "axios";
+import BlankModal from "../../../shared/small_components/Modal/Blank";
+import LibraryService from "../../../service/library";
+import { TbPlaylist } from "react-icons/tb";
+import useModal from "../../../hooks/useModal";
+import { toast } from "react-toastify";
+import AlbumService from "../../../service/album";
 
 const Song = ({
   song,
@@ -33,6 +39,7 @@ const Song = ({
   isShowTime = true,
   customTextArtist = "",
   isNewReleaseItem = false,
+  setIsFetchData = null,
 }: any) => {
   const location = useLocation();
   const { styles }: any = useTheme();
@@ -46,10 +53,16 @@ const Song = ({
     setIsLoading,
     handleAddToPlayingList,
   }: any = useAudio();
-
+  const { handleModalBlank }: any = useModal();
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type");
+  const albumIdQuery = searchParams.get("albumIdQuery");
+  const authorId = searchParams.get("authorId");
   const [isHover, setIsHover] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [playlist, setPlaylist] = useState([]);
   const [isLiked, setIsLiked] = useState(
-    song?.followers?.includes(userProfile._id) || false
+    song?.followers?.includes(userProfile?._id) || false
   );
 
   const likeRef = useRef(null);
@@ -70,6 +83,72 @@ const Song = ({
         fileDownload(res.data, song?.audio);
       });
   };
+  const handleAddSongToPlaylist = async (song: any, playlistId: string) => {
+    try {
+      const param = {
+        songId: song._id,
+        playlistId: playlistId,
+      };
+      const response: any = await LibraryService.addSongToPlayingList(param);
+      if (response?.data?.data) {
+        const text = `"${song.name}"`;
+        toast(`Đã thêm bài hát ${text} vào playlist thành công`, {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setIsOpenModal(false);
+        handleModalBlank({});
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleRemoveSongOutOfPlaylist = async (
+    song: any,
+    playlistId: string
+  ) => {
+    try {
+      const param = {
+        songId: song._id,
+        playlistId: playlistId,
+      };
+      const response: any = await LibraryService.removeSongOutOfPlaylist(param);
+      if (response?.data?.data) {
+        const text = `"${song.name}"`;
+        toast(`Đã xoá bài hát ${text} vào playlist thành công`, {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        if (setIsFetchData) {
+          setIsFetchData(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchData = async () => {
+    try {
+      const response: any = await LibraryService.getOwnPlaylist();
+      if (response?.data?.data) {
+        setPlaylist(response?.data?.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div
@@ -78,7 +157,7 @@ const Song = ({
       onMouseLeave={() => handleMouseLeave()}
     >
       <div
-        className={` flex justify-between items-center py-3 hover:bg-[hsla(0,0%,100%,0.1)] ${
+        className={` flex justify-between items-center py-3 hover:bg-[hsla(0,0%,100%,0.1)] px-1 ${
           !isShowIndex ? "px-2" : ""
         } ${songId == song?._id && "bg-[hsla(0,0%,100%,0.1)]"}  rounded ${
           isHiddenBorder
@@ -128,7 +207,7 @@ const Song = ({
                   : "hidden"
               }`}
             >
-              {isPlaying && songId == song._id ? (
+              {isPlaying && songId == song?._id ? (
                 <MusicWave
                   className="text-sm cursor-pointer "
                   onClick={() => {
@@ -153,15 +232,21 @@ const Song = ({
               {song?.name}
               <div className={`ml-2 ${song?.is_vip ? "" : "hidden"} `}>
                 <span className="overflow-hidden ">
-                  <div className="vip_label"></div>
+                  <img
+                    src="/icon/vip-label.svg"
+                    className="w-full h-full"
+                    alt=""
+                  />
                 </span>
               </div>
             </div>
-            <p
-              className={`${styles.album.subTextColor} ${customTextArtist} text-xs mt-0.5`}
+            <Link
+              to={"/nghe-si"}
+              state={{ artistId: song?.artist?._id }}
+              className={`${styles.album.subTextColor} ${customTextArtist} hover:text-[#c273ed] hover:underline text-xs mt-0.5`}
             >
               {song?.artist?.name}
-            </p>
+            </Link>
             <h3
               className={`${styles.body.subTextColor} text-xs font-normal mt-1 truncate cursor-default`}
             >
@@ -186,8 +271,8 @@ const Song = ({
             <div
               className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full flex items-center justify-center"
               onClick={() => {
-                if (userProfile._id) {
-                  handleLikeSong(song._id);
+                if (userProfile?._id) {
+                  handleLikeSong(song?._id);
                   setIsLiked((preState: any) => !preState);
                 }
               }}
@@ -245,16 +330,16 @@ const Song = ({
                           handleDownload();
                           onclick();
                         }}
-                        className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full"
+                        className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full cursor-pointer"
                       >
                         <BsDownload /> <span>Tải Xuống</span>
                       </div>
-                      <div className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full">
+                      <div className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full cursor-pointer">
                         <MdOutlineLyrics /> <span>Lời bài hát</span>
                       </div>
-                      <div className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full">
+                      {/* <div className="flex flex-col items-center py-2 px-1 hover:bg-[#594B6F] rounded w-full cursor-pointer">
                         <HiOutlineBan /> <span>Chặn</span>
-                      </div>
+                      </div> */}
                     </li>
                     <li>
                       <div
@@ -269,16 +354,29 @@ const Song = ({
                       </div>
                     </li>
                     <li>
-                      <a href="#" className={`${liClass} `}>
+                      <div
+                        onClick={async () => {
+                          handleModalBlank({
+                            text: {
+                              title: "Thêm vào playlist",
+                            },
+                            onSubmit: null,
+                          });
+                          setIsOpenModal(true);
+                          await fetchData();
+                          onclick();
+                        }}
+                        className={`${liClass} cursor-pointer`}
+                      >
                         <IoAddCircleOutline
                           className={`${dropDownIconClass}`}
                         />
                         Thêm vào playlist
-                      </a>
+                      </div>
                     </li>
                     <li>
                       <a
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://zing-mp3-taupe.vercel.app/"
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
                         target="_blank"
                         className={`${liClass} `}
                       >
@@ -286,6 +384,19 @@ const Song = ({
                         Chia sẻ
                       </a>
                     </li>
+                    {type == "custom" && authorId == userProfile?._id && (
+                      <li
+                        onClick={() => {
+                          handleRemoveSongOutOfPlaylist(song, albumIdQuery);
+                          onclick();
+                        }}
+                      >
+                        <div className={`${liClass}  cursor-pointer`}>
+                          <BiTrashAlt className={`${dropDownIconClass}`} />
+                          Xoá khỏi playlist này
+                        </div>
+                      </li>
+                    )}
                   </ul>
                 );
               }}
@@ -295,6 +406,37 @@ const Song = ({
           )}
         </div>
       </div>
+
+      <BlankModal
+        isShow={isOpenModal}
+        handleClose={() => {
+          setIsOpenModal(false);
+          handleModalBlank({});
+        }}
+        className={`bg-[#34224F] max-w-[448px] max-h-[480px]`}
+        classHeader={`!border-0 p-0`}
+        isShowHeader={true}
+      >
+        <input
+          type="search"
+          className={` bg-[#594B6F] focus:ring-0 block  mb-5 w-full text-sm border-none  rounded-2xl border focus:border-transparent `}
+          placeholder="Tìm kiếm playlist"
+        />
+        <ul className="w-[300px]">
+          {playlist?.map((item: any) => (
+            <li
+              onClick={() => {
+                handleAddSongToPlaylist(song, item?._id);
+              }}
+            >
+              <div className={`${liClass} cursor-pointer`}>
+                <TbPlaylist className={`${dropDownIconClass}`} />
+                {item?.name}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </BlankModal>
     </div>
   );
 };

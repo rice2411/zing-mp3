@@ -10,7 +10,7 @@ export const data = {
     {
       id: 1,
       title: "Album",
-      route: "/playlist",
+      route: "/album",
       tab: "playlist",
     },
   ],

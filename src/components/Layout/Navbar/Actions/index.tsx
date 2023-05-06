@@ -116,85 +116,86 @@ const Actions = () => {
             </ButtonIcon>
           );
         }}
-        content={
-          <ul className="py-2 text-sm w-[228px]">
-            {" "}
-            <li>
-              <a
-                href="#"
-                className={`${liClass} `}
-                onClick={handleOpenModalTheme}
-              >
-                <FaBrush className={`${dropDownIconClass}`} />
-                Giao diện
-                <MdOutlineKeyboardArrowRight className="ml-auto" />
-              </a>
-            </li>
-            <li>
-              <Divide />
-            </li>
-            <li>
-              <a
-                href="#"
-                className={`${liClass} ${styles.dropdown.subTextColor} `}
-                onClick={() => {
-                  setIsOpenModalIntro(true);
-                }}
-              >
-                <AiOutlineInfoCircle className={`${dropDownIconClass}`} />
-                Giới thiệu
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                onClick={() => {
-                  handleOpenModal404();
-                }}
-                className={`${liClass} ${styles.dropdown.subTextColor}`}
-              >
-                <BsTelephone className={`${dropDownIconClass}`} />
-                Liên hệ
-                <BsArrowUpRight className="ml-auto" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                onClick={() => {
-                  handleOpenModal404();
-                }}
-                className={`${liClass} ${styles.dropdown.subTextColor}`}
-              >
-                <RiAdvertisementLine className={`${dropDownIconClass}`} />
-                Quảng cáo
-                <BsArrowUpRight className="ml-auto" />
-              </a>
-            </li>
-            <li>
-              <Link
-                to={`/dieu-khoan-su-dung`}
-                target="_blank"
-                className={`${liClass} ${styles.dropdown.subTextColor}`}
-              >
-                <CgFileDocument className={`${dropDownIconClass}`} />
-                Thoả thuận sử dụng
-                <BsArrowUpRight className="ml-auto" />
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={`/chinh-sach-bao-mat`}
-                target="_blank"
-                className={`${liClass} ${styles.dropdown.subTextColor}`}
-              >
-                <TbShieldCheck className={`${dropDownIconClass}`} />
-                Chính sách bảo mật
-                <BsArrowUpRight className="ml-auto" />
-              </Link>
-            </li>
-          </ul>
-        }
+        content={(onClick: any) => {
+          return (
+            <ul className="py-2 text-sm w-[228px]">
+              <li>
+                <a
+                  href="#"
+                  className={`${liClass} `}
+                  onClick={handleOpenModalTheme}
+                >
+                  <FaBrush className={`${dropDownIconClass}`} />
+                  Giao diện
+                  <MdOutlineKeyboardArrowRight className="ml-auto" />
+                </a>
+              </li>
+              <li>
+                <Divide />
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className={`${liClass} ${styles.dropdown.subTextColor} `}
+                  onClick={() => {
+                    setIsOpenModalIntro(true);
+                  }}
+                >
+                  <AiOutlineInfoCircle className={`${dropDownIconClass}`} />
+                  Giới thiệu
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onClick={() => {
+                    handleOpenModal404();
+                  }}
+                  className={`${liClass} ${styles.dropdown.subTextColor}`}
+                >
+                  <BsTelephone className={`${dropDownIconClass}`} />
+                  Liên hệ
+                  <BsArrowUpRight className="ml-auto" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onClick={() => {
+                    handleOpenModal404();
+                  }}
+                  className={`${liClass} ${styles.dropdown.subTextColor}`}
+                >
+                  <RiAdvertisementLine className={`${dropDownIconClass}`} />
+                  Quảng cáo
+                  <BsArrowUpRight className="ml-auto" />
+                </a>
+              </li>
+              <li>
+                <Link
+                  to={`/dieu-khoan-su-dung`}
+                  target="_blank"
+                  className={`${liClass} ${styles.dropdown.subTextColor}`}
+                >
+                  <CgFileDocument className={`${dropDownIconClass}`} />
+                  Thoả thuận sử dụng
+                  <BsArrowUpRight className="ml-auto" />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={`/chinh-sach-bao-mat`}
+                  target="_blank"
+                  className={`${liClass} ${styles.dropdown.subTextColor}`}
+                >
+                  <TbShieldCheck className={`${dropDownIconClass}`} />
+                  Chính sách bảo mật
+                  <BsArrowUpRight className="ml-auto" />
+                </Link>
+              </li>
+            </ul>
+          );
+        }}
       />
 
       {isAuthenticated ? (
@@ -218,63 +219,67 @@ const Actions = () => {
                     alt=""
                   />
                   {userProfile?.is_vip && (
-                    <div className="vip_label  absolute bottom-0"></div>
+                    <img
+                      src="/icon/vip-label.svg"
+                      className="w-7 h-7 absolute top-1/2"
+                      alt=""
+                    />
                   )}
                 </div>
               );
             }}
-            content={
-              <ul className="py-2 text-sm w-[228px] ">
-                {" "}
-                <li>
-                  <p
-                    className={`${styles.dropdown.subTextColor} pb-2 text-xs text-center border-b-[1px] border-[${styles.dropdown.borderColor}]`}
-                  >
-                    Gói VIP sẽ hết hạn <br />
-                    vào ngày
-                    <span className={`${styles.dropdown.textColor}`}>
-                      {" "}
-                      20/3/2023
-                    </span>
-                  </p>
-                </li>
-                <li>
-                  <Link to="/mua-vip" className={`${liClass} mt-3`}>
-                    <RiVipLine className={`${dropDownIconClass}`} />
-                    Mua code VIP
-                    <BsArrowUpRight className="ml-auto" />
-                  </Link>
-                </li>
-                <li>
-                  <a href="#" className={`${liClass}`}>
-                    <HiOutlineBan className={`${dropDownIconClass}`} />
-                    Danh sách chặn
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className={`${liClass} mb-3 `}>
-                    <BsUpload className={`${dropDownIconClass} `} />
-                    Tải lên
-                  </a>
-                </li>
-                <li>
-                  <Divide />
-                </li>
-                <li>
-                  <a
-                    onClick={() => {
-                      handleLogout();
-                      navigate("/");
-                    }}
-                    href="#"
-                    className={`${liClass} mt-3`}
-                  >
-                    <FiLogOut className={`${dropDownIconClass} `} />
-                    Đăng xuất
-                  </a>
-                </li>
-              </ul>
-            }
+            content={(onClick: any) => {
+              return (
+                <ul className="py-2 text-sm w-[228px] ">
+                  <li>
+                    <p
+                      className={`${styles.dropdown.subTextColor} pb-2 text-xs text-center border-b-[1px] border-[${styles.dropdown.borderColor}]`}
+                    >
+                      Gói VIP sẽ hết hạn <br />
+                      vào ngày
+                      <span className={`${styles.dropdown.textColor}`}>
+                        2023
+                      </span>
+                    </p>
+                  </li>
+                  <li>
+                    <Link to="/mua-vip" className={`${liClass} mt-3`}>
+                      <RiVipLine className={`${dropDownIconClass}`} />
+                      Mua code VIP
+                      <BsArrowUpRight className="ml-auto" />
+                    </Link>
+                  </li>
+                  {/* <li>
+                    <a href="#" className={`${liClass}`}>
+                      <HiOutlineBan className={`${dropDownIconClass}`} />
+                      Danh sách chặn
+                    </a>
+                  </li> */}
+                  <li>
+                    <a href="#" className={`${liClass} mb-3 `}>
+                      <BsUpload className={`${dropDownIconClass} `} />
+                      Tải lên
+                    </a>
+                  </li>
+                  <li>
+                    <Divide />
+                  </li>
+                  <li>
+                    <a
+                      onClick={() => {
+                        handleLogout();
+                        navigate("/");
+                      }}
+                      href="#"
+                      className={`${liClass} mt-3`}
+                    >
+                      <FiLogOut className={`${dropDownIconClass} `} />
+                      Đăng xuất
+                    </a>
+                  </li>
+                </ul>
+              );
+            }}
           />
         </>
       ) : (

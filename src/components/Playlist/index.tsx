@@ -33,7 +33,6 @@ const Playlist = () => {
           }`}
         >
           <div className="p-2 ">
-            {" "}
             <ul className="min-w-[284px] overflow-hidden text-xs text-center flex items-center rounded-full text-[#dadada]  bg-[#2A2139] mb-2">
               <li
                 className="w-full  p-1 cursor-pointer"
@@ -49,8 +48,8 @@ const Playlist = () => {
                 >
                   Danh sách phát
                 </div>
-              </li>{" "}
-              <li
+              </li>
+              {/* <li
                 className="w-full p-1 cursor-pointer"
                 onClick={() => SetTab("recent")}
               >
@@ -64,8 +63,8 @@ const Playlist = () => {
                 >
                   Nghe gần đây
                 </div>
-              </li>
-            </ul>{" "}
+              </li> */}
+            </ul>
             <Scrollbar className="h-[580px] overflow-x-hidden" isHover={true}>
               {data?.map((item: any, idx: any) => {
                 if (idx < trackIndex) {

@@ -48,7 +48,7 @@ const Lyrics = () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [songId]);
 
   const customAnimation = (from: number = 0) => {
     const animations = document.getElementById("animationStyle");
@@ -235,9 +235,10 @@ const Lyrics = () => {
                     >
                       Ca Sĩ: Bức Tường
                     </p>
-                    {data?.map((item: any) => (
+                    {data?.map((item: any, idx: number) => (
                       <p
                         data-text={item}
+                        key={idx}
                         className="word text-5xl h-max text-white py-5"
                       >
                         {item}

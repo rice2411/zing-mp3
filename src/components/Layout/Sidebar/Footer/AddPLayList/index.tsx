@@ -4,10 +4,12 @@ import useTheme from "../../../../../hooks/useTheme";
 import BlankModal from "../../../../../shared/small_components/Modal/Blank";
 import Button from "../../../../../shared/small_components/Button/Basic";
 import LibraryService from "../../../../../service/library";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, createSearchParams } from "react-router-dom";
+import useAuth from "../../../../../hooks/useAuth";
 
 const AddPLayList = () => {
   const { styles }: any = useTheme();
+  const { userProfile }: any = useAuth();
   const navigate = useNavigate();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [name, setName] = useState("");
@@ -23,8 +25,16 @@ const AddPLayList = () => {
     try {
       const response: any = await LibraryService.createPLaylist(param);
       if (response?.data?.data) {
-        navigate("/album", { state: { albumId: response?.data?.data._id } });
+        navigate({
+          pathname: "/album",
+          search: createSearchParams({
+            albumIdQuery: response?.data?.data._id,
+            type: response?.data?.data.type,
+            authorId: userProfile._id,
+          }).toString(),
+        });
         setIsOpenModal(false);
+        setName("");
       }
     } catch (err) {
       console.log(err);

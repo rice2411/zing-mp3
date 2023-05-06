@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
@@ -12,10 +12,12 @@ const Info = ({ image, title, artist }: any) => {
   const { userProfile }: any = useAuth();
   const { playlist, trackIndex, handleLikeSong }: any = useAudio();
 
-  const [isLiked, setIsLiked] = useState(
-    playlist[trackIndex]?.followers?.includes(userProfile?._id) || false
-  );
-
+  const [isLiked, setIsLiked] = useState(false);
+  useEffect(() => {
+    if (playlist[trackIndex]) {
+      setIsLiked(playlist[trackIndex]?.followers?.includes(userProfile?._id));
+    }
+  }, [playlist[trackIndex]]);
   return (
     <div
       className={`info flex items-center ju ml-3 min-w-[320px] w-1/5 ${styles.audio.info.textColor}`}
@@ -33,8 +35,8 @@ const Info = ({ image, title, artist }: any) => {
         <div
           className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center "
           onClick={() => {
-            handleLikeSong(playlist[trackIndex]._id);
-            if (userProfile._id) setIsLiked((preState: any) => !preState);
+            handleLikeSong(playlist[trackIndex]?._id);
+            if (userProfile?._id) setIsLiked((preState: any) => !preState);
           }}
         >
           {isLiked ? (
@@ -44,9 +46,9 @@ const Info = ({ image, title, artist }: any) => {
           )}
         </div>
 
-        <div className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center ">
+        {/* <div className="cursor-pointer p-2.5 hover:bg-[hsla(0,0%,100%,.1)] hover:rounded-full mr-2 flex items-center justify-center ">
           <FiMoreHorizontal />
-        </div>
+        </div> */}
       </div>
     </div>
   );

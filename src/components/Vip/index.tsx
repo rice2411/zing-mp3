@@ -18,6 +18,7 @@ const VIP = () => {
         const timer = setInterval(async () => {
           const check: any = await PaymentService.check({
             app_trans_id: rawData[1],
+            description: rawData[2],
           });
           const raw = check?.data?.data;
           if (raw.return_code == 1) {

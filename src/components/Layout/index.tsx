@@ -15,7 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Layout({ route, ...props }: any) {
   const location = useLocation();
-  const { audio, modalVip, setModalVip }: any = useAudio();
+  const { songId, modalVip, setModalVip }: any = useAudio();
   const { styles }: any = useTheme();
 
   return (
@@ -25,7 +25,7 @@ export default function Layout({ route, ...props }: any) {
         <SiderBar />
         <div
           className={`flex flex-col w-screen  ${
-            audio ? "h-[calc(100vh_-_90px)]" : ""
+            songId ? "h-[calc(100vh_-_90px)]" : ""
           }  pl-[calc(100vw - 100%)]`}
         >
           <div className="">

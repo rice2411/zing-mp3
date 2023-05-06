@@ -10,14 +10,15 @@ import useAudio from "../../../../hooks/useAudio";
 
 const Actions = () => {
   const { styles }: any = useTheme();
-  const { setIsShowLyrics, isHaveLyrics, setIsShowPlaylist }: any = useAudio();
+  const { setIsShowLyrics, isHaveLyrics, handleCheckIsHaveLyrics }: any =
+    useAudio();
   return (
     <>
       <div
         className={`flex  gap-x-3  ${styles.audio.player.textColor}  text-xl  `}
       >
         <ButtonIcon
-          className={`${styles.audio.controls.hoverStyle} cursor-pointer  p-3`}
+          className={`${styles.audio.controls.hoverStyle}  cursor-not-allowed  p-3`}
         >
           <MdOutlineOndemandVideo />
         </ButtonIcon>
@@ -33,7 +34,7 @@ const Actions = () => {
           <GiMicrophone />
         </ButtonIcon>
         <ButtonIcon
-          className={`${styles.audio.controls.hoverStyle} cursor-pointer  p-3`}
+          className={`${styles.audio.controls.hoverStyle}  cursor-not-allowed  p-3`}
         >
           <VscMultipleWindows />
         </ButtonIcon>

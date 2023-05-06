@@ -10,7 +10,7 @@ import useAuth from "../../../../hooks/useAuth";
 
 export default function BodySideBar({ isToggle }: any) {
   const { styles }: any = useTheme();
-  const { audio }: any = useAudio();
+  const { songId }: any = useAudio();
   const { userProfile }: any = useAuth();
   return (
     <>
@@ -23,7 +23,7 @@ export default function BodySideBar({ isToggle }: any) {
       </div>
       <Scrollbar
         isHover={true}
-        className={`${audio ? "h-[300px]" : ""}  overflow-x-hidden `}
+        className={`${songId ? "h-[300px]" : ""}  overflow-x-hidden `}
       >
         <Items data={data.scroll} className="pt-3" isToggle={isToggle} />
         {!userProfile?.is_vip && (
