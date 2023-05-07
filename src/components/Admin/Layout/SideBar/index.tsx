@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 function AdminSidebar() {
   const [isOpenSubMenu, setIsOpenSubMenu] = useState(false);
   return (
@@ -12,8 +13,8 @@ function AdminSidebar() {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
-              <a
-                href="#"
+              <Link
+                to={"/dashboard"}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
@@ -27,7 +28,7 @@ function AdminSidebar() {
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
                 </svg>
                 <span className="ml-3">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li>
               <button
@@ -56,7 +57,7 @@ function AdminSidebar() {
                   className="flex-1 ml-3 text-left whitespace-nowrap"
                   sidebar-toggle-item=""
                 >
-                  E-commerce
+                  Zing-MP3
                 </span>
                 <svg
                   sidebar-toggle-item=""
@@ -77,32 +78,32 @@ function AdminSidebar() {
                 className={`${isOpenSubMenu ? "" : "hidden"} py-2 space-y-2`}
               >
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/zingmp3/bai-hat"
                     className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                   >
-                    Products
-                  </a>
+                    Bài hát
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to="/zingmp3/nghe-si"
                     className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                   >
-                    Billing
-                  </a>
+                    Nghệ sĩ
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="#"
+                  <Link
+                    to={"/zingmp3/album"}
                     className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                   >
-                    Invoice
-                  </a>
+                    Album
+                  </Link>
                 </li>
               </ul>
             </li>
-            <li>
+            {/* <li>
               <a
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -226,7 +227,7 @@ function AdminSidebar() {
                 </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </aside>

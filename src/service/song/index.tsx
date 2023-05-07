@@ -6,9 +6,14 @@ const router = {
   getNewRelease: `${env.apiUrl}/api/v1/song/get-new-release`,
   increaseViews: `${env.apiUrl}/api/v1/song/increase-views/{songId}`,
   getLyrics: `${env.apiUrl}/api/v1/song/get-lyrics/{songId}`,
+  getAll: `${env.apiUrl}/api/v1/song/get-all`,
 };
 
 class SongService {
+  static getAll(params: object) {
+    let uri = router.getAll;
+    return fetch.get(uri, params);
+  }
   static getLyrics(songId: string) {
     let uri = fmt(router.getLyrics, { songId });
     return fetch.get(uri);

@@ -9,9 +9,14 @@ const router = {
   suggestType: `${env.apiUrl}/api/v1/album/get-suggest-type`,
   detailAlbum: `${env.apiUrl}/api/v1/album/{albumId}`,
   getNeighbour: `${env.apiUrl}/api/v1/album/get-neighbour/{typeId}`,
+  getAll: `${env.apiUrl}/api/v1/album/get-all`,
 };
 
 class AlbumService {
+  static getAll(param: object) {
+    let uri = router.getAll;
+    return fetch.get(uri, param);
+  }
   static getNeighBour(typeId: string) {
     let uri = fmt(router.getNeighbour, { typeId });
     return fetch.get(uri);

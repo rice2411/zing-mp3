@@ -4,7 +4,10 @@ import TransactionService from "../../../../service/transaction";
 import { convertToDate } from "../../../../utils/helpers";
 import { debounce } from "lodash";
 import Pagination from "../../../Shared/Pagination";
-function Transactions() {
+import SongService from "../../../../service/song";
+import { getFile } from "../../../../constant/file";
+import ArtistService from "../../../../service/artist";
+function AdminArtist() {
   const [data, setData]: any = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchData, setIsFetchData] = useState(false);
@@ -18,7 +21,7 @@ function Transactions() {
 
   const params = {
     page: 1,
-    limit: 1,
+    limit: 10,
     search: contentSearch || "",
   };
 
@@ -44,7 +47,7 @@ function Transactions() {
     setIsLoading(true);
 
     try {
-      const response: any = await TransactionService.getAll(param);
+      const response: any = await ArtistService.getAll(param);
       const dataRaw = response?.data?.data;
       if (dataRaw) {
         setData(dataRaw);
@@ -65,8 +68,15 @@ function Transactions() {
       <div className="p-5">
         <div className="flex justify-between items-center">
           <div>
-            <b> Danh sách giao dịch </b>
-            <p> Các giao dịch gần đây</p>
+            <p>
+              <b> Danh sách nghệ sĩ</b>
+            </p>
+            <button
+              type="button"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            >
+              Thêm mới
+            </button>
           </div>
           <input
             type="text"
@@ -80,21 +90,15 @@ function Transactions() {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-5">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              {" "}
               <th scope="col" className="px-6 py-3">
-                MÃ GIAO DỊCH
+                STT
               </th>
               <th scope="col" className="px-6 py-3">
-                NỘI DUNG GIAO DỊCH
+                TÊN
               </th>
+
               <th scope="col" className="px-6 py-3">
-                NGÀY TẠO
-              </th>
-              <th scope="col" className="px-6 py-3">
-                GIÁ TRỊ
-              </th>
-              <th scope="col" className="px-6 py-3">
-                TÌNH TRẠNG
+                HÀNH ĐỘNG
               </th>
             </tr>
           </thead>
@@ -104,35 +108,51 @@ function Transactions() {
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                 key={index}
               >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  {item?.transaction?.app_trans_id}
-                </th>
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
-                  Giao dịch của{" "}
-                  <b>{item?.user?.first_name + " " + item?.user?.last_name}</b>:{" "}
-                  {item?.transaction?.description}
-                </th>
-                <td className="px-6 py-4">
-                  {convertToDate(item?.transaction?.createdAt)}
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {10 * (pagination?.page - 1) + index + 1}
                 </td>
-                <td className="px-6 py-4">
-                  {item?.transaction?.value.toLocaleString("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                  })}
+                <td
+                  scope="row"
+                  className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src={getFile(item?.avatar)}
+                    alt="Jese image"
+                  />
+                  <div className="pl-3">
+                    <div className="text-base font-semibold flex items-center">
+                      {item?.name}{" "}
+                      <div
+                        className={`ml-2 ${
+                          item?.is_vip ? "" : "hidden"
+                        } h-5 w-5`}
+                      >
+                        <span className="overflow-hidden ">
+                          <img
+                            src="/icon/vip-label.svg"
+                            className="w-full h-full"
+                            alt=""
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </td>
+
                 <td className="px-6 py-4">
-                  <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
-                    {item?.transaction?.status == 1 ? "Hoàn thành" : ""}
-                  </span>
+                  <button
+                    type="button"
+                    className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  >
+                    Chỉnh sửa
+                  </button>
+                  <button
+                    type="button"
+                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                  >
+                    Xoá
+                  </button>
                 </td>
               </tr>
             ))}
@@ -153,4 +173,4 @@ function Transactions() {
   );
 }
 
-export default Transactions;
+export default AdminArtist;

@@ -29,7 +29,7 @@ const Playlist = () => {
             background: "#120822",
           }}
           className={`slide-left   top-0 right-0 z-50 h-screen overflow-hidden ${
-            isShowPlaylist ? "w-[400px]" : ""
+            isShowPlaylist ? "w-[450px]" : ""
           }`}
         >
           <div className="p-2 ">
@@ -92,6 +92,7 @@ const Playlist = () => {
                 customTextArtist={"!text-[hsla(0,0%,100%,.6)]"}
                 isShowIndex={false}
                 isShowTime={false}
+                isInPlaylist={true}
               />
               <p className="text-sm text-white font-bold py-2">Tiếp theo</p>
               {data?.map((item: any, idx: any) => {
@@ -103,9 +104,10 @@ const Playlist = () => {
                         index={idx}
                         timeData={0}
                         listSongs={null}
-                        className={"opacity-50"}
+                        className={""}
                         isShowIndex={false}
                         isShowTime={false}
+                        isInPlaylist={true}
                       />
                     </div>
                   );

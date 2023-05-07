@@ -37,6 +37,9 @@ import AllPageLibrary from "../pages/library/playlist/all";
 import OwnPage from "../pages/library/playlist/own";
 import AdminLayoutPage from "../pages/admin/layout";
 import DashboarđPage from "../pages/admin/dashboard";
+import AdminSongPage from "../pages/admin/zingmp3/song";
+import AdminArtistPage from "../pages/admin/zingmp3/artist";
+import AdminAlbumPage from "../pages/admin/zingmp3/album";
 const AdminLayout = () => {
   return (
     <ModalProvider>
@@ -163,6 +166,15 @@ export default createBrowserRouter([
       {
         element: <DashboarđPage />,
         path: "/dashboard",
+      },
+      {
+        element: <Outlet></Outlet>,
+        path: "/zingmp3",
+        children: [
+          { element: <AdminSongPage />, path: "bai-hat" },
+          { element: <AdminArtistPage />, path: "nghe-si" },
+          { element: <AdminAlbumPage />, path: "album" },
+        ],
       },
     ],
   },

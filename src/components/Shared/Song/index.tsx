@@ -40,6 +40,7 @@ const Song = ({
   customTextArtist = "",
   isNewReleaseItem = false,
   setIsFetchData = null,
+  isInPlaylist = true,
 }: any) => {
   const location = useLocation();
   const { styles }: any = useTheme();
@@ -52,7 +53,10 @@ const Song = ({
     songId,
     setIsLoading,
     handleAddToPlayingList,
-  }: any = useAudio();
+    playlist,
+    setPlaylist,
+  }: // playlist,
+  any = useAudio();
   const { handleModalBlank }: any = useModal();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
@@ -60,7 +64,7 @@ const Song = ({
   const authorId = searchParams.get("authorId");
   const [isHover, setIsHover] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [playlist, setPlaylist] = useState([]);
+  const [playlist2, setPlaylist2] = useState([]);
   const [isLiked, setIsLiked] = useState(
     song?.followers?.includes(userProfile?._id) || false
   );
@@ -139,11 +143,44 @@ const Song = ({
       console.log(err);
     }
   };
+  const handleRemoveSongOutOfPlayinglist = async (song: any) => {
+    try {
+      const param = {
+        songId: song._id,
+      };
+      const response: any = await LibraryService.removeSongOutOfPlayingList(
+        param
+      );
+      if (response?.data?.data) {
+        const text = `"${song.name}"`;
+        toast(`Đã xoá bài hát ${text} vào playlist thành công`, {
+          position: "bottom-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        const temp = [...playlist];
+        const item = temp.find((i: any) => i._id == song._id);
+        const index = temp.indexOf(item);
+        temp.splice(index, 1);
+        setPlaylist(temp);
+        if (setIsFetchData) {
+          setIsFetchData(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const fetchData = async () => {
     try {
       const response: any = await LibraryService.getOwnPlaylist();
       if (response?.data?.data) {
-        setPlaylist(response?.data?.data);
+        setPlaylist2(response?.data?.data);
       }
     } catch (err) {
       console.log(err);
@@ -384,19 +421,25 @@ const Song = ({
                         Chia sẻ
                       </a>
                     </li>
-                    {type == "custom" && authorId == userProfile?._id && (
-                      <li
-                        onClick={() => {
-                          handleRemoveSongOutOfPlaylist(song, albumIdQuery);
-                          onclick();
-                        }}
-                      >
-                        <div className={`${liClass}  cursor-pointer`}>
-                          <BiTrashAlt className={`${dropDownIconClass}`} />
-                          Xoá khỏi playlist này
-                        </div>
-                      </li>
-                    )}
+                    {(type == "custom" && authorId == userProfile?._id) ||
+                      (isInPlaylist && (
+                        <li
+                          onClick={() => {
+                            isInPlaylist
+                              ? handleRemoveSongOutOfPlayinglist(song)
+                              : handleRemoveSongOutOfPlaylist(
+                                  song,
+                                  albumIdQuery
+                                );
+                            onclick();
+                          }}
+                        >
+                          <div className={`${liClass}  cursor-pointer`}>
+                            <BiTrashAlt className={`${dropDownIconClass}`} />
+                            Xoá khỏi playlist này
+                          </div>
+                        </li>
+                      ))}
                   </ul>
                 );
               }}
@@ -423,7 +466,7 @@ const Song = ({
           placeholder="Tìm kiếm playlist"
         />
         <ul className="w-[300px]">
-          {playlist?.map((item: any) => (
+          {playlist2?.map((item: any) => (
             <li
               onClick={() => {
                 handleAddSongToPlaylist(song, item?._id);
