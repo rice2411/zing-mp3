@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @import "scrollbar.scss";
-@import "toasty.scss";
+@import "toasty.module.scss";
 html{
     font-family: 'Inter'; 
     scroll-behavior: smooth!important;

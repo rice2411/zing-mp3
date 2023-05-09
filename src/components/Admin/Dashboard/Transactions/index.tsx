@@ -18,7 +18,7 @@ function Transactions() {
 
   const params = {
     page: 1,
-    limit: 1,
+    limit: 5,
     search: contentSearch || "",
   };
 

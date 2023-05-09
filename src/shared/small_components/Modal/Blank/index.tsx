@@ -58,7 +58,7 @@ function BlankModal({
         >
           {/* Modal content */}
           <div
-            className={`bg-[#34224F] ${styles.modal.textColor}  ${className}  relative rounded-lg shadow`}
+            className={`bg-[#34224F] text-white  ${className}  relative rounded-lg shadow`}
           >
             {/* Modal header */}
             {isShowHeader ? (
@@ -73,7 +73,9 @@ function BlankModal({
                 <button
                   onClick={() => {
                     onSubmit();
-                    handleClose();
+                    if (handleClose) {
+                      handleClose();
+                    }
                   }}
                   type="button"
                   className=" bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "

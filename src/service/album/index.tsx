@@ -10,9 +10,24 @@ const router = {
   detailAlbum: `${env.apiUrl}/api/v1/album/{albumId}`,
   getNeighbour: `${env.apiUrl}/api/v1/album/get-neighbour/{typeId}`,
   getAll: `${env.apiUrl}/api/v1/album/get-all`,
+  create: `${env.apiUrl}/api/v1/album/`,
+  update: `${env.apiUrl}/api/v1/album/`,
+  delete: `${env.apiUrl}/api/v1/album/{albumId}`,
 };
 
 class AlbumService {
+  static update(param: object) {
+    let uri = router.update;
+    return fetch.put(uri, param);
+  }
+  static delete(albumId: string) {
+    let uri = fmt(router.delete, { albumId });
+    return fetch.delete(uri);
+  }
+  static create(param: object) {
+    let uri = router.create;
+    return fetch.post(uri, param);
+  }
   static getAll(param: object) {
     let uri = router.getAll;
     return fetch.get(uri, param);
