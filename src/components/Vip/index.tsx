@@ -8,30 +8,30 @@ import { useNavigate } from "react-router-dom";
 
 const VIP = () => {
   const { setUserProfile }: any = useAuth();
-  const navigate = useNavigate();
+
   const handlePurchase = async () => {
     try {
       const resposne: any = await PaymentService.zaloPay();
       const rawData = resposne?.data?.data;
       if (rawData) {
-        const win = await window.open(rawData[0].order_url);
-        const timer = setInterval(async () => {
-          const check: any = await PaymentService.check({
-            app_trans_id: rawData[1],
-            description: rawData[2],
-          });
-          const raw = check?.data?.data;
-          if (raw.return_code == 1) {
-            const response: any = await UserService.getMe();
-            if (response?.data?.data) {
-              setUserProfile(response?.data?.data);
-              setUser(JSON.stringify(response?.data?.data));
-              navigate("/");
-            }
-            clearInterval(timer);
-            win.close();
-          }
-        }, 1000);
+        window.location = rawData[0].order_url;
+        // const timer = setInterval(async () => {
+        //   const check: any = await PaymentService.check({
+        //     app_trans_id: rawData[1],
+        //     description: rawData[2],
+        //   });
+        //   const raw = check?.data?.data;
+        //   if (raw.return_code == 1) {
+        //     const response: any = await UserService.getMe();
+        //     if (response?.data?.data) {
+        //       setUserProfile(response?.data?.data);
+        //       setUser(JSON.stringify(response?.data?.data));
+        //       navigate("/");
+        //     }
+        //     clearInterval(timer);
+        //     win.close();
+        //   }
+        // }, 1000);
       }
     } catch (err) {
       console.log(err);

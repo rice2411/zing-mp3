@@ -14,9 +14,9 @@ function setUser(user: string) {
 function Logout() {
   cookie.remove("token");
   cookie.remove("user");
-  cookie.remove("songId");
-  cookie.remove("albumId");
-  cookie.remove("trackIndex");
+  // cookie.remove("songId");
+  // cookie.remove("albumId");
+  // cookie.remove("trackIndex");
 
   if (typeof window != "undefined") {
     window.localStorage.setItem("logout", Date.now().toString());

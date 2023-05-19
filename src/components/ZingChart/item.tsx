@@ -71,8 +71,13 @@ const ItemChart = ({
           <div
             className="relative hover:cursor-pointer flex items-center justify-center"
             onClick={() => {
-              const albumId = location?.state?.albumId || null;
-              const albumIdStorage = JSON.parse(Cookies.get("albumId"));
+              const { albumId } = location?.state
+                ? location?.state
+                : { albumId: null };
+              const albumIdStorage =
+                typeof Cookies.get("albumId") !== "undefined"
+                  ? JSON.parse(Cookies.get("albumId"))
+                  : null;
               handlePlayOneSong(song, albumId || albumIdStorage);
             }}
           >

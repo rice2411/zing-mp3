@@ -230,7 +230,7 @@ export const AudioProvider = ({ children }: any) => {
     }
 
     if (albumId != null) {
-      if (data._id !== playlist[trackIndex]._id) {
+      if (data._id !== playlist[trackIndex]?._id) {
         setIsPlaying(false);
         handleSaveNewSong(data, albumId);
         await SongService.increaseViews(data._id);
@@ -277,21 +277,55 @@ export const AudioProvider = ({ children }: any) => {
   };
   const fetchData = async () => {
     try {
-      if (!userProfile._id) return;
-      const response: any = await LibraryService.getPlaylist();
-      const dataRaw = response?.data?.data;
-      if (dataRaw) {
-        const { name, image, artist, audio } = dataRaw[trackIndex];
-        setPlaylist(dataRaw);
-        setAudio(audio);
-        setName(name);
-        setArtist(artist);
-        setImage(image);
-        const newAudio = new Audio(getFile(audio));
-        newAudio.onloadedmetadata = function () {
-          audioRef.current = newAudio;
-          setTimeEnd(newAudio.duration);
-        };
+      if (!userProfile._id) {
+        const songId =
+          typeof cookie.get("songId") !== "undefined"
+            ? cookie.get("songId")
+            : null;
+        const albumId =
+          typeof cookie.get("albumId") !== "undefined"
+            ? cookie.get("albumId")
+            : null;
+        const trackIndex =
+          typeof cookie.get("trackIndex") !== "undefined"
+            ? JSON.parse(cookie.get("trackIndex"))
+            : null;
+        if (songId && albumId && trackIndex != -1) {
+          const response: any = await AlbumService.detailAlbum(
+            JSON.parse(albumId)
+          );
+          const dataRaw = response?.data?.data?.songs;
+
+          if (dataRaw) {
+            const { name, image, artist, audio } = dataRaw[trackIndex];
+            setPlaylist(dataRaw);
+            setAudio(audio);
+            setName(name);
+            setArtist(artist);
+            setImage(image);
+            const newAudio = new Audio(getFile(audio));
+            newAudio.onloadedmetadata = function () {
+              audioRef.current = newAudio;
+              setTimeEnd(newAudio.duration);
+            };
+          }
+        }
+      } else {
+        const response: any = await LibraryService.getPlaylist();
+        const dataRaw = response?.data?.data;
+        if (dataRaw.length > 0) {
+          const { name, image, artist, audio } = dataRaw[trackIndex];
+          setPlaylist(dataRaw);
+          setAudio(audio);
+          setName(name);
+          setArtist(artist);
+          setImage(image);
+          const newAudio = new Audio(getFile(audio));
+          newAudio.onloadedmetadata = function () {
+            audioRef.current = newAudio;
+            setTimeEnd(newAudio.duration);
+          };
+        }
       }
     } catch (err) {
       console.log(err);

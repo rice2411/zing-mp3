@@ -36,9 +36,9 @@ const Lyrics = () => {
       const dataRaw = response?.data?.data;
 
       if (dataRaw) {
-        setData(dataRaw.lyrics.data);
-        setTimeIn(dataRaw.lyrics.timeIn);
-        setTimeOut(dataRaw.lyrics.timeOut);
+        setData(dataRaw?.lyrics?.data);
+        setTimeIn(dataRaw.lyrics?.timeIn);
+        setTimeOut(dataRaw?.lyrics?.timeOut);
       }
     } catch (err) {
       console.log(err);
