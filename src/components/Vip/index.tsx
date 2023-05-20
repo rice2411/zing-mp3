@@ -1,20 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import PaymentService from "../../service/payment";
 import UserService from "../../service/user";
 import { setUser } from "../../utils/auth";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import useModal from "../../hooks/useModal";
+import BlankModal from "../../shared/small_components/Modal/Blank";
 
 const VIP = () => {
+  const [isSelected, setIsSelected] = useState("momo");
   const { setUserProfile }: any = useAuth();
-
+  const { handleModalBlank, handleModalConfirm }: any = useModal();
+  const handleOpenModal = async () => {
+    // await fetchHubdata(modal, item);
+    handleModalBlank({
+      text: {
+        title: "Phương thức thanh toán",
+      },
+      isShow: true,
+      onSubmit: () => {},
+    });
+  };
   const handlePurchase = async () => {
     try {
-      const resposne: any = await PaymentService.zaloPay();
+      const resposne: any =
+        isSelected == "zalopay"
+          ? await PaymentService.ZaloPayPayment()
+          : await PaymentService.MoMoPayPayment();
       const rawData = resposne?.data?.data;
       if (rawData) {
-        window.location = rawData[0].order_url;
+        window.location =
+          isSelected == "zalopay" ? rawData[0].order_url : rawData.payUrl;
         // const timer = setInterval(async () => {
         //   const check: any = await PaymentService.check({
         //     app_trans_id: rawData[1],
@@ -77,7 +94,7 @@ const VIP = () => {
             <div
               className="bg-[#FFD94E] rounded-3xl cursor-pointer uppercase font-bold text-[#480c00] w-[224px] h-[44px] flex items-center justify-center"
               onClick={() => {
-                handlePurchase();
+                handleOpenModal();
               }}
             >
               Chọn Mua
@@ -85,6 +102,105 @@ const VIP = () => {
           </div>
         </div>
       </div>
+      <BlankModal
+        className={`bg-white text-black`}
+        classHeader={``}
+        isShowHeader={true}
+      >
+        <div className="flex flex-col items-center  justify-center text-center text-xs w-full">
+          <div className="flex mb-2">
+            {" "}
+            <div
+              onClick={() => {
+                setIsSelected("momo");
+              }}
+              className={`mr-2 flex p-4 ${
+                isSelected == "momo" ? `border-4 border-green-400` : ""
+              }  hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg cursor-pointer`}
+            >
+              <div className="flex items-center ">
+                <input
+                  id="helper-radio-4"
+                  name="helper-radio"
+                  type="radio"
+                  checked={isSelected == "momo"}
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+              </div>
+              <div className="ml-2 text-sm flex">
+                <label
+                  htmlFor="helper-radio-4"
+                  className="font-medium text-gray-900 dark:text-gray-300 flex"
+                >
+                  <div className="mr-2">
+                    <div>MoMo</div>
+                    <p
+                      id="helper-radio-text-4"
+                      className="text-xs font-normal text-gray-500 dark:text-gray-300"
+                    >
+                      Ví điện tử
+                    </p>
+                  </div>
+                  <img
+                    src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square.png"
+                    alt=""
+                    className="h-10 w-10"
+                  />
+                </label>
+              </div>
+            </div>
+            <div
+              onClick={() => {
+                setIsSelected("zalopay");
+              }}
+              className={`flex p-4  ${
+                isSelected == "zalopay" ? `border-4 border-green-400` : ""
+              }  hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg cursor-pointer`}
+            >
+              <div className="flex items-center ">
+                <input
+                  id="helper-radio-4"
+                  name="helper-radio"
+                  type="radio"
+                  checked={isSelected == "zalopay"}
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+              </div>
+              <div className="ml-2 text-sm flex">
+                <label
+                  htmlFor="helper-radio-4"
+                  className="font-medium text-gray-900 dark:text-gray-300 flex"
+                >
+                  <div className="mr-2">
+                    <div>ZaloPay</div>
+                    <p
+                      id="helper-radio-text-4"
+                      className="text-xs font-normal text-gray-500 dark:text-gray-300"
+                    >
+                      Ví điện tử
+                    </p>
+                  </div>
+                  <img
+                    src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay.png"
+                    alt=""
+                    className="h-10 w-10"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            onClick={() => {
+              handlePurchase();
+            }}
+            className="ml-auto focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5  mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          >
+            Xác nhận
+          </button>
+        </div>
+      </BlankModal>
     </div>
   );
 };

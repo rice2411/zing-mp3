@@ -46,6 +46,7 @@ function Transactions() {
     try {
       const response: any = await TransactionService.getAll(param);
       const dataRaw = response?.data?.data;
+
       if (dataRaw) {
         setData(dataRaw);
         setPagination(response?.data?.paginate);
@@ -94,6 +95,9 @@ function Transactions() {
                 GIÁ TRỊ
               </th>
               <th scope="col" className="px-6 py-3">
+                HÌNH THỨC
+              </th>
+              <th scope="col" className="px-6 py-3">
                 TÌNH TRẠNG
               </th>
             </tr>
@@ -112,7 +116,7 @@ function Transactions() {
                 </th>
                 <th
                   scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-normal dark:text-white  max-w-[100px]"
                 >
                   Giao dịch của{" "}
                   <b>{item?.user?.first_name + " " + item?.user?.last_name}</b>:{" "}
@@ -128,6 +132,9 @@ function Transactions() {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
                   })}
+                </td>
+                <td className="px-6 py-4">
+                  {item?.transaction?.type?.toUpperCase()}
                 </td>
                 <td className="px-6 py-4">
                   <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">

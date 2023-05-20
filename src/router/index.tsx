@@ -150,7 +150,9 @@ export default createBrowserRouter([
   {
     element: (
       <AuthProvider>
-        <VipPage />
+        <ModalProvider>
+          <VipPage />
+        </ModalProvider>
       </AuthProvider>
     ),
     path: "/mua-vip",
