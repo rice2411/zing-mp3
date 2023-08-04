@@ -1,3 +1,7 @@
+# Live Demo
+If you want to see my app please accesss the api first and watting for api wake up then follow the link bellow:
+Live demo: https://zing-mp3-taupe.vercel.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
